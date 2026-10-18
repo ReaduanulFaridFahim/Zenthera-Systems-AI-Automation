@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment & Secrets
+.env
+.env.local
+*.env
+
+# Local test & debug scripts containing service keys
+test_*.ps1
+probe_supabase.ps1
+seed_supabase_direct.ps1
+update_supabase_cal.ps1
+verify_records.ps1
+watch_and_seed.ps1
+fix_sqlite.ps1
+test_sqlite.js
+
+# Logs & temp
+*.log
+n8n_output.log
+.DS_Store
+Thumbs.db
+scratch/

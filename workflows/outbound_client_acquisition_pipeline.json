@@ -1,0 +1,222 @@
+{
+  "name": "Zenthra Systems — Autonomous Outbound Client Acquisition & Cold Email Engine",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * 1-5"
+            }
+          ]
+        }
+      },
+      "id": "outbound-001",
+      "name": "Schedule Trigger (Mon-Fri 9:00 AM)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [220, 320]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "trigger-outbound-prospecting",
+        "options": {}
+      },
+      "id": "outbound-002",
+      "name": "Manual Webhook Trigger (On-Demand)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [220, 500],
+      "webhookId": "zenthra-outbound-trigger"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apollo.io/v1/mixed_people/search",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Cache-Control",
+              "value": "no-cache"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"api_key\": \"{{ $vars.APOLLO_API_KEY || 'YOUR_APOLLO_API_KEY' }}\",\n  \"q_organization_domains\": \"\",\n  \"page\": 1,\n  \"per_page\": 10,\n  \"person_titles\": [\"CTO\", \"VP of Operations\", \"Chief Technology Officer\", \"Head of Operations\", \"Founder\", \"Co-Founder\"],\n  \"organization_num_employees_ranges\": [\"11,50\", \"51,200\"],\n  \"q_keywords\": \"HubSpot, Shopify, lead generation, automation, marketing operations\"\n}",
+        "options": {}
+      },
+      "id": "outbound-003",
+      "name": "Fetch High-Intent Prospects (Apollo API)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Fallback seed leads if running in test environment without live Apollo key\nconst apolloData = $json.people || [];\n\nconst sampleLeads = [\n  {\n    first_name: 'Marcus',\n    last_name: 'Vance',\n    email: 'marcus@nexustechlogistics.com',\n    title: 'VP of Technology & Operations',\n    organization: { name: 'Nexus Logistics', website_url: 'nexuslogistics.com' },\n    headline: 'Scaling multi-channel delivery ops across US & Canada',\n    pain_point: 'Manual freight bill auditing and slow CRM lead dispatch'\n  },\n  {\n    first_name: 'Sarah',\n    last_name: 'Chen',\n    email: 'sarah@kineticgrowth.io',\n    title: 'Head of Growth Operations',\n    organization: { name: 'Kinetic Agency', website_url: 'kineticgrowth.io' },\n    headline: 'High-growth B2B lead generation agency running paid ads',\n    pain_point: 'SDRs taking 45 minutes to respond to Meta Lead Ads, losing prospect conversions'\n  },\n  {\n    first_name: 'David',\n    last_name: 'Kowalski',\n    email: 'david@luminaecommerce.co',\n    title: 'Founder & CEO',\n    organization: { name: 'Lumina Commerce', website_url: 'luminaecommerce.co' },\n    headline: '8-figure multi-brand Shopify ecosystem',\n    pain_point: 'Disconnected inventory sync between Shopify, 3PL, and QuickBooks'\n  }\n];\n\nconst rawLeads = apolloData.length > 0 ? apolloData : sampleLeads;\n\nreturn rawLeads.map(lead => ({\n  json: {\n    first_name: lead.first_name,\n    last_name: lead.last_name,\n    full_name: `${lead.first_name} ${lead.last_name}`,\n    email: lead.email,\n    title: lead.title,\n    company_name: lead.organization ? lead.organization.name : 'your company',\n    domain: lead.organization ? lead.organization.website_url : '',\n    pain_point: lead.pain_point || 'Operational manual bottlenecks in data and workflow routing'\n  }\n}));"
+      },
+      "id": "outbound-004",
+      "name": "Normalize & Filter Verified Leads",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [700, 400]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are an elite B2B Solutions Architect at Zenthra Systems (an engineering consultancy specializing in enterprise n8n workflow systems, autonomous AI agents, and data engineering pipelines).\n\nYour task is to write a highly technical, non-salesy, hyper-personalized 3-sentence outreach email to a prospective client.\n\nProspect Details:\n- Name: {{ $json.first_name }} {{ $json.last_name }}\n- Title: {{ $json.title }}\n- Company: {{ $json.company_name }}\n- Known Operational Pain Point: {{ $json.pain_point }}\n\nStrict Rules:\n1. Tone: Consultative, senior peer-to-peer, zero fluff, zero generic compliments like 'hope this finds you well'.\n2. Sentence 1: Acknowledge their exact operational bottleneck.\n3. Sentence 2: Mention how Zenthra Systems solved this exact problem using an automated n8n pipeline or AI agent architecture with specific metrics (e.g. reducing triage latency from 45 min to 30 sec).\n4. Sentence 3: Low-friction CTA asking if they are open to reviewing an asynchronous 2-minute architectural blueprint.\n\nReturn clean JSON in the format:\n{\n  \"subject\": \"n8n workflow for {{ $json.company_name }}'s operations\",\n  \"body\": \"[email body]\"\n}"
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "id": "outbound-005",
+      "name": "AI Hyper-Personalization Engine",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.4,
+      "position": [940, 400],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai_default",
+          "name": "OpenAI Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let parsed;\ntry {\n  const raw = $json.message.content.replace(/```json/g, '').replace(/```/g, '').trim();\n  parsed = JSON.parse(raw);\n} catch(e) {\n  parsed = {\n    subject: `Technical architecture inquiry for ${$('Normalize & Filter Verified Leads').item.json.company_name}`,\n    body: `Hi ${$('Normalize & Filter Verified Leads').item.json.first_name},\\n\\nNoticed your team is scaling operations at ${$('Normalize & Filter Verified Leads').item.json.company_name}. We recently built an automated n8n pipeline solving ${$('Normalize & Filter Verified Leads').item.json.pain_point}, cutting latency by 90% without adding headcount.\\n\\nWould you be open to an asynchronous 2-minute blueprint of how we wired this up?\\n\\nBest,\\nZenthra Systems Engineering Team\\nconnect.zenthra@gmail.com`\n  };\n}\n\nreturn {\n  json: {\n    to_email: $('Normalize & Filter Verified Leads').item.json.email,\n    to_name: $('Normalize & Filter Verified Leads').item.json.full_name,\n    company: $('Normalize & Filter Verified Leads').item.json.company_name,\n    subject: parsed.subject,\n    body: parsed.body\n  }\n};"
+      },
+      "id": "outbound-006",
+      "name": "Format Outbound Dispatch Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1160, 400]
+    },
+    {
+      "parameters": {
+        "fromEmail": "connect.zenthra@gmail.com",
+        "toEmail": "={{ $json.to_email }}",
+        "subject": "={{ $json.subject }}",
+        "emailFormat": "text",
+        "message": "={{ $json.body }}\n\n--\nZenthra Systems Engineering Practice\nAutonomous Workflow Hub & Data Architectures\nhttps://cal.com/zenthra-systems-dyuqpi/30min",
+        "options": {}
+      },
+      "id": "outbound-007",
+      "name": "Dispatch Personalized Email (Gmail / SMTP)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1380, 400],
+      "credentials": {
+        "smtp": {
+          "id": "zenthra_smtp",
+          "name": "Zenthra Gmail / SMTP"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return {\n  json: {\n    event: 'OUTBOUND_DISPATCH_CONFIRMED',\n    recipient: $json.to_name,\n    email: $json.to_email,\n    company: $json.company,\n    subject: $json.subject,\n    status: 'DISPATCHED_TO_LEAD',\n    timestamp: new Date().toISOString()\n  }\n};"
+      },
+      "id": "outbound-008",
+      "name": "Log Outreach Telemetry",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1600, 400]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger (Mon-Fri 9:00 AM)": {
+      "main": [
+        [
+          {
+            "node": "Fetch High-Intent Prospects (Apollo API)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Webhook Trigger (On-Demand)": {
+      "main": [
+        [
+          {
+            "node": "Fetch High-Intent Prospects (Apollo API)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch High-Intent Prospects (Apollo API)": {
+      "main": [
+        [
+          {
+            "node": "Normalize & Filter Verified Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize & Filter Verified Leads": {
+      "main": [
+        [
+          {
+            "node": "AI Hyper-Personalization Engine",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Hyper-Personalization Engine": {
+      "main": [
+        [
+          {
+            "node": "Format Outbound Dispatch Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Outbound Dispatch Payload": {
+      "main": [
+        [
+          {
+            "node": "Dispatch Personalized Email (Gmail / SMTP)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dispatch Personalized Email (Gmail / SMTP)": {
+      "main": [
+        [
+          {
+            "node": "Log Outreach Telemetry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

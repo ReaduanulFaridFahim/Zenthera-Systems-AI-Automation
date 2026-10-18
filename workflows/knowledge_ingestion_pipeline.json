@@ -1,0 +1,143 @@
+{
+  "name": "Zenthra Systems — Supabase pgvector Knowledge Base Ingestion Pipeline",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1a2b3c4d-0001-4000-8000-000000000001",
+      "name": "Manual Ingestion Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ingest-knowledge",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "1a2b3c4d-0002-4000-8000-000000000002",
+      "name": "Webhook Ingestion Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 480],
+      "webhookId": "zenthra-ingest-knowledge"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Load pre-chunked knowledge base items for Zenthra Systems\nconst seedChunks = [\n  {\n    title: 'Service Overview: Autonomous AI Agents & LangChain Workflows',\n    category: 'services',\n    tags: ['ai_agents', 'langchain', 'rag', 'automation', 'llm'],\n    content: 'Zenthra Systems builds and deploys production-ready autonomous AI agents directly within n8n, LangChain, or custom microservices. Capabilities include multi-agent orchestration (supervisor/worker architectures), RAG using Supabase pgvector/Pinecone/Qdrant, inbound qualification & triage across Web, WhatsApp, Telegram, Email, and Slack, as well as document parsing and automated invoice validation. Supported models include Claude 3.5 Sonnet, OpenAI GPT-4o, and local Ollama models.'\n  },\n  {\n    title: 'Service Overview: Enterprise n8n Workflow Architecture',\n    category: 'services',\n    tags: ['n8n', 'workflows', 'docker', 'kubernetes', 'webhooks', 'crm_sync'],\n    content: 'Zenthra Systems provides production-grade n8n workflow deployment, migration, and maintenance. We architect self-hosted n8n infrastructure on Docker, Kubernetes, AWS ECS, or DigitalOcean with Redis queue scaling. Integrations feature secure webhook endpoints with HMAC authentication, rate-limiting, bidirectional CRM synchronization (HubSpot, Salesforce, Pipedrive, Airtable), and dead-letter queue (DLQ) retry systems that ping Slack or Telegram on failures.'\n  },\n  {\n    title: 'Service Overview: Data Analytics & ETL Pipelines',\n    category: 'services',\n    tags: ['data_engineering', 'etl', 'python', 'sql', 'bigquery', 'postgres', 'bi'],\n    content: 'Zenthra Systems engineers automated ELT and ETL data pipelines utilizing Python, SQL, PostgreSQL, BigQuery, and Snowflake. Capabilities include real-time event ingestion, automated deduplication, data cleansing, and weekly/monthly executive KPI digest generation delivered automatically to Slack or Email.'\n  },\n  {\n    title: 'Service Overview: Custom Full-Stack Web Applications & Portals',\n    category: 'services',\n    tags: ['web_dev', 'nextjs', 'react', 'fastapi', 'portal', 'ui'],\n    content: 'Zenthra Systems engineers bespoke client portals, SaaS MVPs, and internal management consoles. Tech stack: Next.js, React, TypeScript, Tailwind CSS with high-aesthetic dark-mode UI. Backend: Node.js, FastAPI, Python, PostgreSQL, Supabase, and Redis, integrated with n8n backend triggers for headless business logic execution.'\n  },\n  {\n    title: 'Flagship Case Study: Cyclistic Bike-Share Analytics Pipeline',\n    category: 'case_studies',\n    tags: ['cyclistic', 'bike_share', 'case_study', 'analytics', 'sql', 'python'],\n    content: 'For the Cyclistic urban micro-mobility analytics project, millions of granular trip records (durations, bike types, GPS start/end stations, member vs. casual status) were siloed in raw CSVs with data corruption. Zenthra Systems engineered an automated Python & SQL data-cleansing and feature-engineering pipeline that filtered duration anomalies and normalized coordinates. We identified that casual riders take trips 2.1x longer primarily on weekends for recreation, whereas annual members exhibit deterministic commuter patterns during weekday rush hours (08:00 and 17:00). We deployed interactive BI dashboards and automated alert triggers, cutting executive reporting lag from 7 days to near-instantaneous query turnaround.'\n  },\n  {\n    title: 'Flagship Case Study: High-Velocity Inbound Lead Triage',\n    category: 'case_studies',\n    tags: ['lead_triage', 'hubspot', 'slack', 'case_study', 'whatsapp'],\n    content: 'For a B2B lead generation agency experiencing a 45-minute delay that caused a 65% drop-off in lead conversions, Zenthra Systems deployed an event-driven n8n webhook listener connected directly to Facebook and Google Ads. An AI agent enriched company domains, qualified budget and intent via WhatsApp/Email within 30 seconds, logged the lead to HubSpot, and scheduled a discovery call. Lead response time dropped to under 45 seconds, resulting in a 320% increase in booked discovery calls within 60 days.'\n  },\n  {\n    title: 'Flagship Case Study: Automated Invoicing & Accounting Reconciliation',\n    category: 'case_studies',\n    tags: ['finance', 'invoicing', 'ocr', 'quickbooks', 'xero', 'slack_approval'],\n    content: 'Zenthra Systems deployed an n8n workflow that ingests vendor PDF invoices via LLM document vision, parses and reconciles line items against QuickBooks / Xero purchase orders, and flags discrepancies above $50 to Slack for one-tap human approval. Saved 22 hours per week in manual finance operations with zero accounting errors.'\n  },\n  {\n    title: 'Engagement Models, Turnarounds & Pricing Tiers',\n    category: 'pricing_and_slas',\n    tags: ['pricing', 'timeline', 'sprint', 'mvp', 'retainer', 'sla'],\n    content: 'Zenthra Systems offers three primary engagement tiers: 1) Automation Sprint (MVP): 2 to 3 weeks turnaround for an isolated bottleneck (e.g. Lead Ads to CRM sync, AI triage agent, invoice parser). 2) Full Pipeline & System Build: 4 to 6 weeks for end-to-end platforms, custom web portals, or multi-agent workflows. 3) Managed Automation Retainer: Monthly continuous workflow engineering, dead-letter queue monitoring, and a 99.9% uptime SLA.'\n  },\n  {\n    title: 'Security, Compliance & Hosting Flexibility',\n    category: 'security',\n    tags: ['security', 'gdpr', 'hipaa', 'vpc', 'encryption', 'hmac'],\n    content: 'Zenthra Systems enforces strict enterprise security: client data is never used to train public LLM models (zero-data-retention endpoints). All webhooks leverage cryptographic HMAC signature verification or Bearer token authorization. Workflows can be deployed inside client-owned VPCs (AWS, GCP, Azure, or private Hetzner/DigitalOcean VPS) for total GDPR and HIPAA alignment.'\n  },\n  {\n    title: 'Company Contact, Scheduling & Discovery Sessions',\n    category: 'contact',\n    tags: ['contact', 'email', 'calendar', 'cal_com', 'discovery'],\n    content: 'Official email inquiries: connect.zenthra@gmail.com with guaranteed 24 business hour turnaround. Direct scheduling for 30-minute Technical Discovery Sessions with our Principal Solutions Architect is handled autonomously through our Cal.com integration.'\n  }\n];\n\n// If payload received via webhook, use it; otherwise fallback to seedChunks\nconst inputData = ($json.body && Array.isArray($json.body.documents)) ? $json.body.documents : seedChunks;\n\nreturn inputData.map((doc, idx) => ({\n  json: {\n    pageContent: `Title: ${doc.title}\\nCategory: ${doc.category}\\n\\n${doc.content}`,\n    metadata: {\n      doc_id: `doc_${idx + 1}`,\n      title: doc.title,\n      category: doc.category,\n      tags: doc.tags ? doc.tags.join(',') : '',\n      source: 'zenthra_internal_kb'\n    }\n  }\n}));"
+      },
+      "id": "1a2b3c4d-0003-4000-8000-000000000003",
+      "name": "Prepare Knowledge Chunks",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [440, 390]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "tableName": "zenthra_knowledge",
+        "options": {
+          "tableName": "zenthra_knowledge"
+        }
+      },
+      "id": "1a2b3c4d-0004-4000-8000-000000000004",
+      "name": "Supabase Vector Store (Insert)",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [720, 390],
+      "credentials": {
+        "supabaseApi": {
+          "id": "supabase_zenthra",
+          "name": "Supabase Zenthra Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-small"
+      },
+      "id": "1a2b3c4d-0005-4000-8000-000000000005",
+      "name": "OpenAI Embeddings",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.1,
+      "position": [720, 580],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai_default",
+          "name": "OpenAI Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return {\n  json: {\n    status: 'SUCCESS',\n    message: 'Knowledge base documents successfully embedded and synchronized to Supabase pgvector table: zenthra_knowledge',\n    total_records: $items().length,\n    timestamp: new Date().toISOString()\n  }\n};"
+      },
+      "id": "1a2b3c4d-0006-4000-8000-000000000006",
+      "name": "Ingestion Confirmation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1000, 390]
+    }
+  ],
+  "connections": {
+    "Manual Ingestion Trigger": {
+      "main": [
+        [
+          {
+            "node": "Prepare Knowledge Chunks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Ingestion Trigger": {
+      "main": [
+        [
+          {
+            "node": "Prepare Knowledge Chunks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Knowledge Chunks": {
+      "main": [
+        [
+          {
+            "node": "Supabase Vector Store (Insert)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Embeddings": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store (Insert)",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store (Insert)": {
+      "main": [
+        [
+          {
+            "node": "Ingestion Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

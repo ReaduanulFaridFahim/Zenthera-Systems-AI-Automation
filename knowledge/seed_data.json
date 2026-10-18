@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Service Overview: Autonomous AI Agents & LangChain Workflows",
+    "category": "services",
+    "tags": ["ai_agents", "langchain", "rag", "automation", "llm"],
+    "content": "Zenthra Systems builds and deploys production-ready autonomous AI agents directly within n8n, LangChain, or custom microservices. Capabilities include multi-agent orchestration (supervisor/worker architectures), RAG using Supabase pgvector/Pinecone/Qdrant, inbound qualification & triage across Web, WhatsApp, Telegram, Email, and Slack, as well as document parsing and automated invoice validation. Supported models include Claude 3.5 Sonnet, OpenAI GPT-4o, and local Ollama models."
+  },
+  {
+    "title": "Service Overview: Enterprise n8n Workflow Architecture",
+    "category": "services",
+    "tags": ["n8n", "workflows", "docker", "kubernetes", "webhooks", "crm_sync"],
+    "content": "Zenthra Systems provides production-grade n8n workflow deployment, migration, and maintenance. We architect self-hosted n8n infrastructure on Docker, Kubernetes, AWS ECS, or DigitalOcean with Redis queue scaling. Integrations feature secure webhook endpoints with HMAC authentication, rate-limiting, bidirectional CRM synchronization (HubSpot, Salesforce, Pipedrive, Airtable), and dead-letter queue (DLQ) retry systems that ping Slack or Telegram on failures."
+  },
+  {
+    "title": "Service Overview: Data Analytics & ETL Pipelines",
+    "category": "services",
+    "tags": ["data_engineering", "etl", "python", "sql", "bigquery", "postgres", "bi"],
+    "content": "Zenthra Systems engineers automated ELT and ETL data pipelines utilizing Python, SQL, PostgreSQL, BigQuery, and Snowflake. Capabilities include real-time event ingestion, automated deduplication, data cleansing, and weekly/monthly executive KPI digest generation delivered automatically to Slack or Email."
+  },
+  {
+    "title": "Service Overview: Custom Full-Stack Web Applications & Portals",
+    "category": "services",
+    "tags": ["web_dev", "nextjs", "react", "fastapi", "portal", "ui"],
+    "content": "Zenthra Systems engineers bespoke client portals, SaaS MVPs, and internal management consoles. Tech stack: Next.js, React, TypeScript, Tailwind CSS with high-aesthetic dark-mode UI. Backend: Node.js, FastAPI, Python, PostgreSQL, Supabase, and Redis, integrated with n8n backend triggers for headless business logic execution."
+  },
+  {
+    "title": "Flagship Case Study: Cyclistic Bike-Share Analytics Pipeline",
+    "category": "case_studies",
+    "tags": ["cyclistic", "bike_share", "case_study", "analytics", "sql", "python"],
+    "content": "For the Cyclistic urban micro-mobility analytics project, millions of granular trip records (durations, bike types, GPS start/end stations, member vs. casual status) were siloed in raw CSVs with data corruption. Zenthra Systems engineered an automated Python & SQL data-cleansing and feature-engineering pipeline that filtered duration anomalies and normalized coordinates. We identified that casual riders take trips 2.1x longer primarily on weekends for recreation, whereas annual members exhibit deterministic commuter patterns during weekday rush hours (08:00 and 17:00). We deployed interactive BI dashboards and automated alert triggers, cutting executive reporting lag from 7 days to near-instantaneous query turnaround."
+  },
+  {
+    "title": "Flagship Case Study: High-Velocity Inbound Lead Triage",
+    "category": "case_studies",
+    "tags": ["lead_triage", "hubspot", "slack", "case_study", "whatsapp"],
+    "content": "For a B2B lead generation agency experiencing a 45-minute delay that caused a 65% drop-off in lead conversions, Zenthra Systems deployed an event-driven n8n webhook listener connected directly to Facebook and Google Ads. An AI agent enriched company domains, qualified budget and intent via WhatsApp/Email within 30 seconds, logged the lead to HubSpot, and scheduled a discovery call. Lead response time dropped to under 45 seconds, resulting in a 320% increase in booked discovery calls within 60 days."
+  },
+  {
+    "title": "Flagship Case Study: Automated Invoicing & Accounting Reconciliation",
+    "category": "case_studies",
+    "tags": ["finance", "invoicing", "ocr", "quickbooks", "xero", "slack_approval"],
+    "content": "Zenthra Systems deployed an n8n workflow that ingests vendor PDF invoices via LLM document vision, parses and reconciles line items against QuickBooks / Xero purchase orders, and flags discrepancies above $50 to Slack for one-tap human approval. Saved 22 hours per week in manual finance operations with zero accounting errors."
+  },
+  {
+    "title": "Engagement Models, Turnarounds & Pricing Tiers",
+    "category": "pricing_and_slas",
+    "tags": ["pricing", "timeline", "sprint", "mvp", "retainer", "sla"],
+    "content": "Zenthra Systems offers three primary engagement tiers: 1) Automation Sprint (MVP): 2 to 3 weeks turnaround for an isolated bottleneck (e.g. Lead Ads to CRM sync, AI triage agent, invoice parser). 2) Full Pipeline & System Build: 4 to 6 weeks for end-to-end platforms, custom web portals, or multi-agent workflows. 3) Managed Automation Retainer: Monthly continuous workflow engineering, dead-letter queue monitoring, and a 99.9% uptime SLA."
+  },
+  {
+    "title": "Security, Compliance & Hosting Flexibility",
+    "category": "security",
+    "tags": ["security", "gdpr", "hipaa", "vpc", "encryption", "hmac"],
+    "content": "Zenthra Systems enforces strict enterprise security: client data is never used to train public LLM models (zero-data-retention endpoints). All webhooks leverage cryptographic HMAC signature verification or Bearer token authorization. Workflows can be deployed inside client-owned VPCs (AWS, GCP, Azure, or private Hetzner/DigitalOcean VPS) for total GDPR and HIPAA alignment."
+  },
+  {
+    "title": "Company Contact, Scheduling & Discovery Sessions",
+    "category": "contact",
+    "tags": ["contact", "email", "calendar", "cal_com", "discovery"],
+    "content": "Official email inquiries: connect.zenthra@gmail.com with guaranteed 24 business hour turnaround. Direct scheduling for 30-minute Technical Discovery Sessions with our Principal Solutions Architect is handled autonomously through our Cal.com integration: https://cal.com/zenthra-systems-dyuqpi/30min"
+  }
+]

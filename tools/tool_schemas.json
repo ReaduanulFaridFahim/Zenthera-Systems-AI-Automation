@@ -1,0 +1,145 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ZenthraSystemsAgentToolDefinitions",
+  "description": "JSON Schemas and specifications for tools connected to the Zenthra Systems n8n AI Agent",
+  "tools": [
+    {
+      "name": "search_knowledge_base",
+      "description": "Searches Zenthra Systems verified documentation for capabilities, case studies (e.g. Cyclistic bike-share analytics), service offerings, SLAs, technical architectures, and company information.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The search query or keyword phrase (e.g., 'Cyclistic bike-share case study', 'n8n self hosting vs cloud', 'invoicing automation')"
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "save_qualified_lead",
+      "description": "Persists qualified lead details and an AI-generated discovery memo into Zenthra Systems' CRM/Database (Airtable, HubSpot, or PostgreSQL). Must be invoked before providing a calendar booking link.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "full_name": {
+            "type": "string",
+            "description": "Prospect's full name"
+          },
+          "work_email": {
+            "type": "string",
+            "description": "Prospect's business email address"
+          },
+          "company_name": {
+            "type": "string",
+            "description": "Name of the prospect's company or organization"
+          },
+          "core_process_to_automate": {
+            "type": "string",
+            "description": "Detailed description of the manual bottleneck or system to automate"
+          },
+          "current_tech_stack": {
+            "type": "string",
+            "description": "Current software tools, databases, or APIs involved (e.g., HubSpot, Shopify, PostgreSQL, Slack)"
+          },
+          "project_timeline": {
+            "type": "string",
+            "description": "Target launch timeline (e.g., 'Within 2 weeks', '1 month', 'Immediate')"
+          },
+          "estimated_budget_or_volume": {
+            "type": "string",
+            "description": "Estimated monthly lead/task volume or budget scope if mentioned"
+          },
+          "discovery_memo": {
+            "type": "string",
+            "description": "A concise 3-4 sentence technical briefing written for Zenthra's engineering team summarizing problem, proposed architecture, and key risks."
+          },
+          "qualification_status": {
+            "type": "string",
+            "enum": ["HIGH_INTENT", "QUALIFIED", "EXPLORATORY"],
+            "description": "Assessed intent level based on rubric"
+          }
+        },
+        "required": [
+          "full_name",
+          "work_email",
+          "company_name",
+          "core_process_to_automate",
+          "current_tech_stack",
+          "project_timeline",
+          "discovery_memo",
+          "qualification_status"
+        ]
+      }
+    },
+    {
+      "name": "get_booking_link",
+      "description": "Generates a prefilled 30-minute Technical Discovery Session calendar link for the prospective client.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "full_name": {
+            "type": "string",
+            "description": "Client's full name for pre-filling the booking form"
+          },
+          "work_email": {
+            "type": "string",
+            "description": "Client's email for calendar invite dispatch"
+          },
+          "company_name": {
+            "type": "string",
+            "description": "Client's company name"
+          },
+          "meeting_topic": {
+            "type": "string",
+            "description": "Short description of meeting scope (e.g., 'n8n Automation Discovery')"
+          }
+        },
+        "required": ["full_name", "work_email", "company_name"]
+      }
+    },
+    {
+      "name": "notify_internal_team",
+      "description": "Dispatches an instantaneous priority alert to Zenthra Systems' internal Slack/Discord/Telegram channel.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "alert_type": {
+            "type": "string",
+            "enum": ["NEW_QUALIFIED_LEAD", "URGENT_HUMAN_TAKEOVER", "MEETING_BOOKED"],
+            "description": "The category of notification"
+          },
+          "lead_name": {
+            "type": "string",
+            "description": "Name of the lead"
+          },
+          "company_name": {
+            "type": "string",
+            "description": "Company name"
+          },
+          "primary_need": {
+            "type": "string",
+            "description": "Core process to automate"
+          },
+          "timeline": {
+            "type": "string",
+            "description": "Target launch timeline"
+          },
+          "summary_message": {
+            "type": "string",
+            "description": "Formatted message payload for the notification channel"
+          }
+        },
+        "required": [
+          "alert_type",
+          "lead_name",
+          "company_name",
+          "primary_need",
+          "timeline",
+          "summary_message"
+        ]
+      }
+    }
+  ]
+}

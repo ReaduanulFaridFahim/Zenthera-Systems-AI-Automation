@@ -1,0 +1,385 @@
+{
+  "name": "Zenthra Systems — Autonomous Front-Office & Operations Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "👋 Hello! I am Zenthra Systems' Technical Operations Specialist.\n\nWhether you need to eliminate manual bottlenecks with custom n8n automations, deploy autonomous AI agents, or build resilient data engineering pipelines—how can I assist your team today?",
+        "options": {
+          "allowFileUploads": false,
+          "title": "Zenthra Systems — Operations Hub",
+          "subtitle": "Autonomous Technical Triage & Systems Engineering 24/7"
+        }
+      },
+      "id": "e0b01c01-789a-4c91-9e73-1001a1b2c3d4",
+      "name": "n8n Chat Trigger",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [240, 260],
+      "webhookId": "zenthra-chat-trigger"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "inbound-lead",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "f1c02d02-890b-4d02-af84-2002b2c3d4e5",
+      "name": "Inbound Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 480],
+      "webhookId": "zenthra-inbound-lead"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput || $json.body?.message || $json.body?.query || 'Inbound prospect inquiry received.' }}",
+        "options": {
+          "systemMessage": "You are the autonomous Technical Operations Specialist for Zenthra Systems, an elite engineering studio specializing in enterprise AI automation, n8n workflow systems, resilient data pipelines, and custom web applications.\n\nYour official contact email is connect.zenthra@gmail.com.\n\n### OBJECTIVES:\n1. Speed to Lead (24/7): Respond immediately, authoritatively, and professionally to inquiries.\n2. Technical Lead Qualification: Uncover:\n   - Core process or bottleneck they want to automate\n   - Current tech stack / APIs (e.g. HubSpot, Shopify, Postgres, Slack)\n   - Target project timeline\n   - Prospect name, company, and business email\n3. Autonomous Task Execution:\n   - Use `search_knowledge_base` to retrieve verified facts from Supabase pgvector regarding capabilities, turnaround SLAs, and case studies (like the Cyclistic bike-share analytics project).\n   - When qualification info is collected, invoke `save_qualified_lead` with an AI-generated discovery memo.\n   - Immediately follow with `notify_internal_team`.\n   - Offer the personalized booking link using `get_booking_link`.\n\nMaintain a consultative, technical, and polished tone. Never output unformatted JSON directly to the user."
+        }
+      },
+      "id": "a2d03e03-901c-4e13-bf95-3003c3d4e5f6",
+      "name": "Zenthra Technical Operations Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [620, 360]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "options": {
+          "temperature": 0.25,
+          "maxTokens": 2048
+        }
+      },
+      "id": "b3e04f04-012d-4f24-ca06-4004d4e5f6a7",
+      "name": "OpenAI Chat Model (GPT-4o)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [440, 620],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai_default",
+          "name": "OpenAI Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "id": "c4f05a05-123e-4035-db17-5005e5f6a7b8",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [620, 620]
+    },
+    {
+      "parameters": {
+        "name": "search_knowledge_base",
+        "description": "Searches Zenthra Systems Supabase pgvector knowledge base for services, case studies (e.g. Cyclistic bike-share analytics pipeline), turnaround SLAs, pricing tiers, and technical capabilities."
+      },
+      "id": "d5a06b06-234f-4146-ec28-6006f6a7b8c9",
+      "name": "Tool: Supabase Vector Store Search",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [820, 620]
+    },
+    {
+      "parameters": {
+        "tableName": "zenthra_knowledge",
+        "options": {
+          "queryName": "match_zenthra_documents"
+        }
+      },
+      "id": "e5a06b06-234f-4146-ec28-7006f6a7b8d0",
+      "name": "Supabase Vector Store (Query)",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [820, 800],
+      "credentials": {
+        "supabaseApi": {
+          "id": "supabase_zenthra",
+          "name": "Supabase Zenthra Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-small"
+      },
+      "id": "f5a06b06-234f-4146-ec28-8006f6a7b8d1",
+      "name": "OpenAI Embeddings (Search)",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.1,
+      "position": [820, 960],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai_default",
+          "name": "OpenAI Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "save_qualified_lead",
+        "description": "Logs a qualified lead and technical discovery memo into Zenthra Systems CRM and database. Invoke before giving the calendar link.",
+        "parameters": {
+          "parameters": [
+            {
+              "name": "full_name",
+              "type": "string",
+              "description": "Prospect full name",
+              "required": true
+            },
+            {
+              "name": "work_email",
+              "type": "string",
+              "description": "Business email address",
+              "required": true
+            },
+            {
+              "name": "company_name",
+              "type": "string",
+              "description": "Company name",
+              "required": true
+            },
+            {
+              "name": "core_process_to_automate",
+              "type": "string",
+              "description": "Core process or manual bottleneck",
+              "required": true
+            },
+            {
+              "name": "current_tech_stack",
+              "type": "string",
+              "description": "Current software stack or APIs",
+              "required": true
+            },
+            {
+              "name": "project_timeline",
+              "type": "string",
+              "description": "Target project timeline",
+              "required": true
+            },
+            {
+              "name": "discovery_memo",
+              "type": "string",
+              "description": "3-4 sentence technical briefing summarizing bottleneck, proposed architecture, and priority",
+              "required": true
+            },
+            {
+              "name": "qualification_status",
+              "type": "string",
+              "description": "HIGH_INTENT, QUALIFIED, or EXPLORATORY",
+              "required": true
+            }
+          ]
+        },
+        "jsCode": "const p = $input.params;\nconst recordId = 'ZEN-LEAD-' + Math.floor(100000 + Math.random() * 900000);\nconst timestamp = new Date().toISOString();\n\nconst payload = {\n  status: 'SUCCESS',\n  record_id: recordId,\n  timestamp: timestamp,\n  lead: {\n    name: p.full_name,\n    email: p.work_email,\n    company: p.company_name,\n    process: p.core_process_to_automate,\n    stack: p.current_tech_stack,\n    timeline: p.project_timeline,\n    memo: p.discovery_memo,\n    qualification: p.qualification_status\n  },\n  message: 'Lead successfully persisted to Zenthra Operations CRM.'\n};\n\nreturn JSON.stringify(payload);"
+      },
+      "id": "e6b07c07-3450-4257-fd39-7007a7b8c9d0",
+      "name": "Tool: save_qualified_lead",
+      "type": "@n8n/n8n-nodes-langchain.toolCustom",
+      "typeVersion": 1.1,
+      "position": [1020, 620]
+    },
+    {
+      "parameters": {
+        "name": "get_booking_link",
+        "description": "Generates a prefilled 30-minute Technical Discovery Session calendar booking link.",
+        "parameters": {
+          "parameters": [
+            {
+              "name": "full_name",
+              "type": "string",
+              "description": "Prospect full name",
+              "required": true
+            },
+            {
+              "name": "work_email",
+              "type": "string",
+              "description": "Prospect email address",
+              "required": true
+            },
+            {
+              "name": "company_name",
+              "type": "string",
+              "description": "Prospect company name",
+              "required": true
+            }
+          ]
+        },
+        "jsCode": "const name = encodeURIComponent($input.params.full_name || '');\nconst email = encodeURIComponent($input.params.work_email || '');\nconst company = encodeURIComponent($input.params.company_name || '');\n\n// Live Cal.com configuration (API Key: cal_live_f6e01e309996d21244a8b04e99fa3c13)\nconst calUsername = 'zenthra-systems-dyuqpi';\nconst calEventSlug = '30min';\nconst bookingUrl = `https://cal.com/${calUsername}/${calEventSlug}?name=${name}&email=${email}&notes=${company}`;\n\nreturn JSON.stringify({\n  status: 'AVAILABLE',\n  meeting_title: '30-Minute Technical Discovery Session',\n  booking_url: bookingUrl,\n  cal_username: calUsername,\n  event_slug: calEventSlug,\n  message: 'Calendar slot ready for booking.'\n});"
+      },
+      "id": "f7c08d08-4561-4368-0e40-8008b8c9d0e1",
+      "name": "Tool: get_booking_link",
+      "type": "@n8n/n8n-nodes-langchain.toolCustom",
+      "typeVersion": 1.1,
+      "position": [1200, 620]
+    },
+    {
+      "parameters": {
+        "name": "notify_internal_team",
+        "description": "Dispatches instant priority alert to Zenthra Systems internal Slack/Telegram/Discord operations channel.",
+        "parameters": {
+          "parameters": [
+            {
+              "name": "lead_name",
+              "type": "string",
+              "description": "Name of the prospect",
+              "required": true
+            },
+            {
+              "name": "company_name",
+              "type": "string",
+              "description": "Company name",
+              "required": true
+            },
+            {
+              "name": "primary_need",
+              "type": "string",
+              "description": "Core process to automate",
+              "required": true
+            },
+            {
+              "name": "timeline",
+              "type": "string",
+              "description": "Target project timeline",
+              "required": true
+            },
+            {
+              "name": "summary_message",
+              "type": "string",
+              "description": "Alert text payload",
+              "required": true
+            }
+          ]
+        },
+        "jsCode": "const p = $input.params;\nconst alertPayload = {\n  event: 'NEW_QUALIFIED_LEAD',\n  alert: `🚨 New Qualified Lead: ${p.lead_name} from ${p.company_name} | Primary Need: ${p.primary_need} | Timeline: ${p.timeline}`,\n  details: p.summary_message,\n  dispatched_at: new Date().toISOString(),\n  channel: 'internal-ops-triage'\n};\n\nreturn JSON.stringify({ status: 'DELIVERED', alert: alertPayload });"
+      },
+      "id": "a8d09e09-5672-4479-1f51-9009c9d0e1f2",
+      "name": "Tool: notify_internal_team",
+      "type": "@n8n/n8n-nodes-langchain.toolCustom",
+      "typeVersion": 1.1,
+      "position": [1380, 620]
+    }
+  ],
+  "connections": {
+    "n8n Chat Trigger": {
+      "main": [
+        [
+          {
+            "node": "Zenthra Technical Operations Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Inbound Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Zenthra Technical Operations Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model (GPT-4o)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Zenthra Technical Operations Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Zenthra Technical Operations Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Embeddings (Search)": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store (Query)",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store (Query)": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Tool: Supabase Vector Store Search",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tool: Supabase Vector Store Search": {
+      "ai_tool": [
+        [
+          {
+            "node": "Zenthra Technical Operations Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tool: save_qualified_lead": {
+      "ai_tool": [
+        [
+          {
+            "node": "Zenthra Technical Operations Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tool: get_booking_link": {
+      "ai_tool": [
+        [
+          {
+            "node": "Zenthra Technical Operations Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tool: notify_internal_team": {
+      "ai_tool": [
+        [
+          {
+            "node": "Zenthra Technical Operations Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

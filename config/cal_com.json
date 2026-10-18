@@ -1,0 +1,31 @@
+{
+  "provider": "cal.com",
+  "apiKey": "cal_live_f6e01e309996d21244a8b04e99fa3c13",
+  "apiVersion": "v2",
+  "user": {
+    "id": 3371732,
+    "uuid": "a5ec3582-723f-4246-888c-350e3d5e5e68",
+    "name": "Zenthra Systems",
+    "email": "connect.zenthra@gmail.com",
+    "username": "zenthra-systems-dyuqpi",
+    "timeZone": "Asia/Dhaka",
+    "defaultScheduleId": 2517779
+  },
+  "eventTypes": [
+    {
+      "id": 7533751,
+      "slug": "30min",
+      "title": "30 min meeting",
+      "length": 30,
+      "bookingUrl": "https://cal.com/zenthra-systems-dyuqpi/30min"
+    },
+    {
+      "id": 7533753,
+      "slug": "15min",
+      "title": "15 min meeting",
+      "length": 15,
+      "bookingUrl": "https://cal.com/zenthra-systems-dyuqpi/15min"
+    }
+  ],
+  "defaultBookingUrl": "https://cal.com/zenthra-systems-dyuqpi/30min"
+}
