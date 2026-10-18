@@ -2,7 +2,7 @@
 
 > 🌐 **Live Hosted Portal:** [https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/](https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/)  
 > 💬 **Live Chat Specialist:** [https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/embed/chat-widget.html](https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/embed/chat-widget.html)  
-> 🎬 **Interactive Practice Video:** [https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/practice_video.html](https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/practice_video.html)  
+> 🎓 **Interactive Website Training:** [https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/?train=true](https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/?train=true)  
 > 📦 **GitHub Repository:** [https://github.com/ReaduanulFaridFahim/Zenthera-Systems-AI-Automation](https://github.com/ReaduanulFaridFahim/Zenthera-Systems-AI-Automation)  
 > 📅 **Live Calendar Booking:** [https://cal.com/zenthra-systems-dyuqpi/30min](https://cal.com/zenthra-systems-dyuqpi/30min)
 

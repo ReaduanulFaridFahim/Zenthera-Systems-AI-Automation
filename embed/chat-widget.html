@@ -1883,6 +1883,16 @@
       loadHistory();
       logOps('[READY] Interface ready for enterprise client scoping.');
     });
+
+    // Listen for events from parent window (for guided training / simulations)
+    window.addEventListener('message', (event) => {
+      if (!event.data) return;
+      if (event.data.action === 'sendPrompt' && event.data.text) {
+        sendPrompt(event.data.text);
+      } else if (event.data.action === 'triggerDemo') {
+        sendPrompt("Can you give a technical breakdown of how Zenthra Systems handles enterprise n8n lead routing and Supabase pgvector RAG?");
+      }
+    });
   </script>
 </body>
 </html>

@@ -34,12 +34,17 @@
       --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
       --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.07), 0 4px 6px -4px rgba(15, 23, 42, 0.03);
       --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+      --shadow-modal: 0 25px 50px -12px rgba(15, 23, 42, 0.35);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -49,6 +54,7 @@
       line-height: 1.6;
       letter-spacing: -0.01em;
       -webkit-font-smoothing: antialiased;
+      position: relative;
     }
 
     /* Ambient Background Gradients */
@@ -71,10 +77,10 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-subtle);
-      padding: 1rem 2.5rem;
+      padding: 0.85rem 2.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -123,14 +129,14 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 2rem;
+      gap: 1.75rem;
       list-style: none;
     }
 
     .nav-links a {
       text-decoration: none;
       color: var(--text-secondary);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
       transition: color 0.18s;
     }
@@ -142,7 +148,7 @@
     .nav-cta {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.65rem;
     }
 
     .btn {
@@ -150,9 +156,9 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      padding: 0.6rem 1.15rem;
+      padding: 0.55rem 1.15rem;
       border-radius: 10px;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 700;
       text-decoration: none;
       cursor: pointer;
@@ -184,10 +190,23 @@
       color: var(--text-primary);
     }
 
+    .btn-tour {
+      background: #eff6ff;
+      border-color: #bae6fd;
+      color: #0284c7;
+      font-weight: 700;
+    }
+
+    .btn-tour:hover {
+      background: #e0f2fe;
+      color: #0369a1;
+      transform: translateY(-1px);
+    }
+
     /* Hero Section */
     .hero {
       max-width: 1200px;
-      margin: 3.5rem auto 2.5rem auto;
+      margin: 3rem auto 2rem auto;
       padding: 0 1.5rem;
       text-align: center;
     }
@@ -239,7 +258,7 @@
     .hero p.subtitle {
       font-size: 1.15rem;
       color: var(--text-secondary);
-      max-width: 720px;
+      max-width: 760px;
       margin: 0 auto 2.25rem auto;
       line-height: 1.6;
     }
@@ -248,7 +267,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 1rem;
+      flex-wrap: wrap;
+      gap: 0.85rem;
       margin-bottom: 2rem;
     }
 
@@ -257,7 +277,7 @@
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
-      gap: 1.5rem;
+      gap: 1.25rem;
       margin-bottom: 3.5rem;
       font-size: 0.8rem;
       color: var(--text-tertiary);
@@ -291,12 +311,14 @@
     }
 
     .preview-header {
-      padding: 1rem 1.5rem;
+      padding: 0.95rem 1.5rem;
       background: #f8fafc;
       border-bottom: 1px solid var(--border-subtle);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
     }
 
     .preview-title {
@@ -306,6 +328,12 @@
       font-size: 0.88rem;
       font-weight: 700;
       color: var(--text-primary);
+    }
+
+    .preview-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .preview-frame {
@@ -528,10 +556,576 @@
       font-size: 0.78rem;
     }
 
+    /* ========================================================================= */
+    /* INTERACTIVE WEBSITE TRAINING SYSTEM, HUD & SPOTLIGHT                      */
+    /* ========================================================================= */
+    /* Top Site Training Announcement Banner */
+    .site-training-banner {
+      background: #ffffff;
+      border-bottom: 1px solid #bae6fd;
+      padding: 0.65rem 2rem;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      box-shadow: 0 1px 4px rgba(2, 132, 199, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .banner-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .banner-tag {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 600;
+    }
+
+    .banner-beacon {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #0284c7;
+      box-shadow: 0 0 8px #0284c7;
+      animation: pulse 1.8s infinite;
+    }
+
+    .banner-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .btn-banner-action {
+      background: var(--accent-gradient);
+      color: #ffffff;
+      border: none;
+      padding: 0.4rem 0.95rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
+    }
+
+    .btn-banner-action:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(2, 132, 199, 0.35);
+    }
+
+    .btn-banner-academy {
+      background: #eff6ff;
+      border: 1px solid #bae6fd;
+      color: #0369a1;
+      padding: 0.4rem 0.95rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+
+    .btn-banner-academy:hover {
+      background: #e0f2fe;
+    }
+
+    .banner-close-btn {
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+      color: var(--text-tertiary);
+      padding: 0 0.35rem;
+      line-height: 1;
+    }
+
+    /* Floating Training Controller HUD */
+    .training-hud {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1040;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      border: 1px solid #bae6fd;
+      box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.22), 0 0 0 1px rgba(2, 132, 199, 0.12);
+      border-radius: 9999px;
+      padding: 0.55rem 0.95rem;
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      max-width: 95vw;
+      animation: hudSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes hudSlideUp {
+      from { opacity: 0; transform: translate(-50%, 20px) scale(0.96); }
+      to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+    }
+
+    .training-hud.active {
+      display: flex;
+    }
+
+    .hud-status {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding-left: 0.4rem;
+      padding-right: 0.65rem;
+      border-right: 1px solid #e2e8f0;
+      font-size: 0.78rem;
+      font-weight: 750;
+      color: #0369a1;
+      white-space: nowrap;
+    }
+
+    .hud-step-pills {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .hud-pill {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .hud-pill:hover {
+      border-color: #0284c7;
+      color: #0284c7;
+    }
+
+    .hud-pill.active {
+      background: var(--accent-gradient);
+      border-color: #0284c7;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);
+    }
+
+    .hud-btn {
+      padding: 0.42rem 0.8rem;
+      border-radius: 9999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.18s;
+      white-space: nowrap;
+    }
+
+    .hud-btn:hover {
+      background: #f1f5f9;
+      color: var(--text-primary);
+    }
+
+    .hud-btn-action {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0284c7;
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.28);
+    }
+
+    .hud-btn-action:hover {
+      background: #0369a1;
+      color: #ffffff;
+    }
+
+    .hud-btn-toggle.active {
+      background: #ecfdf5;
+      color: #065f46;
+      border-color: #a7f3d0;
+    }
+
+    /* Tour Backdrop & Card */
+    .tour-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: auto;
+    }
+
+    .tour-backdrop.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .tour-spotlight-highlight {
+      position: relative;
+      z-index: 1010 !important;
+      box-shadow: 0 0 0 4px #0284c7, 0 14px 40px rgba(2, 132, 199, 0.38) !important;
+      border-radius: 16px;
+      background: #ffffff !important;
+      transition: all 0.3s ease;
+    }
+
+    .tour-card {
+      position: fixed;
+      z-index: 1025;
+      background: #ffffff;
+      border: 1px solid #bae6fd;
+      border-radius: 18px;
+      padding: 1.5rem;
+      max-width: 480px;
+      width: 90vw;
+      box-shadow: var(--shadow-modal);
+      display: none;
+      animation: tourCardPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes tourCardPop {
+      from { opacity: 0; transform: translateY(12px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .tour-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .tour-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+    }
+
+    .tour-close-btn {
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+      color: var(--text-tertiary);
+      padding: 0 0.25rem;
+    }
+
+    .tour-card h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      line-height: 1.25;
+    }
+
+    .tour-card p.desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 0.85rem;
+    }
+
+    .tour-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.55rem;
+      margin-bottom: 1rem;
+    }
+
+    .tour-detail-box {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.8rem;
+      line-height: 1.45;
+    }
+
+    .tour-detail-box.pitch {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: #1e40af;
+    }
+
+    .tour-detail-box.tip {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+      color: #166534;
+    }
+
+    .tour-action-row {
+      margin-bottom: 1.15rem;
+    }
+
+    .tour-live-action-btn {
+      width: 100%;
+      background: #f0fdf4;
+      border: 1px dashed #22c55e;
+      color: #15803d;
+      font-weight: 750;
+      font-size: 0.82rem;
+      padding: 0.65rem 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .tour-live-action-btn:hover {
+      background: #dcfce7;
+      border-style: solid;
+      transform: translateY(-1px);
+    }
+
+    .tour-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 0.85rem;
+    }
+
+    .tour-steps-count {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .tour-btn-group {
+      display: flex;
+      gap: 0.45rem;
+    }
+
+    /* Cal.com Interactive Booking Modal */
+    .cal-modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(8px);
+      z-index: 1060;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .cal-modal-backdrop.active {
+      display: flex;
+      animation: fadeInModal 0.25s ease-out;
+    }
+
+    .cal-modal-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 960px;
+      height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-modal);
+      overflow: hidden;
+    }
+
+    .cal-modal-header {
+      padding: 1rem 1.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+    }
+
+    .cal-modal-title {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.95rem;
+      font-weight: 750;
+      color: var(--text-primary);
+    }
+
+    .cal-modal-body {
+      flex: 1;
+      width: 100%;
+      background: #ffffff;
+    }
+
+    .cal-embed-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ========================================================================= */
+    /* FULL TRAINING ACADEMY MODAL                                               */
+    /* ========================================================================= */
+    .academy-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(6px);
+      z-index: 1050;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .academy-backdrop.active {
+      display: flex;
+      animation: fadeInModal 0.2s ease-out;
+    }
+
+    .academy-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      max-width: 860px;
+      width: 100%;
+      max-height: 85vh;
+      box-shadow: var(--shadow-modal);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .academy-header {
+      padding: 1.25rem 1.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+    }
+
+    .academy-header h2 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .academy-nav {
+      display: flex;
+      border-bottom: 1px solid var(--border-subtle);
+      background: #ffffff;
+      padding: 0 1.25rem;
+      overflow-x: auto;
+    }
+
+    .academy-tab {
+      padding: 0.85rem 1.15rem;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-tertiary);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .academy-tab.active {
+      color: var(--accent-primary);
+      border-bottom-color: var(--accent-primary);
+    }
+
+    .academy-body {
+      padding: 1.75rem;
+      overflow-y: auto;
+      flex: 1;
+      line-height: 1.65;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .academy-body h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+    }
+
+    .academy-body h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 1.1rem 0 0.35rem 0;
+    }
+
+    .academy-box {
+      background: #f8fafc;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin: 0.85rem 0;
+    }
+
+    .academy-code {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      background: #0f172a;
+      color: #38bdf8;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      margin: 0.65rem 0;
+      overflow-x: auto;
+    }
+
     /* Responsive */
     @media (max-width: 860px) {
       nav {
-        padding: 1rem 1.25rem;
+        padding: 0.75rem 1.25rem;
       }
       .nav-links {
         display: none;
@@ -547,6 +1141,10 @@
       .preview-frame {
         height: 520px;
       }
+      .tour-card {
+        max-width: 95vw;
+        padding: 1.15rem;
+      }
     }
   </style>
 </head>
@@ -554,8 +1152,27 @@
 
   <div class="ambient-bg"></div>
 
+  <!-- Top Site Training Announcement Banner -->
+  <div class="site-training-banner" id="siteTrainingBanner">
+    <div class="banner-inner">
+      <div class="banner-tag">
+        <span class="banner-beacon"></span>
+        <span><strong>Live Website Training Mode:</strong> Learn how every tool works &amp; how to close global enterprise deals.</span>
+      </div>
+      <div class="banner-controls">
+        <button class="btn-banner-action" onclick="startWebsiteTour(true)">
+          <span>▶ Start Guided Walkthrough</span>
+        </button>
+        <button class="btn-banner-academy" onclick="openAcademyModal()">
+          <span>📖 Full Sales Academy &amp; Scripts</span>
+        </button>
+        <button class="banner-close-btn" onclick="dismissTrainingBanner()" title="Dismiss">&times;</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Corporate Nav -->
-  <nav>
+  <nav id="main-nav">
     <a href="#" class="brand">
       <div class="brand-icon">
         <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
@@ -569,26 +1186,34 @@
     <ul class="nav-links">
       <li><a href="#solutions">Solutions</a></li>
       <li><a href="#calculator">ROI Estimator</a></li>
-      <li><a href="#case-studies">Case Studies</a></li>
       <li><a href="#chat-assistant">Live AI Agent</a></li>
-      <li><a href="practice_video.html" style="color: #0284c7; font-weight: 700;">🎬 Practice Video</a></li>
+      <li>
+        <button class="btn btn-tour" onclick="startWebsiteTour()" style="padding: 0.38rem 0.85rem; font-size: 0.82rem;">
+          <span>🚀 Interactive Training</span>
+        </button>
+      </li>
+      <li>
+        <button class="btn btn-secondary" onclick="openAcademyModal()" style="padding: 0.38rem 0.85rem; font-size: 0.82rem;">
+          <span>🎓 Sales Academy</span>
+        </button>
+      </li>
     </ul>
 
     <div class="nav-cta">
-      <a href="embed/chat-widget.html" class="btn btn-secondary" target="_blank">
-        <span>↗ Fullscreen Agent</span>
-      </a>
-      <a href="https://cal.com/zenthra-systems-dyuqpi/30min" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+      <button onclick="openCalModal()" class="btn btn-secondary">
+        <span>📅 Test Cal.com</span>
+      </button>
+      <a href="https://cal.com/zenthra-systems-dyuqpi/30min" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="nav-book-btn">
         <span>Book Discovery Call</span>
       </a>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <header class="hero">
-    <div class="status-pill">
+  <header class="hero" id="hero-section">
+    <div class="status-pill" id="header-status-pill">
       <div class="status-dot"></div>
-      <span>Enterprise SLA Active · Production Cluster Online</span>
+      <span id="header-status-text">Enterprise SLA Active · Production Cluster Online (99.98%)</span>
     </div>
 
     <h1>
@@ -601,15 +1226,17 @@
     </p>
 
     <div class="hero-actions">
-      <a href="#chat-assistant" class="btn btn-primary" style="padding: 0.8rem 1.6rem; font-size: 0.95rem;">
-        <span>⚡ Talk to Our Operations Specialist</span>
-      </a>
-      <a href="practice_video.html" class="btn btn-secondary" style="padding: 0.8rem 1.6rem; font-size: 0.95rem; border-color: #0284c7; color: #0284c7;">
-        <span>🎬 Watch Full Practice Video</span>
-      </a>
-      <a href="embed/chat-widget.html" target="_blank" class="btn btn-secondary" style="padding: 0.8rem 1.6rem; font-size: 0.95rem;">
-        <span>Quick Scope ↗</span>
-      </a>
+      <button class="btn btn-primary" onclick="startWebsiteTour(true)" style="padding: 0.8rem 1.6rem; font-size: 0.95rem;">
+        <span>🚀 Start Interactive Guided Training</span>
+      </button>
+
+      <button class="btn btn-secondary" onclick="openAcademyModal()" style="padding: 0.8rem 1.6rem; font-size: 0.95rem; border-color: #0284c7; color: #0284c7;">
+        <span>🎓 Full Operational Academy</span>
+      </button>
+
+      <button onclick="openCalModal()" class="btn btn-secondary" style="padding: 0.8rem 1.6rem; font-size: 0.95rem;">
+        <span>📅 Schedule 30-Min Call ↗</span>
+      </button>
     </div>
 
     <div class="global-trust-bar">
@@ -622,17 +1249,72 @@
 
   <!-- Live AI Assistant Showcase Frame -->
   <section class="chat-preview-section" id="chat-assistant">
-    <div class="preview-card">
+    <div class="preview-card" id="chat-preview-card">
       <div class="preview-header">
         <div class="preview-title">
           <span>🤖</span>
           <span>Zenthra Autonomous Operations Console — Live Interactive Concierge</span>
         </div>
-        <a href="embed/chat-widget.html" target="_blank" class="btn btn-secondary" style="padding: 0.35rem 0.75rem; font-size: 0.76rem;">
-          Open in New Tab ↗
+        <div class="preview-actions">
+          <button class="btn btn-tour" onclick="simulateClientDemo()" style="padding: 0.35rem 0.75rem; font-size: 0.76rem;">
+            <span>⚡ Run Live Qualification Simulation</span>
+          </button>
+          <a href="embed/chat-widget.html" target="_blank" class="btn btn-secondary" style="padding: 0.35rem 0.75rem; font-size: 0.76rem;">
+            Open Fullscreen ↗
+          </a>
+        </div>
+      </div>
+      <iframe src="embed/chat-widget.html" id="chatIframe" class="preview-frame" title="Zenthra Systems Autonomous Agent"></iframe>
+    </div>
+  </section>
+
+  <!-- ROI / Savings Calculator -->
+  <section class="section-container" id="calculator">
+    <div class="section-header">
+      <span class="section-tag">Quantifiable Impact</span>
+      <h2>Calculate Your Automation ROI</h2>
+    </div>
+
+    <div class="calculator-card" id="calculator-card-el">
+      <div class="calc-controls">
+        <div class="slider-group">
+          <label>
+            <span>Team Members Spending Time on Manual Ops:</span>
+            <span class="val" id="teamSizeVal">5 People</span>
+          </label>
+          <input type="range" id="teamSize" min="1" max="50" value="5" oninput="updateCalculator()">
+        </div>
+
+        <div class="slider-group">
+          <label>
+            <span>Hours Spent per Person / Week (Data entry, routing, emails):</span>
+            <span class="val" id="hoursVal">12 Hours</span>
+          </label>
+          <input type="range" id="hoursSpent" min="2" max="30" value="12" oninput="updateCalculator()">
+        </div>
+
+        <div class="slider-group">
+          <label>
+            <span>Average Fully-Loaded Hourly Cost ($/hr):</span>
+            <span class="val" id="rateVal">$45 / hr</span>
+          </label>
+          <input type="range" id="hourlyRate" min="25" max="150" value="45" oninput="updateCalculator()">
+        </div>
+      </div>
+
+      <div class="calc-results">
+        <div class="metric-box">
+          <h4>Annual Hours Reclaimed</h4>
+          <div class="number" id="annualHours">2,808 hrs</div>
+        </div>
+        <div class="metric-box">
+          <h4>Estimated Annual Cost Savings</h4>
+          <div class="number" id="annualSavings" style="color: #4ade80;">$126,360</div>
+        </div>
+        <a href="https://cal.com/zenthra-systems-dyuqpi/30min" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="margin-top: 0.5rem;">
+          Schedule an ROI Strategy Call
         </a>
       </div>
-      <iframe src="embed/chat-widget.html" class="preview-frame" title="Zenthra Systems Autonomous Agent"></iframe>
     </div>
   </section>
 
@@ -643,7 +1325,7 @@
       <h2>Built for Mission-Critical Production</h2>
     </div>
 
-    <div class="cards-grid">
+    <div class="cards-grid" id="capabilities-grid">
       <div class="feature-card">
         <div class="card-icon-wrap">⚡</div>
         <h3>n8n Workflow Engineering</h3>
@@ -690,56 +1372,6 @@
     </div>
   </section>
 
-  <!-- ROI / Savings Calculator -->
-  <section class="section-container" id="calculator">
-    <div class="section-header">
-      <span class="section-tag">Quantifiable Impact</span>
-      <h2>Calculate Your Automation ROI</h2>
-    </div>
-
-    <div class="calculator-card">
-      <div class="calc-controls">
-        <div class="slider-group">
-          <label>
-            <span>Team Members Spending Time on Manual Ops:</span>
-            <span class="val" id="teamSizeVal">5 People</span>
-          </label>
-          <input type="range" id="teamSize" min="1" max="50" value="5" oninput="updateCalculator()">
-        </div>
-
-        <div class="slider-group">
-          <label>
-            <span>Hours Spent per Person / Week (Data entry, routing, emails):</span>
-            <span class="val" id="hoursVal">12 Hours</span>
-          </label>
-          <input type="range" id="hoursSpent" min="2" max="30" value="12" oninput="updateCalculator()">
-        </div>
-
-        <div class="slider-group">
-          <label>
-            <span>Average Fully-Loaded Hourly Cost ($/hr):</span>
-            <span class="val" id="rateVal">$45 / hr</span>
-          </label>
-          <input type="range" id="hourlyRate" min="25" max="150" value="45" oninput="updateCalculator()">
-        </div>
-      </div>
-
-      <div class="calc-results">
-        <div class="metric-box">
-          <h4>Annual Hours Reclaimed</h4>
-          <div class="number" id="annualHours">2,808 hrs</div>
-        </div>
-        <div class="metric-box">
-          <h4>Estimated Annual Cost Savings</h4>
-          <div class="number" id="annualSavings" style="color: #4ade80;">$126,360</div>
-        </div>
-        <a href="https://cal.com/zenthra-systems-dyuqpi/30min" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="margin-top: 0.5rem;">
-          Schedule an ROI Strategy Call
-        </a>
-      </div>
-    </div>
-  </section>
-
   <!-- Footer -->
   <footer>
     <div class="footer-content">
@@ -764,7 +1396,119 @@
     </div>
   </footer>
 
+  <!-- ======================================================================= -->
+  <!-- FLOATING TRAINING CONTROLLER HUD                                        -->
+  <!-- ======================================================================= -->
+  <div class="training-hud" id="trainingHUD">
+    <div class="hud-status">
+      <span class="banner-beacon"></span>
+      <span id="hudStatusText">Guided Training</span>
+    </div>
+    <div class="hud-step-pills" id="hudStepPills">
+      <button class="hud-pill active" onclick="jumpToTourStep(0)" title="Step 1: Production SLA Beacon">1</button>
+      <button class="hud-pill" onclick="jumpToTourStep(1)" title="Step 2: ROI Calculator">2</button>
+      <button class="hud-pill" onclick="jumpToTourStep(2)" title="Step 3: AI Specialist & RAG">3</button>
+      <button class="hud-pill" onclick="jumpToTourStep(3)" title="Step 4: Enterprise Deliverables">4</button>
+      <button class="hud-pill" onclick="jumpToTourStep(4)" title="Step 5: Cal.com Booking Flow">5</button>
+      <button class="hud-pill" onclick="jumpToTourStep(5)" title="Step 6: Sales & Outbound Academy">6</button>
+    </div>
+    <button class="hud-btn" id="hudPrevBtn" onclick="prevTourStep()">← Back</button>
+    <button class="hud-btn" id="hudNextBtn" onclick="nextTourStep()">Next →</button>
+    <button class="hud-btn hud-btn-action" id="hudActionBtn" onclick="triggerCurrentDemoAction()">⚡ Demo</button>
+    <button class="hud-btn hud-btn-toggle" id="hudAutoPlayBtn" onclick="toggleAutoPlay()">▶ Auto-Play</button>
+    <button class="hud-btn hud-btn-toggle" id="hudVoiceBtn" onclick="toggleVoiceNarration()">🔊 Voice: Off</button>
+    <button class="banner-close-btn" onclick="stopWebsiteTour()" title="Exit Training">&times;</button>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- SPOTLIGHT TOUR BACKDROP & CARD                                          -->
+  <!-- ======================================================================= -->
+  <div class="tour-backdrop" id="tourBackdrop" onclick="handleTourBackdropClick(event)"></div>
+
+  <div class="tour-card" id="tourCard">
+    <div class="tour-card-header">
+      <span class="tour-badge" id="tourBadge">Step 1 of 6 · System Overview</span>
+      <button class="tour-close-btn" onclick="stopWebsiteTour()">&times;</button>
+    </div>
+    <h3 id="tourTitle">Welcome to Zenthra Systems</h3>
+    <p class="desc" id="tourDesc">Description text goes here.</p>
+
+    <div class="tour-detail-grid">
+      <div class="tour-detail-box pitch" id="tourPitchBox">
+        <strong>🎯 Sales Discovery Framework:</strong> <span id="tourPitch">Pitch notes</span>
+      </div>
+      <div class="tour-detail-box tip" id="tourTipBox">
+        <strong>💡 Pro-Tip for Closing Clients:</strong> <span id="tourTip">Tip notes</span>
+      </div>
+    </div>
+
+    <div class="tour-action-row">
+      <button class="tour-live-action-btn" id="tourActionBtn" onclick="triggerCurrentDemoAction()">
+        <span id="tourActionIcon">⚡</span>
+        <span id="tourActionText">Run Live Demo Simulation</span>
+      </button>
+    </div>
+
+    <div class="tour-footer">
+      <span class="tour-steps-count" id="tourCount">1 / 6</span>
+      <div class="tour-btn-group">
+        <button class="btn btn-secondary" id="tourPrevBtn" onclick="prevTourStep()" style="padding: 0.35rem 0.75rem; font-size: 0.78rem;">← Back</button>
+        <button class="btn btn-primary" id="tourNextBtn" onclick="nextTourStep()" style="padding: 0.35rem 0.85rem; font-size: 0.78rem;">Next Step →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- CAL.COM INTERACTIVE BOOKING MODAL                                       -->
+  <!-- ======================================================================= -->
+  <div class="cal-modal-backdrop" id="calModal" onclick="handleCalModalBackdropClick(event)">
+    <div class="cal-modal-card">
+      <div class="cal-modal-header">
+        <div class="cal-modal-title">
+          <span>📅</span>
+          <span>Zenthra Systems — 30-Minute Architecture Discovery (Cal.com Live)</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.65rem;">
+          <a href="https://cal.com/zenthra-systems-dyuqpi/30min" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="padding: 0.35rem 0.75rem; font-size: 0.78rem;">
+            Open in New Window ↗
+          </a>
+          <button class="tour-close-btn" onclick="closeCalModal()">&times;</button>
+        </div>
+      </div>
+      <div class="cal-modal-body">
+        <iframe src="https://cal.com/zenthra-systems-dyuqpi/30min" class="cal-embed-frame" title="Cal.com Booking Flow"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- FULL TRAINING ACADEMY MODAL                                             -->
+  <!-- ======================================================================= -->
+  <div class="academy-backdrop" id="academyModal" onclick="handleAcademyBackdropClick(event)">
+    <div class="academy-card">
+      <div class="academy-header">
+        <h2><span>🎓</span> Zenthra Systems — Operational Academy &amp; Closing Playbook</h2>
+        <button class="tour-close-btn" onclick="closeAcademyModal()">&times;</button>
+      </div>
+
+      <div class="academy-nav">
+        <button class="academy-tab active" onclick="switchAcademyTab('overview')">1. Architecture &amp; System Flow</button>
+        <button class="academy-tab" onclick="switchAcademyTab('sales')">2. Live Discovery Calls (3-Step Close)</button>
+        <button class="academy-tab" onclick="switchAcademyTab('rag')">3. AI Agent &amp; Supabase RAG</button>
+        <button class="academy-tab" onclick="switchAcademyTab('outbound')">4. Outbound Lead Generation</button>
+        <button class="academy-tab" onclick="switchAcademyTab('pricing')">5. Sprints, Retainers &amp; Invoicing</button>
+      </div>
+
+      <div class="academy-body" id="academyBody">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
   <script>
+    // =========================================================================
+    // ROI & SAVINGS CALCULATOR LOGIC
+    // =========================================================================
     function updateCalculator() {
       const team = parseInt(document.getElementById('teamSize').value, 10);
       const hours = parseInt(document.getElementById('hoursSpent').value, 10);
@@ -774,7 +1518,6 @@
       document.getElementById('hoursVal').textContent = `${hours} Hours`;
       document.getElementById('rateVal').textContent = `$${rate} / hr`;
 
-      // Assuming 90% automation efficiency across 52 weeks
       const weeklyHoursSaved = team * hours * 0.90;
       const annualHoursSaved = Math.round(weeklyHoursSaved * 52);
       const annualDollarsSaved = Math.round(annualHoursSaved * rate);
@@ -783,8 +1526,492 @@
       document.getElementById('annualSavings').textContent = '$' + annualDollarsSaved.toLocaleString();
     }
 
+    // =========================================================================
+    // FULL INTERACTIVE TRAINING MASTERCLASS CONTROLLER
+    // =========================================================================
+    const TOUR_STEPS = [
+      {
+        targetId: 'header-status-pill',
+        badge: 'Module 1 of 6 · System Trust & SLA',
+        title: 'The 24/7 Operations Hub & Trust Architecture',
+        desc: 'This website is your global client acquisition headquarters. The glowing status beacon signals active cloud cluster health, sub-second latency, and enterprise SLA reliability to prospective clients worldwide.',
+        pitch: 'When presenting to decision-makers, direct their attention to this beacon to reassure them of 99.9% uptime, data privacy, and immediate automated execution.',
+        tip: 'Enterprise buyers require trust before tech. Highlighting 24/7 uptime and zero-data retention eliminates security objections instantly.',
+        actionIcon: '⚡',
+        actionText: 'Simulate Cluster Ping & SLA Health',
+        actionType: 'pingCluster',
+        speech: 'Step one: Welcome to Zenthra Systems. This website functions as your global operations hub, featuring real-time cluster monitoring that establishes trust with international enterprise buyers.'
+      },
+      {
+        targetId: 'calculator-card-el',
+        badge: 'Module 2 of 6 · Value Demonstration',
+        title: 'Interactive Automation ROI & Savings Calculator',
+        desc: 'Allows enterprise prospects to drag team size, repetitive hours, and labor costs to instantly calculate their annual financial leakage and automated savings.',
+        pitch: 'During discovery calls, share your screen and adjust these sliders live with the prospect. When they see $120,000+ in annual leakage, your $4,500 sprint fee becomes an obvious 10x ROI.',
+        tip: 'Never quote price before value. Always anchor your fee against the six-figure savings calculated right here.',
+        actionIcon: '📈',
+        actionText: 'Animate Live $379,000+ ROI Calculation',
+        actionType: 'animateCalculator',
+        speech: 'Step two: The interactive ROI Calculator. On discovery calls, manipulate these sliders live to prove six-figure annual savings, eliminating price resistance.'
+      },
+      {
+        targetId: 'chat-preview-card',
+        badge: 'Module 3 of 6 · Inbound Concierge',
+        title: 'Live AI Operations Specialist & Vector RAG',
+        desc: 'Prospects can converse with our AI Specialist or click Quick Scope to qualify their stack in 30 seconds. The agent queries 12 indexed Supabase pgvector records with strict cosine similarity cutoffs.',
+        pitch: 'Demonstrate how the AI autonomously handles lead qualification, verifies technical compatibility, and logs complete discovery memos directly to your CRM.',
+        tip: 'Show prospective clients that our AI never hallucinates because every answer is strictly grounded in our Supabase vector embeddings.',
+        actionIcon: '🤖',
+        actionText: 'Dispatch Live Scoping Query to AI Agent',
+        actionType: 'promptAI',
+        speech: 'Step three: The Live AI Specialist. Powered by Supabase pgvector, it answers complex architectural queries and logs qualified leads into your CRM 24 hours a day.'
+      },
+      {
+        targetId: 'capabilities-grid',
+        badge: 'Module 4 of 6 · Turnkey Deliverables',
+        title: 'Four High-Yield Production Deliverables',
+        desc: 'Zenthra Systems sells 4 core turnkey solutions: Sub-30s Lead Routing, Supabase pgvector RAG Knowledge Hubs, Autonomous Invoice AI, and Cyclistic BI Pipelines.',
+        pitch: 'Deliver these as fixed 2-week Automation Sprints ($3,500 to $6,500 USD) with 100% IP transfer, then transition clients to monthly retainers ($1,500 to $2,500/mo).',
+        tip: 'Avoid selling open-ended consulting hours. Package clear, outcome-focused deliverables with a 30-day warranty to close contracts faster.',
+        actionIcon: '✨',
+        actionText: 'Highlight Sprints & Price Points',
+        actionType: 'highlightServices',
+        speech: 'Step four: High-Yield Deliverables. Package your services as fixed-price two-week sprints, followed by continuous monthly retainers.'
+      },
+      {
+        targetId: 'nav-book-btn',
+        badge: 'Module 5 of 6 · Autonomous Booking',
+        title: 'One-Click Cal.com Meeting Scheduling Flow',
+        desc: 'Eliminates friction and back-and-forth email scheduling. Prospects select a 30-minute discovery slot, generating Google Meet invitations and syncing with your calendar.',
+        pitch: 'All outbound marketing campaigns and website calls-to-action route directly to https://cal.com/zenthra-systems-dyuqpi/30min.',
+        tip: 'When a meeting is scheduled via Cal.com, the prospect is 300% more likely to show up compared to manual email links.',
+        actionIcon: '📅',
+        actionText: 'Test Live Cal.com Booking Experience',
+        actionType: 'openCalModal',
+        speech: 'Step five: Frictionless Scheduling. Integrated Cal.com booking allows international clients to secure discovery calls directly on your calendar.'
+      },
+      {
+        targetId: 'hero-section',
+        badge: 'Module 6 of 6 · Closing Playbook',
+        title: 'Outbound Client Engine & Discovery Scripts',
+        desc: 'How Zenthra Systems acquires clients across USA, UK, Europe, Australia, and UAE using daily automated Apollo scraping, GPT-4o personalization, and multi-currency invoicing.',
+        pitch: 'Use our 3-step closing framework on the 30-minute call to close 50% deposit upfront via Stripe or Wise before writing a single line of code.',
+        tip: 'Always secure a 50% upfront deposit before commencing any two-week sprint.',
+        actionIcon: '🎓',
+        actionText: 'Open Full Sales Academy & Discovery Script',
+        actionType: 'openAcademyModal',
+        speech: 'Step six: Global Outbound and Closing. Launch the automated Apollo pipeline to generate clients worldwide, and use our three-step closing script to lock in deals.'
+      }
+    ];
+
+    let currentTourStep = 0;
+    let isAutoPlay = false;
+    let autoPlayTimer = null;
+    let isVoiceEnabled = false;
+
+    // Start Training Mode
+    function startWebsiteTour(autoStart = false) {
+      currentTourStep = 0;
+      document.getElementById('tourBackdrop').classList.add('active');
+      document.getElementById('trainingHUD').classList.add('active');
+      showTourStep(0);
+
+      if (autoStart) {
+        toggleAutoPlay(true);
+      }
+    }
+
+    // Stop Training Mode
+    function stopWebsiteTour() {
+      if (isAutoPlay) toggleAutoPlay(false);
+      if (isVoiceEnabled && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+      document.getElementById('tourBackdrop').classList.remove('active');
+      document.getElementById('trainingHUD').classList.remove('active');
+      document.getElementById('tourCard').style.display = 'none';
+      clearSpotlight();
+    }
+
+    function clearSpotlight() {
+      document.querySelectorAll('.tour-spotlight-highlight').forEach(el => {
+        el.classList.remove('tour-spotlight-highlight');
+      });
+    }
+
+    // Show specific step
+    function showTourStep(index) {
+      clearSpotlight();
+      currentTourStep = index;
+      const step = TOUR_STEPS[index];
+      const target = document.getElementById(step.targetId);
+
+      if (target) {
+        target.classList.add('tour-spotlight-highlight');
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      // Update Card
+      const card = document.getElementById('tourCard');
+      document.getElementById('tourBadge').textContent = step.badge;
+      document.getElementById('tourTitle').textContent = step.title;
+      document.getElementById('tourDesc').textContent = step.desc;
+      document.getElementById('tourPitch').textContent = step.pitch;
+      document.getElementById('tourTip').textContent = step.tip;
+      document.getElementById('tourActionIcon').textContent = step.actionIcon;
+      document.getElementById('tourActionText').textContent = step.actionText;
+      document.getElementById('tourCount').textContent = `${index + 1} / ${TOUR_STEPS.length}`;
+
+      // Navigation button states
+      const prevBtn = document.getElementById('tourPrevBtn');
+      const nextBtn = document.getElementById('tourNextBtn');
+      if (prevBtn) prevBtn.style.visibility = index === 0 ? 'hidden' : 'visible';
+      if (nextBtn) nextBtn.textContent = index === TOUR_STEPS.length - 1 ? 'Finish Tour ✓' : 'Next Step →';
+
+      // Update HUD Pills
+      document.querySelectorAll('.hud-pill').forEach((pill, idx) => {
+        pill.classList.toggle('active', idx === index);
+      });
+
+      // Voice Narration
+      if (isVoiceEnabled && step.speech) {
+        speakStep(step.speech);
+      }
+
+      // Position Card smartly
+      card.style.display = 'block';
+      setTimeout(() => {
+        if (target) {
+          const rect = target.getBoundingClientRect();
+          const cardWidth = card.offsetWidth;
+          const cardHeight = card.offsetHeight;
+
+          let top = rect.bottom + 15;
+          let left = rect.left + (rect.width / 2) - (cardWidth / 2);
+
+          // Boundary checks
+          if (top + cardHeight > window.innerHeight - 20) {
+            top = Math.max(20, rect.top - cardHeight - 15);
+          }
+          if (left < 20) left = 20;
+          if (left + cardWidth > window.innerWidth - 20) left = window.innerWidth - cardWidth - 20;
+
+          card.style.top = `${top}px`;
+          card.style.left = `${left}px`;
+        }
+      }, 350);
+    }
+
+    function nextTourStep() {
+      if (currentTourStep < TOUR_STEPS.length - 1) {
+        currentTourStep++;
+        showTourStep(currentTourStep);
+      } else {
+        stopWebsiteTour();
+      }
+    }
+
+    function prevTourStep() {
+      if (currentTourStep > 0) {
+        currentTourStep--;
+        showTourStep(currentTourStep);
+      }
+    }
+
+    function jumpToTourStep(index) {
+      if (index >= 0 && index < TOUR_STEPS.length) {
+        showTourStep(index);
+      }
+    }
+
+    function handleTourBackdropClick(e) {
+      if (e.target.id === 'tourBackdrop') {
+        stopWebsiteTour();
+      }
+    }
+
+    // Auto-Play Feature
+    function toggleAutoPlay(forcedState = null) {
+      isAutoPlay = forcedState !== null ? forcedState : !isAutoPlay;
+      const btn = document.getElementById('hudAutoPlayBtn');
+
+      if (isAutoPlay) {
+        btn.classList.add('active');
+        btn.textContent = '⏸ Pause Tour';
+        runAutoPlayLoop();
+      } else {
+        btn.classList.remove('active');
+        btn.textContent = '▶ Auto-Play';
+        clearTimeout(autoPlayTimer);
+      }
+    }
+
+    function runAutoPlayLoop() {
+      clearTimeout(autoPlayTimer);
+      if (!isAutoPlay) return;
+
+      autoPlayTimer = setTimeout(() => {
+        if (!isAutoPlay) return;
+        if (currentTourStep < TOUR_STEPS.length - 1) {
+          nextTourStep();
+          runAutoPlayLoop();
+        } else {
+          toggleAutoPlay(false);
+        }
+      }, 8500);
+    }
+
+    // Voice Narration
+    function toggleVoiceNarration() {
+      isVoiceEnabled = !isVoiceEnabled;
+      const btn = document.getElementById('hudVoiceBtn');
+
+      if (isVoiceEnabled) {
+        btn.classList.add('active');
+        btn.textContent = '🔊 Voice: ON';
+        if (TOUR_STEPS[currentTourStep]?.speech) {
+          speakStep(TOUR_STEPS[currentTourStep].speech);
+        }
+      } else {
+        btn.classList.remove('active');
+        btn.textContent = '🔊 Voice: Off';
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      }
+    }
+
+    function speakStep(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 1.0;
+      utterance.pitch = 1.0;
+      utterance.lang = 'en-US';
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // =========================================================================
+    // INTERACTIVE LIVE DEMO ACTION DISPATCHER
+    // =========================================================================
+    function triggerCurrentDemoAction() {
+      const step = TOUR_STEPS[currentTourStep];
+      if (!step) return;
+
+      switch (step.actionType) {
+        case 'pingCluster':
+          pingClusterDemo();
+          break;
+        case 'animateCalculator':
+          animateCalculatorDemo();
+          break;
+        case 'promptAI':
+          promptAIDemo();
+          break;
+        case 'highlightServices':
+          highlightServicesDemo();
+          break;
+        case 'openCalModal':
+          openCalModal();
+          break;
+        case 'openAcademyModal':
+          openAcademyModal();
+          break;
+        default:
+          alert("Demo simulation complete for this module.");
+      }
+    }
+
+    // Demo 1: Cluster Health Simulation
+    function pingClusterDemo() {
+      const statusPill = document.getElementById('header-status-pill');
+      const text = document.getElementById('header-status-text');
+      text.textContent = '⚡ Pinging n8n Cloud Cluster & Supabase pgvector...';
+
+      setTimeout(() => {
+        text.textContent = '✓ Cluster Online · Latency: 112ms · 99.98% SLA Active';
+        statusPill.style.borderColor = '#10b981';
+      }, 700);
+    }
+
+    // Demo 2: Animated Sliders & $379k Savings Demonstration
+    function animateCalculatorDemo() {
+      const calcCard = document.getElementById('calculator-card-el');
+      calcCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      const teamInput = document.getElementById('teamSize');
+      const hoursInput = document.getElementById('hoursSpent');
+      const rateInput = document.getElementById('hourlyRate');
+
+      let currentTeam = parseInt(teamInput.value, 10);
+      let currentHours = parseInt(hoursInput.value, 10);
+      let currentRate = parseInt(rateInput.value, 10);
+
+      const targetTeam = 14;
+      const targetHours = 24;
+      const targetRate = 65;
+
+      const timer = setInterval(() => {
+        let changed = false;
+        if (currentTeam < targetTeam) { currentTeam++; teamInput.value = currentTeam; changed = true; }
+        if (currentHours < targetHours) { currentHours += 2; hoursInput.value = currentHours; changed = true; }
+        if (currentRate < targetRate) { currentRate += 5; rateInput.value = currentRate; changed = true; }
+
+        updateCalculator();
+
+        if (!changed) {
+          clearInterval(timer);
+          const savingsEl = document.getElementById('annualSavings');
+          savingsEl.style.transform = 'scale(1.15)';
+          savingsEl.style.transition = 'all 0.3s ease';
+          setTimeout(() => savingsEl.style.transform = 'scale(1)', 400);
+        }
+      }, 80);
+    }
+
+    // Demo 3: Inbound AI Scoper Inquiry
+    function promptAIDemo() {
+      const chatCard = document.getElementById('chat-preview-card');
+      chatCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      const iframe = document.getElementById('chatIframe');
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage({
+          action: 'sendPrompt',
+          text: 'What are the deliverables and pricing for an enterprise n8n workflow sprint?'
+        }, '*');
+      }
+    }
+
+    // Demo 4: Service Deliverables Spotlight
+    function highlightServicesDemo() {
+      const grid = document.getElementById('capabilities-grid');
+      grid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      const cards = grid.querySelectorAll('.feature-card');
+      cards.forEach((c, idx) => {
+        setTimeout(() => {
+          c.style.transform = 'translateY(-6px)';
+          c.style.borderColor = '#0284c7';
+          c.style.boxShadow = '0 12px 24px rgba(2, 132, 199, 0.2)';
+          setTimeout(() => {
+            c.style.transform = '';
+            c.style.borderColor = '';
+            c.style.boxShadow = '';
+          }, 1200);
+        }, idx * 250);
+      });
+    }
+
+    // =========================================================================
+    // CAL.COM INTERACTIVE MODAL CONTROLLER
+    // =========================================================================
+    function openCalModal() {
+      document.getElementById('calModal').classList.add('active');
+    }
+
+    function closeCalModal() {
+      document.getElementById('calModal').classList.remove('active');
+    }
+
+    function handleCalModalBackdropClick(e) {
+      if (e.target.id === 'calModal') {
+        closeCalModal();
+      }
+    }
+
+    // =========================================================================
+    // FULL OPERATIONAL ACADEMY & CLOSING PLAYBOOK
+    // =========================================================================
+    const ACADEMY_CONTENT = {
+      overview: `
+        <h3>1. End-to-End System Architecture</h3>
+        <p>Zenthra Systems operates an autonomous, two-way client acquisition and execution loop:</p>
+        <div class="academy-box">
+          <strong>1. Outbound Acquisition:</strong> n8n Cloud runs daily Apollo B2B searches for companies hiring for operations, GPT-4o personalizes a 3-sentence diagnostic email, and Gmail dispatches it.<br>
+          <strong>2. Inbound Reception:</strong> Prospects land on this website, calculate their ROI ($126k+), or converse with the AI Specialist.<br>
+          <strong>3. Vector RAG Qualification:</strong> Inquiries are checked against 12 Supabase pgvector records (Cyclistic BI, Invoicing, Lead Triage).<br>
+          <strong>4. Calendar Booking:</strong> Qualified prospects receive a direct Cal.com link (https://cal.com/zenthra-systems-dyuqpi/30min).
+        </div>
+      `,
+      sales: `
+        <h3>2. How to Run a High-Converting Sales Discovery Call</h3>
+        <p>When an enterprise client books a 30-minute discovery call on Cal.com, follow this 3-step closing framework:</p>
+        <div class="academy-box">
+          <h4>Phase 1: Diagnosis (Minutes 0–10)</h4>
+          <p>"Thanks for syncing. I saw your notes regarding [Pain Point, e.g. lead routing]. Walk me through how your team currently handles this manually, and where the biggest breakdown happens?"</p>
+          
+          <h4>Phase 2: Screen-Share Proof (Minutes 10–20)</h4>
+          <p>Open this website on screen-share. Show the ROI Calculator projecting their savings. Show the n8n architecture diagram demonstrating sub-30 second event processing.</p>
+          
+          <h4>Phase 3: The 2-Week Sprint Close (Minutes 20–30)</h4>
+          <p>"We deliver this as a turnkey 2-week Automation Sprint for a flat $4,500 USD. We build directly in your accounts with zero vendor lock-in and a 30-day warranty. Shall we lock in Monday for kickoff?"</p>
+        </div>
+      `,
+      rag: `
+        <h3>3. AI Specialist & Supabase pgvector Mechanics</h3>
+        <p>The AI Agent (Zenthra-Ops-01) running in n8n Cloud connects directly to Supabase:</p>
+        <div class="academy-box">
+          <p>• <strong>Vector Model:</strong> 1536-dimension embeddings using OpenAI <code>text-embedding-3-small</code>.</p>
+          <p>• <strong>Search Mechanism:</strong> Cosine distance similarity using PostgreSQL HNSW indexing with strict threshold cutoffs.</p>
+          <p>• <strong>Lead Logging:</strong> When qualified, the agent runs <code>save_qualified_lead</code> to persist full contact and technical discovery memos.</p>
+        </div>
+      `,
+      outbound: `
+        <h3>4. Running the Outbound Prospecting Engine</h3>
+        <p>How to generate 2 to 4 qualified discovery calls every week automatically:</p>
+        <div class="academy-box">
+          <p>1. Open n8n Cloud and ensure <code>workflows/outbound_client_acquisition_pipeline.json</code> is set to <strong>Active</strong>.</p>
+          <p>2. The workflow executes Monday through Friday at 09:00 AM.</p>
+          <p>3. To generate custom pitches for specific sectors anytime, run from terminal:</p>
+          <div class="academy-code">powershell -ExecutionPolicy Bypass -File tools/generate_global_campaigns.ps1 -Vertical agency</div>
+        </div>
+      `,
+      pricing: `
+        <h3>5. Deliverables, Pricing & Multi-Currency Invoicing</h3>
+        <p>Standard enterprise price points and deliverables:</p>
+        <div class="academy-box">
+          <p>• <strong>Automation Sprint (MVP) — $3,500 to $6,500:</strong> 2 to 3 weeks turnaround. Solves an isolated bottleneck (e.g. Meta Ads to HubSpot + Slack triage).</p>
+          <p>• <strong>Full Pipeline Architecture — $7,500 to $15,000:</strong> 4 to 6 weeks turnaround. End-to-end data pipeline or multi-agent system.</p>
+          <p>• <strong>Monthly Retainer — $1,500 to $2,500 / mo:</strong> Continuous workflow maintenance, DLQ monitoring, 99.9% uptime SLA.</p>
+          <p>• <strong>Billing:</strong> Invoicing in USD ($), EUR (€), GBP (£) via Stripe or Wise with 50% upfront deposit.</p>
+        </div>
+      `
+    };
+
+    function openAcademyModal() {
+      document.getElementById('academyModal').classList.add('active');
+      switchAcademyTab('overview');
+    }
+
+    function closeAcademyModal() {
+      document.getElementById('academyModal').classList.remove('active');
+    }
+
+    function handleAcademyBackdropClick(e) {
+      if (e.target.id === 'academyModal') {
+        closeAcademyModal();
+      }
+    }
+
+    function switchAcademyTab(tabKey) {
+      document.querySelectorAll('.academy-tab').forEach((tab, idx) => {
+        const keys = ['overview', 'sales', 'rag', 'outbound', 'pricing'];
+        tab.classList.toggle('active', keys[idx] === tabKey);
+      });
+      document.getElementById('academyBody').innerHTML = ACADEMY_CONTENT[tabKey] || '';
+    }
+
+    function dismissTrainingBanner() {
+      const banner = document.getElementById('siteTrainingBanner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    // Startup initialization
     document.addEventListener('DOMContentLoaded', () => {
       updateCalculator();
+
+      // Check URL parameters to auto-launch training
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('train') === 'true' || params.get('tour') === 'true' || params.get('tour') === '1') {
+        setTimeout(() => startWebsiteTour(true), 600);
+      }
     });
   </script>
 </body>
