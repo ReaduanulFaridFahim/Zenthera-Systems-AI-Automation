@@ -58,5 +58,17 @@
     "category": "contact",
     "tags": ["contact", "email", "calendar", "cal_com", "discovery"],
     "content": "Official email inquiries: connect.zenthra@gmail.com with guaranteed 24 business hour turnaround. Direct scheduling for 30-minute Technical Discovery Sessions with our Principal Solutions Architect is handled autonomously through our Cal.com integration: https://cal.com/zenthra-systems-dyuqpi/30min"
+  },
+  {
+    "title": "Global Enterprise Engagement, Multi-Currency Invoicing & Global Coverage",
+    "category": "pricing_and_slas",
+    "tags": ["global", "international", "currency", "invoicing", "timezones", "warranty"],
+    "content": "Zenthra Systems operates globally, supporting enterprise and high-growth clients across the United States, United Kingdom, European Union, Australia, UAE, and Singapore. We support multi-currency invoicing in USD ($), EUR (€), GBP (£), and AUD ($) via Stripe, International Wire, Wise, and Escrow. Projects are executed in client-owned infrastructure with 100% intellectual property transfer upon delivery, accompanied by our 30-day post-launch warranty and global time-zone coverage."
+  },
+  {
+    "title": "Competitive ROI Breakdown: n8n vs. Zapier, Make, and Full-Time Hires",
+    "category": "roi_and_competition",
+    "tags": ["roi", "zapier", "make", "n8n_vs_zapier", "cost_comparison", "hiring"],
+    "content": "Why companies choose Zenthra Systems over Zapier, Make, or hiring: 1) Zapier/Make tax every step; high-growth companies scaling to 50k+ executions face exorbitant monthly subscription fees, whereas self-hosted n8n runs unlimited executions on a $20/mo private VPS. 2) Hiring a full-time automation engineer costs $80,000 to $130,000/year plus recruiting delays; Zenthra Systems delivers turnkey, battle-tested production pipelines in a 2-3 week fixed sprint for a fraction of that cost ($3,000-$6,500), with zero overhead and full documentation."
   }
 ]

@@ -96,3 +96,24 @@
 - **Solutions Inquiries:** connect.zenthra@gmail.com
 - **Technical Discovery Booking:** Handled autonomously via the agent's `get_booking_link` tool or directly via https://cal.com/zenthra-systems-dyuqpi/30min
 - **Guaranteed Response Time:** Inbound queries received via email receive a reply within 24 business hours.
+
+---
+
+## 7. Global Enterprise Engagement & Multi-Currency Invoicing
+- **Global Footprint:** Zenthra Systems serves international clients across the United States, United Kingdom, European Union, Canada, Australia, UAE, and Singapore.
+- **Accepted Currencies:** USD ($), EUR (€), GBP (£), and AUD ($).
+- **Payment Channels:** Stripe, International Wire (SWIFT/ACH/SEPA), Wise Business, and Escrow.
+- **Client Ownership Guarantee:** 100% intellectual property transfer upon delivery. Workflows are built inside client-controlled n8n, Supabase, or cloud environments with zero vendor lock-in.
+- **Warranty:** Every production deployment includes a comprehensive 30-day post-launch warranty and SLA uptime monitoring.
+
+---
+
+## 8. Competitive Economics: n8n vs. Zapier, Make & Full-Time In-House Hires
+| Criteria | In-House Automation Hire | Zapier / Make.com | Zenthra Systems (n8n + AI) |
+| :--- | :--- | :--- | :--- |
+| **Annual Cost** | $90,000 – $140,000 + benefits | Escalating per-task fees ($1,200+/mo at scale) | **Fixed Sprint ($3k – $6.5k)** or Predictable Retainer |
+| **Time to Production** | 2 – 4 months hiring + ramp-up | Fragile DIY setups | **2 – 3 Weeks Turnkey Deployment** |
+| **Execution Limits** | Bound by individual capacity | Rate-limited & per-step pricing tax | **Unlimited executions on owned VPS ($20/mo)** |
+| **Data Privacy** | Standard employee access | Data processed on shared cloud | **Zero-retention LLMs, VPC / on-premise hosting** |
+| **Maintenance** | Single point of failure if employee leaves | DIY maintenance | **Comprehensive documentation & SLA coverage** |
+

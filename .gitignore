@@ -11,6 +11,7 @@ package-lock.json
 test_*.ps1
 probe_supabase.ps1
 seed_supabase_direct.ps1
+seed_sales_modules.ps1
 update_supabase_cal.ps1
 verify_records.ps1
 watch_and_seed.ps1
