@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zenthra Systems — Full-Use Practice Video & Operational Simulator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --bg-panel: #111827;
+      --bg-card: #1f2937;
+      --border-subtle: #374151;
+      --border-focus: #0284c7;
+
+      --accent-cyan: #38bdf8;
+      --accent-blue: #3b82f6;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-purple: #8b5cf6;
+
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+
+      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      letter-spacing: -0.01em;
+    }
+
+    /* Top Bar */
+    header {
+      background: rgba(17, 24, 39, 0.95);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.85rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+    }
+
+    .brand-logo svg {
+      width: 20px;
+      height: 20px;
+      fill: #ffffff;
+    }
+
+    .brand-text h1 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-text p {
+      font-size: 0.68rem;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .badge-live {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      padding: 0.3rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+    .btn-nav {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 0.4rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+
+    .btn-nav:hover {
+      background: #374151;
+      border-color: #4b5563;
+    }
+
+    /* Main Container */
+    .viewport {
+      max-width: 1400px;
+      margin: 1.5rem auto;
+      padding: 0 1.5rem;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 1.75rem;
+      flex: 1;
+    }
+
+    /* Video Player Arena */
+    .video-stage {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .player-window {
+      background: #000000;
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Simulated Screen Container */
+    .screen-canvas {
+      flex: 1;
+      background: #f8fafc;
+      color: #0f172a;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Simulated Browser Chrome */
+    .sim-browser-bar {
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    .browser-dots {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot.red { background: #ef4444; }
+    .dot.yellow { background: #f59e0b; }
+    .dot.green { background: #10b981; }
+
+    .browser-url-bar {
+      flex: 1;
+      background: #f1f5f9;
+      border-radius: 6px;
+      padding: 0.25rem 0.65rem;
+      color: #0284c7;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Screen Dynamic Content Area */
+    .sim-content {
+      flex: 1;
+      padding: 1.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+    }
+
+    /* Mouse Cursor Simulator */
+    .sim-mouse {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      pointer-events: none;
+      z-index: 100;
+      transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      transform: translate(-2px, -2px);
+    }
+
+    .sim-mouse svg {
+      width: 20px;
+      height: 20px;
+      fill: #0284c7;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+
+    .click-ripple {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid #0284c7;
+      animation: ripple 0.6s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes ripple {
+      0% { transform: scale(0.2); opacity: 1; }
+      100% { transform: scale(2); opacity: 0; }
+    }
+
+    /* Video Annotations & Subtitles */
+    .video-overlay-caption {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      padding: 0.65rem 1.35rem;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      max-width: 85%;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      z-index: 90;
+      transition: all 0.3s;
+    }
+
+    .video-overlay-caption span.highlight {
+      color: #38bdf8;
+      font-weight: 700;
+    }
+
+    /* Video Player Controls Bar */
+    .player-controls {
+      background: #111827;
+      border-top: 1px solid #1f2937;
+      padding: 0.6rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      z-index: 95;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 5px;
+      background: #374151;
+      border-radius: 3px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0284c7, #38bdf8);
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    .controls-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .left-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .btn-play {
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .btn-play:hover {
+      background: #0369a1;
+      transform: scale(1.05);
+    }
+
+    .time-readout {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .voice-toggle-btn {
+      background: #1f2937;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .voice-toggle-btn.active {
+      background: #065f46;
+      border-color: #10b981;
+      color: #a7f3d0;
+    }
+
+    /* Video Details & Meta */
+    .video-info-bar {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .video-meta h2 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .video-meta p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .action-row {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    /* Chapters & Practice Sidebar */
+    .sidebar-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .tab-nav {
+      display: flex;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 0.25rem;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 0.5rem;
+      text-align: center;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: #1f2937;
+      color: #ffffff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .content-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      flex: 1;
+      overflow-y: auto;
+      max-height: 600px;
+    }
+
+    .chapter-item {
+      background: #1f2937;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .chapter-item:hover {
+      border-color: #4b5563;
+      transform: translateX(3px);
+    }
+
+    .chapter-item.active {
+      background: rgba(2, 132, 199, 0.15);
+      border-color: #0284c7;
+    }
+
+    .chapter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    .chapter-title {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .chapter-desc {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Practice Sandbox */
+    .sandbox-card {
+      background: #111827;
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .sandbox-prompt {
+      font-size: 0.82rem;
+      color: #38bdf8;
+      font-weight: 600;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+    }
+
+    .sandbox-input {
+      width: 100%;
+      background: #1f2937;
+      border: 1px solid #374151;
+      color: #ffffff;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.82rem;
+      outline: none;
+    }
+
+    .sandbox-input:focus {
+      border-color: #0284c7;
+    }
+
+    .btn-sandbox {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      color: #ffffff;
+      border: none;
+      padding: 0.55rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .sandbox-output {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: #34d399;
+      background: #000000;
+      padding: 0.75rem;
+      border-radius: 8px;
+      min-height: 80px;
+      max-height: 140px;
+      overflow-y: auto;
+      line-height: 1.4;
+    }
+
+    /* Simulation UI Elements */
+    .sim-hero-banner {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .sim-badge {
+      display: inline-flex;
+      background: #ecfdf5;
+      color: #065f46;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 9999px;
+      border: 1px solid #a7f3d0;
+      margin-bottom: 0.5rem;
+    }
+
+    .sim-h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.2;
+      margin-bottom: 0.4rem;
+    }
+
+    .sim-chat-bubble {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 0.85rem 1.15rem;
+      font-size: 0.84rem;
+      line-height: 1.5;
+      color: #334155;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+      animation: fadeInMsg 0.3s ease-out;
+    }
+
+    .sim-chat-bubble.user {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      color: #ffffff;
+      align-self: flex-end;
+      border: none;
+    }
+
+    .sim-booking-box {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-radius: 10px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    @keyframes fadeInMsg {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .viewport {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header>
+    <a href="index.html" class="brand-wrap">
+      <div class="brand-logo">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+      </div>
+      <div class="brand-text">
+        <h1>Zenthra Systems</h1>
+        <p>Operational Practice Video &amp; Sales Simulator</p>
+      </div>
+    </a>
+
+    <div class="top-controls">
+      <div class="badge-live">
+        <span>●</span>
+        <span>Interactive Walkthrough Active</span>
+      </div>
+
+      <button class="voice-toggle-btn active" id="audioToggle" onclick="toggleAudioNarration()">
+        <span id="voiceIcon">🔊</span>
+        <span id="voiceText">AI Narration Voice: ON</span>
+      </button>
+
+      <a href="index.html" class="btn-nav">
+        <span>🌐 Open Website</span>
+      </a>
+
+      <a href="embed/chat-widget.html" target="_blank" class="btn-nav" style="background: #0284c7; color: #ffffff; border: none;">
+        <span>💬 Open Chat Concierge</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Viewport -->
+  <main class="viewport">
+    <!-- Video Player Stage -->
+    <section class="video-stage">
+      <div class="player-window" id="playerWindow">
+        <!-- Virtual Mouse Pointer -->
+        <div class="sim-mouse" id="virtualMouse" style="top: 50%; left: 50%;">
+          <svg viewBox="0 0 24 24"><path d="M3 3l7 18 3-7 7-3L3 3z"></path></svg>
+        </div>
+
+        <!-- Simulated Browser Screen -->
+        <div class="screen-canvas" id="screenCanvas">
+          <div class="sim-browser-bar">
+            <div class="browser-dots">
+              <div class="dot red"></div>
+              <div class="dot yellow"></div>
+              <div class="dot green"></div>
+            </div>
+            <div class="browser-url-bar">
+              <span>🔒</span>
+              <span id="simUrl">https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/</span>
+            </div>
+          </div>
+
+          <!-- Dynamic Screen Playback Area -->
+          <div class="sim-content" id="simContent">
+            <!-- Dynamic elements injected per scene -->
+          </div>
+        </div>
+
+        <!-- Dynamic Overlay Subtitle / Guide Caption -->
+        <div class="video-overlay-caption" id="videoCaption">
+          Welcome to the <strong>Zenthra Systems Full-Use Practice Video</strong>. Click <span class="highlight">Play ▶</span> to begin the operational walkthrough.
+        </div>
+
+        <!-- Player Controls -->
+        <div class="player-controls">
+          <div class="progress-track" onclick="handleSeek(event)">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+
+          <div class="controls-row">
+            <div class="left-controls">
+              <button class="btn-play" id="playBtn" onclick="togglePlay()">▶</button>
+              <button class="btn-nav" onclick="restartVideo()" title="Restart Video" style="padding: 0.3rem 0.6rem;">↺</button>
+              <span class="time-readout" id="timeReadout">0:00 / 6:00</span>
+            </div>
+
+            <div style="font-family: var(--font-mono); font-size: 0.75rem; color: #38bdf8; font-weight: 700;" id="sceneTitle">
+              SCENE 1: Executive Overview
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Description & Direct CTAs -->
+      <div class="video-info-bar">
+        <div class="video-meta">
+          <h2>End-to-End Operational Walkthrough &amp; Sales Mastery</h2>
+          <p>Learn how to qualify inbound clients, execute vector RAG searches, book discovery meetings, and launch automated Apollo outbound campaigns.</p>
+        </div>
+
+        <div class="action-row">
+          <button class="btn-nav" onclick="jumpToScene(2)" style="background: rgba(2, 132, 199, 0.2); border-color: #0284c7; color: #38bdf8;">
+            ⚡ Test 1-Click Scope
+          </button>
+          <a href="https://cal.com/zenthra-systems-dyuqpi/30min" target="_blank" class="btn-nav" style="background: linear-gradient(135deg, #0284c7, #2563eb); color: #ffffff; border: none;">
+            📅 Open Cal.com Slot
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sidebar: Chapters & Practice Sandbox -->
+    <aside class="sidebar-panel">
+      <!-- Tabs -->
+      <div class="tab-nav">
+        <button class="tab-btn active" id="tabChaptersBtn" onclick="switchTab('chapters')">🎬 Video Chapters</button>
+        <button class="tab-btn" id="tabPracticeBtn" onclick="switchTab('practice')">🛠️ Practice Sandbox</button>
+      </div>
+
+      <!-- Tab 1: Video Chapters -->
+      <div class="content-card" id="chaptersView">
+        <div class="chapter-item active" onclick="jumpToScene(0)" id="ch-0">
+          <div class="chapter-header">
+            <span>SCENE 1</span>
+            <span>0:00</span>
+          </div>
+          <div class="chapter-title">Introduction &amp; Business Model</div>
+          <div class="chapter-desc">How Zenthra Systems closes $3k to $15k sprints replacing in-house hires.</div>
+        </div>
+
+        <div class="chapter-item" onclick="jumpToScene(1)" id="ch-1">
+          <div class="chapter-header">
+            <span>SCENE 2</span>
+            <span>1:00</span>
+          </div>
+          <div class="chapter-title">Website &amp; ROI Calculator</div>
+          <div class="chapter-desc">Demonstrating how clients calculate annual hours and dollar savings on index.html.</div>
+        </div>
+
+        <div class="chapter-item" onclick="jumpToScene(2)" id="ch-2">
+          <div class="chapter-header">
+            <span>SCENE 3</span>
+            <span>2:00</span>
+          </div>
+          <div class="chapter-title">Inbound AI Scoper &amp; Vector RAG</div>
+          <div class="chapter-desc">Using the 1-Click Quick Scope Wizard and querying the Supabase pgvector knowledge base.</div>
+        </div>
+
+        <div class="chapter-item" onclick="jumpToScene(3)" id="ch-3">
+          <div class="chapter-header">
+            <span>SCENE 4</span>
+            <span>3:15</span>
+          </div>
+          <div class="chapter-title">Autonomous Cal.com Booking</div>
+          <div class="chapter-desc">How the agent outputs pre-filled discovery links to zenthra-systems-dyuqpi/30min.</div>
+        </div>
+
+        <div class="chapter-item" onclick="jumpToScene(4)" id="ch-4">
+          <div class="chapter-header">
+            <span>SCENE 5</span>
+            <span>4:30</span>
+          </div>
+          <div class="chapter-title">Automated Outbound Pipeline</div>
+          <div class="chapter-desc">Running Apollo API lead prospecting and AI-personalized cold outreach on n8n Cloud.</div>
+        </div>
+
+        <div class="chapter-item" onclick="jumpToScene(5)" id="ch-5">
+          <div class="chapter-header">
+            <span>SCENE 6</span>
+            <span>5:15</span>
+          </div>
+          <div class="chapter-title">Closing International Deals</div>
+          <div class="chapter-desc">Handling objections (n8n vs Zapier), multi-currency invoicing, and 30-day warranty.</div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Practice Sandbox -->
+      <div class="content-card" id="practiceView" style="display: none;">
+        <div class="sandbox-card">
+          <span style="font-size: 0.72rem; font-family: var(--font-mono); color: #34d399; font-weight: 700;">CHALLENGE 1: OBJECTION HANDLING</span>
+          <div class="sandbox-prompt">
+            Prospect says: "Why should we hire Zenthra for a $4,500 sprint instead of doing it ourselves on Zapier?"
+          </div>
+          <button class="btn-sandbox" onclick="practiceObjection(1)">⚡ See Ideal Closing Response</button>
+          <div class="sandbox-output" id="sbOutput1">Click button to test your response against Zenthra closer guidelines.</div>
+        </div>
+
+        <div class="sandbox-card">
+          <span style="font-size: 0.72rem; font-family: var(--font-mono); color: #38bdf8; font-weight: 700;">CHALLENGE 2: DISCOVERY MEMO GENERATION</span>
+          <div class="sandbox-prompt">
+            Client details: Alex (alex@velo.com), 1,200 leads/mo, needs Facebook Ads -> HubSpot triage in 2 weeks.
+          </div>
+          <button class="btn-sandbox" onclick="practiceObjection(2)">📋 Generate Technical Memo &amp; Cal Link</button>
+          <div class="sandbox-output" id="sbOutput2">Awaiting memo synthesis...</div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    // Scenes Timeline & Script
+    const SCENES = [
+      {
+        id: 0,
+        time: "0:00",
+        title: "SCENE 1: Introduction & Architecture",
+        url: "https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/",
+        caption: "Welcome to Zenthra Systems. We solve enterprise bottlenecks with <span class='highlight'>24/7 autonomous n8n workflows and AI agents</span>.",
+        narration: "Welcome to Zenthra Systems. In this practice video, we will walk through the entire operational lifecycle of our agency: from inbound visitor qualification to automated outbound client acquisition.",
+        render: () => `
+          <div class="sim-hero-banner">
+            <div class="sim-badge">Enterprise SLA Active</div>
+            <div class="sim-h1">Autonomous AI Agents &amp; Enterprise n8n Systems</div>
+            <p style="font-size: 0.8rem; color: #64748b; line-height: 1.4; margin-bottom: 0.75rem;">
+              Zenthra Systems eliminates manual operations. We build deterministic pipelines with 99.9% uptime and zero vendor lock-in.
+            </p>
+            <div style="display: flex; gap: 0.5rem;">
+              <div style="background: #e0f2fe; color: #0284c7; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">⚡ 2-Week Sprints</div>
+              <div style="background: #ecfdf5; color: #065f46; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700;">🌐 Global Clients</div>
+            </div>
+          </div>
+        `,
+        mouseAction: { x: 50, y: 50 }
+      },
+      {
+        id: 1,
+        time: "1:00",
+        title: "SCENE 2: Interactive ROI Calculator",
+        url: "https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/#calculator",
+        caption: "Clients drag sliders on our portal to see their exact <span class='highlight'>Annual Dollar Savings ($126k+)</span>.",
+        narration: "Scene 2: When an enterprise prospect lands on our website, they immediately interact with our Automation ROI Calculator, projecting hours reclaimed and massive cost savings.",
+        render: () => `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.25rem;">
+            <div style="font-size: 0.88rem; font-weight: 800; color: #0f172a; margin-bottom: 0.6rem;">Calculate Your Automation ROI</div>
+            <div style="margin-bottom: 0.6rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.74rem; font-weight: 700; color: #334155;">
+                <span>Team Members on Manual Ops:</span>
+                <span style="color: #0284c7;">5 People</span>
+              </div>
+              <div style="height: 6px; background: #e2e8f0; border-radius: 3px; margin-top: 4px;">
+                <div style="height: 100%; width: 50%; background: #0284c7; border-radius: 3px;"></div>
+              </div>
+            </div>
+            <div style="background: #0f172a; color: #ffffff; border-radius: 8px; padding: 0.85rem; text-align: center; margin-top: 0.75rem;">
+              <div style="font-size: 0.68rem; text-transform: uppercase; color: #94a3b8;">Estimated Annual Cost Savings</div>
+              <div style="font-size: 1.6rem; font-weight: 800; color: #4ade80; font-family: var(--font-mono);">$126,360 / yr</div>
+            </div>
+          </div>
+        `,
+        mouseAction: { x: 70, y: 45 }
+      },
+      {
+        id: 2,
+        time: "2:00",
+        title: "SCENE 3: Inbound AI Scoper & Vector RAG",
+        url: "https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/embed/chat-widget.html",
+        caption: "Prospects use the <span class='highlight'>1-Click Quick Scoper</span>. The agent verifies RAG records from Supabase.",
+        narration: "Scene 3: In the chat console, the prospect clicks Quick Scope. Our AI Operations Specialist queries Supabase pgvector and formulates an architectural response.",
+        render: () => `
+          <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+            <div class="sim-chat-bubble user">
+              Hi, I'm Alex Mercer, CTO at Veloce Systems. We are spending 25 hrs/week manually copying leads from Meta into HubSpot and Slack. Can we deploy an automated n8n pipeline in 2 weeks?
+            </div>
+            <div class="sim-chat-bubble" style="background: #ffffff; border-left: 3px solid #0284c7;">
+              <span style="font-weight: 700; color: #0284c7;">Zenthra Specialist:</span> Absolutely, Alex. We build event-driven n8n webhook pipelines with sub-30s triage latency, deduplication in HubSpot, and Slack 1-click rep routing. I have logged your discovery memo into our CRM.
+            </div>
+          </div>
+        `,
+        mouseAction: { x: 40, y: 60 }
+      },
+      {
+        id: 3,
+        time: "3:15",
+        title: "SCENE 4: Autonomous Cal.com Booking",
+        url: "https://cal.com/zenthra-systems-dyuqpi/30min",
+        caption: "The agent generates a direct <span class='highlight'>Cal.com 30-Min Discovery Session card</span> with pre-filled parameters.",
+        narration: "Scene 4: The AI agent calls get_booking_link and outputs an interactive Cal.com scheduling card. The prospect clicks to select their slot, automatically syncing with your Google Calendar and Meet.",
+        render: () => `
+          <div class="sim-booking-box">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.85rem; font-weight: 800; color: #065f46;">📅 Priority Technical Discovery Session</span>
+              <span style="font-size: 0.68rem; background: #dcfce7; color: #166534; padding: 0.2rem 0.5rem; border-radius: 9999px; font-weight: 700;">30 Min · 1-on-1</span>
+            </div>
+            <p style="font-size: 0.74rem; color: #166534;">Sync with Principal Solutions Architect to review workflow blueprint, milestones, and deployment roadmap.</p>
+            <div style="background: linear-gradient(135deg, #0284c7, #2563eb); color: #ffffff; padding: 0.6rem; border-radius: 6px; text-align: center; font-size: 0.78rem; font-weight: 700;">
+              👉 https://cal.com/zenthra-systems-dyuqpi/30min (Slot Locked)
+            </div>
+          </div>
+        `,
+        mouseAction: { x: 55, y: 70 }
+      },
+      {
+        id: 4,
+        time: "4:30",
+        title: "SCENE 5: Automated Outbound Acquisition",
+        url: "https://zenthrasystems.app.n8n.cloud/workflow/outbound",
+        caption: "n8n Cloud executes the <span class='highlight'>Apollo Prospecting &amp; GPT-4o Personalized Email Pipeline</span>.",
+        narration: "Scene 5: While you sleep, the outbound pipeline triggers on n8n Cloud. It searches Apollo for companies hiring for operations, personalizes a 3-sentence diagnostic email, and sends it from your Gmail.",
+        render: () => `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1rem; font-family: var(--font-mono); font-size: 0.75rem;">
+            <div style="color: #059669; font-weight: 700; margin-bottom: 0.4rem;">[CRON TRIGGER 09:00 AM] Apollo API Batch Ingest</div>
+            <div style="color: #334155;">Target: 15 VPs of Operations in US &amp; UK</div>
+            <div style="color: #2563eb; margin: 0.3rem 0;">GPT-4o Diagnostic Personalization: OK</div>
+            <div style="color: #7c3aed;">Dispatched 15 custom emails via connect.zenthra@gmail.com</div>
+          </div>
+        `,
+        mouseAction: { x: 30, y: 35 }
+      },
+      {
+        id: 5,
+        time: "5:15",
+        title: "SCENE 6: Closing Deals & Getting Paid",
+        url: "https://zenthra.com/invoicing",
+        caption: "Execute 2-week sprint ($3k–$6.5k), deliver with <span class='highlight'>100% IP transfer</span>, and convert into a monthly retainer.",
+        narration: "Scene 6: On the discovery call, you present the architecture blueprint. You invoice via Stripe or Wise in USD or EUR, deliver the production workflow in 2 weeks, and sign them onto a monthly maintenance retainer.",
+        render: () => `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.25rem;">
+            <div style="font-size: 0.88rem; font-weight: 800; color: #0f172a; margin-bottom: 0.5rem;">🎉 Client Engagement Secured</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.74rem;">
+              <div style="background: #f8fafc; padding: 0.5rem; border-radius: 6px;">Sprint Value: <strong>$4,500 USD</strong></div>
+              <div style="background: #f8fafc; padding: 0.5rem; border-radius: 6px;">Timeline: <strong>2 Weeks</strong></div>
+              <div style="background: #f8fafc; padding: 0.5rem; border-radius: 6px;">Warranty: <strong>30 Days</strong></div>
+              <div style="background: #ecfdf5; color: #065f46; padding: 0.5rem; border-radius: 6px;">Retainer: <strong>$1,800/mo</strong></div>
+            </div>
+          </div>
+        `,
+        mouseAction: { x: 60, y: 50 }
+      }
+    ];
+
+    let currentSceneIdx = 0;
+    let isPlaying = false;
+    let playbackTimer = null;
+    let narrationVoiceEnabled = true;
+
+    function renderScene(idx) {
+      const scene = SCENES[idx];
+      document.getElementById('simUrl').textContent = scene.url;
+      document.getElementById('sceneTitle').textContent = scene.title;
+      document.getElementById('videoCaption').innerHTML = scene.caption;
+      document.getElementById('timeReadout').textContent = `${scene.time} / 6:00`;
+      document.getElementById('progressFill').style.width = `${((idx + 1) / SCENES.length) * 100}%`;
+
+      // Update screen content
+      const simContent = document.getElementById('simContent');
+      simContent.innerHTML = scene.render();
+
+      // Animate virtual mouse cursor
+      const mouse = document.getElementById('virtualMouse');
+      mouse.style.left = `${scene.mouseAction.x}%`;
+      mouse.style.top = `${scene.mouseAction.y}%`;
+
+      // Trigger ripple
+      const ripple = document.createElement('div');
+      ripple.className = 'click-ripple';
+      ripple.style.left = `${scene.mouseAction.x}%`;
+      ripple.style.top = `${scene.mouseAction.y}%`;
+      document.getElementById('playerWindow').appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+
+      // Highlight active chapter
+      document.querySelectorAll('.chapter-item').forEach((item, i) => {
+        item.classList.toggle('active', i === idx);
+      });
+
+      // Voice Narration via Web Speech API
+      if (narrationVoiceEnabled && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(scene.narration);
+        utterance.rate = 1.05;
+        utterance.pitch = 1.0;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    function togglePlay() {
+      const playBtn = document.getElementById('playBtn');
+      if (isPlaying) {
+        isPlaying = false;
+        playBtn.textContent = '▶';
+        clearInterval(playbackTimer);
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      } else {
+        isPlaying = true;
+        playBtn.textContent = '⏸';
+        renderScene(currentSceneIdx);
+        playbackTimer = setInterval(() => {
+          currentSceneIdx++;
+          if (currentSceneIdx >= SCENES.length) {
+            currentSceneIdx = 0;
+            isPlaying = false;
+            playBtn.textContent = '▶';
+            clearInterval(playbackTimer);
+          } else {
+            renderScene(currentSceneIdx);
+          }
+        }, 12000); // 12 seconds per scene
+      }
+    }
+
+    function jumpToScene(idx) {
+      currentSceneIdx = idx;
+      renderScene(idx);
+      if (!isPlaying) {
+        togglePlay();
+      }
+    }
+
+    function restartVideo() {
+      currentSceneIdx = 0;
+      renderScene(0);
+      if (isPlaying) {
+        togglePlay();
+      }
+    }
+
+    function handleSeek(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const pct = clickX / rect.width;
+      const targetIdx = Math.min(Math.floor(pct * SCENES.length), SCENES.length - 1);
+      jumpToScene(targetIdx);
+    }
+
+    function toggleAudioNarration() {
+      narrationVoiceEnabled = !narrationVoiceEnabled;
+      const btn = document.getElementById('audioToggle');
+      const icon = document.getElementById('voiceIcon');
+      const text = document.getElementById('voiceText');
+
+      if (narrationVoiceEnabled) {
+        btn.classList.add('active');
+        icon.textContent = '🔊';
+        text.textContent = 'AI Narration Voice: ON';
+      } else {
+        btn.classList.remove('active');
+        icon.textContent = '🔇';
+        text.textContent = 'AI Narration Voice: OFF';
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      }
+    }
+
+    function switchTab(tab) {
+      document.getElementById('tabChaptersBtn').classList.toggle('active', tab === 'chapters');
+      document.getElementById('tabPracticeBtn').classList.toggle('active', tab === 'practice');
+      document.getElementById('chaptersView').style.display = tab === 'chapters' ? 'flex' : 'none';
+      document.getElementById('practiceView').style.display = tab === 'practice' ? 'flex' : 'none';
+    }
+
+    // Interactive Practice Simulations
+    function practiceObjection(type) {
+      if (type === 1) {
+        const out = document.getElementById('sbOutput1');
+        out.innerHTML = `
+          <strong>[ZENTHRA CONSULTATIVE CLOSER RESPONSE]</strong><br>
+          "Great question. Zapier is great for simple linear tasks, but as you scale past 20k executions, Zapier taxes every single step, costing $1,200+/month in subscription fees. 
+          With Zenthra Systems, we build on self-hosted n8n in your private VPS: you get <strong>unlimited executions for $20/month</strong>, zero per-task fees, complex JavaScript logic, and 100% data privacy. You save over $10,000 in your first year alone."
+        `;
+      } else if (type === 2) {
+        const out = document.getElementById('sbOutput2');
+        out.innerHTML = `
+          <strong>[AUTOMATED DISCOVERY MEMO]</strong><br>
+          - Client: Alex Mercer (alex@velo.com)<br>
+          - Scope: Real-time Meta Ads -> HubSpot + Slack triage (1,200 leads/mo)<br>
+          - Architecture: Webhook listener, Clearbit enrichment, CRM deduplication<br>
+          - Timeline: 2-Week Sprint ($4,500 USD)<br>
+          - Booking Link: <span style="color: #38bdf8;">https://cal.com/zenthra-systems-dyuqpi/30min?name=Alex&email=alex@velo.com</span>
+        `;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderScene(0);
+    });
+  </script>
+</body>
+</html>
