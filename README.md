@@ -1,6 +1,11 @@
 # Zenthra Systems — Autonomous Front-Office & Operations n8n AI Agent
 
-This repository contains the complete operational blueprint, production-ready n8n workflow, system prompt engineering, knowledge base, and client-facing embed assets for **Zenthra Systems' Autonomous Technical Operations Agent**.
+> 🌐 **Live Hosted Portal:** [https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/](https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/)  
+> 💬 **Live Chat Specialist:** [https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/embed/chat-widget.html](https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/embed/chat-widget.html)  
+> 📦 **GitHub Repository:** [https://github.com/ReaduanulFaridFahim/Zenthera-Systems-AI-Automation](https://github.com/ReaduanulFaridFahim/Zenthera-Systems-AI-Automation)  
+> 📅 **Live Calendar Booking:** [https://cal.com/zenthra-systems-dyuqpi/30min](https://cal.com/zenthra-systems-dyuqpi/30min)
+
+This repository contains the complete operational blueprint, production-ready n8n workflows, system prompt engineering, Supabase pgvector knowledge base, and client-facing web application for **Zenthra Systems' Autonomous Technical Operations Agent**.
 
 ---
 
