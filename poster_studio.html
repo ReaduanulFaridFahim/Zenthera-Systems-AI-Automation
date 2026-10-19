@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zenthra Systems — B2B Social Media Poster Studio</title>
+  <meta name="description" content="Generate high-converting 1080x1350 and multi-format dark tech minimalist B2B graphics for LinkedIn, X (Twitter), and Instagram.">
+  <meta property="og:title" content="Zenthra Systems — B2B Social Media Poster Studio">
+  <meta property="og:description" content="Design, preview, and export high-converting 1080x1350 social posters with 1 click.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -131,7 +134,7 @@
 
     /* Studio Main Layout */
     .studio-container {
-      max-width: 1400px;
+      max-width: 1440px;
       margin: 1.5rem auto;
       padding: 0 1.5rem;
       display: grid;
@@ -205,6 +208,35 @@
       box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
     }
 
+    .pill-selector {
+      display: flex;
+      background: #f1f5f9;
+      padding: 0.25rem;
+      border-radius: 9px;
+      gap: 0.25rem;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .pill-btn {
+      flex: 1;
+      padding: 0.35rem 0.5rem;
+      border-radius: 7px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .pill-btn.active {
+      background: #ffffff;
+      color: var(--accent-primary);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
     .point-card-control {
       background: #f8fafc;
       border: 1px solid var(--border-subtle);
@@ -239,34 +271,67 @@
       max-width: 100%;
       display: flex;
       justify-content: center;
+      align-items: center;
+      min-height: 640px;
     }
 
     #posterCanvas {
-      width: 480px;
-      height: 600px;
+      max-width: 100%;
+      height: auto;
+      max-height: 600px;
       border-radius: 12px;
-      background: #0a0d14;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      object-fit: contain;
     }
 
     .copy-strip {
       width: 100%;
-      max-width: 600px;
+      max-width: 680px;
       display: flex;
       gap: 0.65rem;
       justify-content: center;
       flex-wrap: wrap;
     }
 
+    /* Toast Notification System */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+
+    .toast-msg {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      border-left: 4px solid #10b981;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      animation: toastSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: auto;
+    }
+
+    @keyframes toastSlideIn {
+      from { transform: translateX(50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
     @media (max-width: 1024px) {
       .studio-container {
         grid-template-columns: 1fr;
       }
-      #posterCanvas {
-        width: 100%;
-        max-width: 420px;
-        height: auto;
-        aspect-ratio: 4/5;
+      .control-panel {
+        max-height: none;
       }
     }
   </style>
@@ -287,7 +352,7 @@
     <div class="nav-actions">
       <a href="index.html" class="btn btn-secondary">← Back to Portal</a>
       <button class="btn btn-primary" onclick="downloadPoster()">
-        <span>⬇ Download 1080x1350 PNG</span>
+        <span>⬇ Download HD PNG</span>
       </button>
     </div>
   </header>
@@ -297,7 +362,25 @@
     <div class="control-panel">
       <div class="panel-title">
         <span>⚙️ Poster Customizer</span>
-        <span style="font-size: 0.75rem; color: var(--accent-primary); font-family: var(--font-mono);">1080 × 1350 HD</span>
+        <span id="dimensionBadge" style="font-size: 0.75rem; color: var(--accent-primary); font-family: var(--font-mono);">1080 × 1350 (4:5)</span>
+      </div>
+
+      <div class="form-group">
+        <label>Aspect Ratio & Format</label>
+        <div class="pill-selector">
+          <button class="pill-btn active" id="ratio45" onclick="setAspectRatio('4:5')">4:5 Portrait</button>
+          <button class="pill-btn" id="ratio11" onclick="setAspectRatio('1:1')">1:1 Square</button>
+          <button class="pill-btn" id="ratio169" onclick="setAspectRatio('16:9')">16:9 Card</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Visual Theme Palette</label>
+        <div class="pill-selector">
+          <button class="pill-btn active" id="themeDark" onclick="setTheme('dark')">Midnight Blue</button>
+          <button class="pill-btn" id="themeEmerald" onclick="setTheme('emerald')">Cyber Emerald</button>
+          <button class="pill-btn" id="themeIndigo" onclick="setTheme('indigo')">Executive Indigo</button>
+        </div>
       </div>
 
       <div class="form-group">
@@ -313,48 +396,48 @@
 
       <div class="form-group">
         <label>Category Tag</label>
-        <input type="text" id="inputCategory" class="form-input" value="B2B TECH INSIGHT" oninput="renderPoster()">
+        <input type="text" id="inputCategory" class="form-input" value="B2B TECH INSIGHT" oninput="handleInput()">
       </div>
 
       <div class="form-group">
         <label>Main Headline</label>
-        <input type="text" id="inputHeadline" class="form-input" value="Is Your Website Costing You 6-Figure Deals?" oninput="renderPoster()">
+        <input type="text" id="inputHeadline" class="form-input" value="Is Your Website Costing You 6-Figure Deals?" oninput="handleInput()">
       </div>
 
       <div class="form-group">
         <label>Subheadline</label>
-        <input type="text" id="inputSubheadline" class="form-input" value="Why modern Western enterprises are leaving template sites behind." oninput="renderPoster()">
+        <input type="text" id="inputSubheadline" class="form-input" value="Why modern Western enterprises are leaving template sites behind." oninput="handleInput()">
       </div>
 
       <!-- Point 1 -->
       <div class="point-card-control">
         <span class="point-header">VALUE POINT 01</span>
-        <input type="text" id="p1Title" class="form-input" value="Sub-Second Page Speeds (<0.8s)" oninput="renderPoster()">
-        <input type="text" id="p1Desc" class="form-input" value="Engineered in Next.js & TypeScript for 99+ Core Web Vitals." oninput="renderPoster()">
+        <input type="text" id="p1Title" class="form-input" value="Sub-Second Page Speeds (<0.8s)" oninput="handleInput()">
+        <input type="text" id="p1Desc" class="form-input" value="Engineered in Next.js & TypeScript for 99+ Core Web Vitals." oninput="handleInput()">
       </div>
 
       <!-- Point 2 -->
       <div class="point-card-control">
         <span class="point-header">VALUE POINT 02</span>
-        <input type="text" id="p2Title" class="form-input" value="24/7 Autonomous AI Sales Agents" oninput="renderPoster()">
-        <input type="text" id="p2Desc" class="form-input" value="Instantly qualify and book inbound leads without human delay." oninput="renderPoster()">
+        <input type="text" id="p2Title" class="form-input" value="24/7 Autonomous AI Sales Agents" oninput="handleInput()">
+        <input type="text" id="p2Desc" class="form-input" value="Instantly qualify and book inbound leads without human delay." oninput="handleInput()">
       </div>
 
       <!-- Point 3 -->
       <div class="point-card-control">
         <span class="point-header">VALUE POINT 03</span>
-        <input type="text" id="p3Title" class="form-input" value="Custom API & Microservice Pipelines" oninput="renderPoster()">
-        <input type="text" id="p3Desc" class="form-input" value="Automate payments, CRM sync, and enterprise workflows." oninput="renderPoster()">
+        <input type="text" id="p3Title" class="form-input" value="Custom API & Microservice Pipelines" oninput="handleInput()">
+        <input type="text" id="p3Desc" class="form-input" value="Automate payments, CRM sync, and enterprise workflows." oninput="handleInput()">
       </div>
 
       <div class="form-group">
         <label>CTA Header Text</label>
-        <input type="text" id="inputCtaText" class="form-input" value="Scale your digital infrastructure with custom AI & web engineering." oninput="renderPoster()">
+        <input type="text" id="inputCtaText" class="form-input" value="Scale your digital infrastructure with custom AI & web engineering." oninput="handleInput()">
       </div>
 
       <div class="form-group">
         <label>CTA Contact Text</label>
-        <input type="text" id="inputCtaSub" class="form-input" value="DM us or email connect.zenthra@gmail.com" oninput="renderPoster()">
+        <input type="text" id="inputCtaSub" class="form-input" value="DM us or email connect.zenthra@gmail.com" oninput="handleInput()">
       </div>
     </div>
 
@@ -373,7 +456,72 @@
     </div>
   </main>
 
+  <div id="toastContainer" class="toast-container"></div>
+
   <script>
+    const THEMES = {
+      dark: {
+        bg: '#0a0d14',
+        glow: 'rgba(0, 102, 255, 0.22)',
+        brand: '#0084ff',
+        brandSub: '#64748b',
+        categoryBg: '#1e293b',
+        categoryText: '#38bdf8',
+        headline: '#ffffff',
+        subheadline: '#94a3b8',
+        divider: '#1e293b',
+        cardBg: '#0f172a',
+        cardBorder: '#1e293b',
+        cardNumber: '#0084ff',
+        cardTitle: '#f8fafc',
+        cardDesc: '#94a3b8',
+        ctaBg: '#111827',
+        ctaBorder: '#1e293b',
+        ctaText: '#ffffff',
+        ctaSub: '#38bdf8'
+      },
+      emerald: {
+        bg: '#05130e',
+        glow: 'rgba(16, 185, 129, 0.22)',
+        brand: '#10b981',
+        brandSub: '#64748b',
+        categoryBg: '#064e3b',
+        categoryText: '#6ee7b7',
+        headline: '#ffffff',
+        subheadline: '#94a3b8',
+        divider: '#064e3b',
+        cardBg: '#0a2218',
+        cardBorder: '#064e3b',
+        cardNumber: '#10b981',
+        cardTitle: '#f8fafc',
+        cardDesc: '#94a3b8',
+        ctaBg: '#071e15',
+        ctaBorder: '#064e3b',
+        ctaText: '#ffffff',
+        ctaSub: '#6ee7b7'
+      },
+      indigo: {
+        bg: '#090d1a',
+        glow: 'rgba(99, 102, 241, 0.22)',
+        brand: '#6366f1',
+        brandSub: '#64748b',
+        categoryBg: '#1e1b4b',
+        categoryText: '#a5b4fc',
+        headline: '#ffffff',
+        subheadline: '#94a3b8',
+        divider: '#1e1b4b',
+        cardBg: '#11162d',
+        cardBorder: '#1e1b4b',
+        cardNumber: '#6366f1',
+        cardTitle: '#f8fafc',
+        cardDesc: '#94a3b8',
+        ctaBg: '#0d1224',
+        ctaBorder: '#1e1b4b',
+        ctaText: '#ffffff',
+        ctaSub: '#a5b4fc'
+      }
+    };
+
     const PRESETS = {
       brochure: {
         category: "B2B TECH INSIGHT",
@@ -458,6 +606,35 @@
     };
 
     let activePreset = 'brochure';
+    let activeTheme = 'dark';
+    let activeRatio = '4:5';
+
+    function setAspectRatio(ratio) {
+      activeRatio = ratio;
+      document.querySelectorAll('#ratio45, #ratio11, #ratio169').forEach(btn => btn.classList.remove('active'));
+      if (ratio === '4:5') document.getElementById('ratio45').classList.add('active');
+      if (ratio === '1:1') document.getElementById('ratio11').classList.add('active');
+      if (ratio === '16:9') document.getElementById('ratio169').classList.add('active');
+
+      const badge = document.getElementById('dimensionBadge');
+      if (ratio === '4:5') badge.textContent = '1080 × 1350 (4:5)';
+      if (ratio === '1:1') badge.textContent = '1080 × 1080 (1:1)';
+      if (ratio === '16:9') badge.textContent = '1200 × 675 (16:9)';
+
+      renderPoster();
+      showToast(`Aspect ratio set to ${ratio}`);
+    }
+
+    function setTheme(theme) {
+      activeTheme = theme;
+      document.querySelectorAll('#themeDark, #themeEmerald, #themeIndigo').forEach(btn => btn.classList.remove('active'));
+      if (theme === 'dark') document.getElementById('themeDark').classList.add('active');
+      if (theme === 'emerald') document.getElementById('themeEmerald').classList.add('active');
+      if (theme === 'indigo') document.getElementById('themeIndigo').classList.add('active');
+
+      renderPoster();
+      showToast(`Applied theme: ${theme.toUpperCase()}`);
+    }
 
     function loadPreset(key) {
       activePreset = key;
@@ -477,13 +654,33 @@
       document.getElementById('inputCtaSub').value = data.ctaSub;
 
       renderPoster();
+      showToast(`Loaded Preset: ${data.category}`);
+    }
+
+    function handleInput() {
+      renderPoster();
     }
 
     function renderPoster() {
       const canvas = document.getElementById('posterCanvas');
       const ctx = canvas.getContext('2d');
-      const width = 1080;
-      const height = 1350;
+
+      // Set dimensions by ratio
+      let width = 1080;
+      let height = 1350;
+
+      if (activeRatio === '1:1') {
+        width = 1080;
+        height = 1080;
+      } else if (activeRatio === '16:9') {
+        width = 1200;
+        height = 675;
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+
+      const theme = THEMES[activeTheme] || THEMES.dark;
 
       // Values
       const category = document.getElementById('inputCategory').value;
@@ -498,51 +695,63 @@
       const ctaText = document.getElementById('inputCtaText').value;
       const ctaSub = document.getElementById('inputCtaSub').value;
 
-      // Background: Deep Dark Tech Minimalist
-      ctx.fillStyle = '#0a0d14';
+      // 1. Background
+      ctx.fillStyle = theme.bg;
       ctx.fillRect(0, 0, width, height);
 
-      // Subtle Accent Glow
-      const gradient = ctx.createRadialGradient(900, 200, 50, 900, 200, 600);
-      gradient.addColorStop(0, 'rgba(0, 102, 255, 0.22)');
+      // 2. Subtle Accent Glow
+      const glowX = width * 0.85;
+      const glowY = height * 0.18;
+      const gradient = ctx.createRadialGradient(glowX, glowY, 40, glowX, glowY, width * 0.55);
+      gradient.addColorStop(0, theme.glow);
       gradient.addColorStop(1, 'transparent');
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, width, height);
 
+      if (activeRatio === '16:9') {
+        // Landscape Layout
+        renderLandscape(ctx, width, height, theme, { category, headline, subheadline, p1Title, p1Desc, p2Title, p2Desc, p3Title, p3Desc, ctaText, ctaSub });
+      } else if (activeRatio === '1:1') {
+        // Square Layout
+        renderSquare(ctx, width, height, theme, { category, headline, subheadline, p1Title, p1Desc, p2Title, p2Desc, p3Title, p3Desc, ctaText, ctaSub });
+      } else {
+        // Portrait (4:5) Default Layout
+        renderPortrait(ctx, width, height, theme, { category, headline, subheadline, p1Title, p1Desc, p2Title, p2Desc, p3Title, p3Desc, ctaText, ctaSub });
+      }
+    }
+
+    function renderPortrait(ctx, width, height, theme, data) {
       // Top Brand Header
       ctx.font = 'bold 24px "Plus Jakarta Sans", sans-serif';
-      ctx.fillStyle = '#0084ff';
+      ctx.fillStyle = theme.brand;
       ctx.fillText('ZENTHRA SYSTEMS', 80, 100);
 
       ctx.font = '600 16px "Plus Jakarta Sans", sans-serif';
-      ctx.fillStyle = '#64748b';
+      ctx.fillStyle = theme.brandSub;
       ctx.fillText('ENTERPRISE DIGITAL ARCHITECTURE', 80, 130);
 
       // Category Tag
-      ctx.fillStyle = '#1e293b';
-      if (ctx.roundRect) {
-        ctx.beginPath();
-        ctx.roundRect(80, 185, 230, 42, 8);
-        ctx.fill();
-      } else {
-        ctx.fillRect(80, 185, 230, 42);
-      }
+      ctx.fillStyle = theme.categoryBg;
+      ctx.beginPath();
+      ctx.roundRect(80, 185, 230, 42, 8);
+      ctx.fill();
+
       ctx.font = '700 14px "Plus Jakarta Sans", sans-serif';
-      ctx.fillStyle = '#38bdf8';
-      ctx.fillText(`• ${category.toUpperCase()}`, 100, 212);
+      ctx.fillStyle = theme.categoryText;
+      ctx.fillText(`• ${data.category.toUpperCase()}`, 100, 212);
 
       // Main Headline
       ctx.font = '800 50px "Plus Jakarta Sans", sans-serif';
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText(headline, 80, 310, 920);
+      ctx.fillStyle = theme.headline;
+      ctx.fillText(data.headline, 80, 310, 920);
 
       // Subheadline
       ctx.font = 'normal 24px "Plus Jakarta Sans", sans-serif';
-      ctx.fillStyle = '#94a3b8';
-      ctx.fillText(subheadline, 80, 380, 920);
+      ctx.fillStyle = theme.subheadline;
+      ctx.fillText(data.subheadline, 80, 380, 920);
 
       // Divider Line
-      ctx.strokeStyle = '#1e293b';
+      ctx.strokeStyle = theme.divider;
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(80, 440);
@@ -551,79 +760,235 @@
 
       // Points
       const points = [
-        { title: p1Title, desc: p1Desc },
-        { title: p2Title, desc: p2Desc },
-        { title: p3Title, desc: p3Desc }
+        { title: data.p1Title, desc: data.p1Desc },
+        { title: data.p2Title, desc: data.p2Desc },
+        { title: data.p3Title, desc: data.p3Desc }
       ];
 
       let startY = 510;
       points.forEach((point, index) => {
-        // Card Box
-        ctx.fillStyle = '#0f172a';
-        if (ctx.roundRect) {
-          ctx.beginPath();
-          ctx.roundRect(80, startY, 920, 105, 12);
-          ctx.fill();
-          ctx.strokeStyle = '#1e293b';
-          ctx.lineWidth = 1.5;
-          ctx.stroke();
-        } else {
-          ctx.fillRect(80, startY, 920, 105);
-        }
+        ctx.fillStyle = theme.cardBg;
+        ctx.beginPath();
+        ctx.roundRect(80, startY, 920, 105, 12);
+        ctx.fill();
+        ctx.strokeStyle = theme.cardBorder;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
 
-        // Number
-        ctx.fillStyle = '#0084ff';
+        ctx.fillStyle = theme.cardNumber;
         ctx.font = 'bold 22px "JetBrains Mono", monospace';
         ctx.fillText(`0${index + 1}`, 110, startY + 60);
 
-        // Point Title
         ctx.font = '700 22px "Plus Jakarta Sans", sans-serif';
-        ctx.fillStyle = '#f8fafc';
+        ctx.fillStyle = theme.cardTitle;
         ctx.fillText(point.title, 160, startY + 46);
 
-        // Point Desc
         ctx.font = 'normal 18px "Plus Jakarta Sans", sans-serif';
-        ctx.fillStyle = '#94a3b8';
+        ctx.fillStyle = theme.cardDesc;
         ctx.fillText(point.desc, 160, startY + 78);
 
         startY += 130;
       });
 
       // Footer / CTA
-      ctx.fillStyle = '#111827';
-      if (ctx.roundRect) {
-        ctx.beginPath();
-        ctx.roundRect(80, 1140, 920, 120, 12);
-        ctx.fill();
-        ctx.strokeStyle = '#1e293b';
-        ctx.stroke();
-      } else {
-        ctx.fillRect(80, 1140, 920, 120);
-      }
+      ctx.fillStyle = theme.ctaBg;
+      ctx.beginPath();
+      ctx.roundRect(80, 1140, 920, 120, 12);
+      ctx.fill();
+      ctx.strokeStyle = theme.ctaBorder;
+      ctx.stroke();
 
       ctx.font = '700 22px "Plus Jakarta Sans", sans-serif';
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText(ctaText, 110, 1190);
+      ctx.fillStyle = theme.ctaText;
+      ctx.fillText(data.ctaText, 110, 1190);
 
       ctx.font = '600 18px "Plus Jakarta Sans", sans-serif';
-      ctx.fillStyle = '#38bdf8';
-      ctx.fillText(ctaSub, 110, 1225);
+      ctx.fillStyle = theme.ctaSub;
+      ctx.fillText(data.ctaSub, 110, 1225);
+    }
+
+    function renderSquare(ctx, width, height, theme, data) {
+      ctx.font = 'bold 22px "Plus Jakarta Sans", sans-serif';
+      ctx.fillStyle = theme.brand;
+      ctx.fillText('ZENTHRA SYSTEMS', 60, 80);
+
+      ctx.fillStyle = theme.categoryBg;
+      ctx.beginPath();
+      ctx.roundRect(60, 120, 220, 36, 8);
+      ctx.fill();
+      ctx.font = '700 13px "Plus Jakarta Sans", sans-serif';
+      ctx.fillStyle = theme.categoryText;
+      ctx.fillText(`• ${data.category.toUpperCase()}`, 78, 143);
+
+      ctx.font = '800 44px "Plus Jakarta Sans", sans-serif';
+      ctx.fillStyle = theme.headline;
+      ctx.fillText(data.headline, 60, 220, 960);
+
+      ctx.font = 'normal 20px "Plus Jakarta Sans", sans-serif';
+      ctx.fillStyle = theme.subheadline;
+      ctx.fillText(data.subheadline, 60, 280, 960);
+
+      const points = [
+        { title: data.p1Title, desc: data.p1Desc },
+        { title: data.p2Title, desc: data.p2Desc },
+        { title: data.p3Title, desc: data.p3Desc }
+      ];
+
+      let startY = 340;
+      points.forEach((point, index) => {
+        ctx.fillStyle = theme.cardBg;
+        ctx.beginPath();
+        ctx.roundRect(60, startY, 960, 95, 12);
+        ctx.fill();
+        ctx.strokeStyle = theme.cardBorder;
+        ctx.stroke();
+
+        ctx.fillStyle = theme.cardNumber;
+        ctx.font = 'bold 20px "JetBrains Mono", monospace';
+        ctx.fillText(`0${index + 1}`, 90, startY + 54);
+
+        ctx.font = '700 20px "Plus Jakarta Sans", sans-serif';
+        ctx.fillStyle = theme.cardTitle;
+        ctx.fillText(point.title, 140, startY + 42);
+
+        ctx.font = 'normal 16px "Plus Jakarta Sans", sans-serif';
+        ctx.fillStyle = theme.cardDesc;
+        ctx.fillText(point.desc, 140, startY + 70);
+
+        startY += 115;
+      });
+
+      ctx.fillStyle = theme.ctaBg;
+      ctx.beginPath();
+      ctx.roundRect(60, 920, 960, 100, 12);
+      ctx.fill();
+      ctx.strokeStyle = theme.ctaBorder;
+      ctx.stroke();
+
+      ctx.font = '700 19px "Plus Jakarta Sans", sans-serif';
+      ctx.fillStyle = theme.ctaText;
+      ctx.fillText(data.ctaText, 90, 960);
+
+      ctx.font = '600 16px "Plus Jakarta Sans", sans-serif';
+      ctx.fillStyle = theme.ctaSub;
+      ctx.fillText(data.ctaSub, 90, 992);
+    }
+
+    function renderLandscape(ctx, width, height, theme, data) {
+      ctx.font = 'bold 20px "Plus Jakarta Sans", sans-serif';
+      ctx.fillStyle = theme.brand;
+      ctx.fillText('ZENTHRA SYSTEMS', 60, 60);
+
+      ctx.fillStyle = theme.categoryBg;
+      ctx.beginPath();
+      ctx.roundRect(300, 40, 200, 30, 6);
+      ctx.fill();
+      ctx.font = '700 12px "Plus Jakarta Sans", sans-serif';
+      ctx.fillStyle = theme.categoryText;
+      ctx.fillText(`• ${data.category.toUpperCase()}`, 315, 60);
+
+      ctx.font = '800 38px "Plus Jakarta Sans", sans-serif';
+      ctx.fillStyle = theme.headline;
+      ctx.fillText(data.headline, 60, 130, 1080);
+
+      ctx.font = 'normal 18px "Plus Jakarta Sans", sans-serif';
+      ctx.fillStyle = theme.subheadline;
+      ctx.fillText(data.subheadline, 60, 175, 1080);
+
+      const points = [
+        { title: data.p1Title, desc: data.p1Desc },
+        { title: data.p2Title, desc: data.p2Desc },
+        { title: data.p3Title, desc: data.p3Desc }
+      ];
+
+      // 3 side-by-side cards
+      const cardWidth = 345;
+      let startX = 60;
+      points.forEach((point, index) => {
+        ctx.fillStyle = theme.cardBg;
+        ctx.beginPath();
+        ctx.roundRect(startX, 230, cardWidth, 230, 12);
+        ctx.fill();
+        ctx.strokeStyle = theme.cardBorder;
+        ctx.stroke();
+
+        ctx.fillStyle = theme.cardNumber;
+        ctx.font = 'bold 20px "JetBrains Mono", monospace';
+        ctx.fillText(`0${index + 1}`, startX + 25, 275);
+
+        ctx.font = '700 18px "Plus Jakarta Sans", sans-serif';
+        ctx.fillStyle = theme.cardTitle;
+        ctx.fillText(point.title, startX + 25, 320, cardWidth - 50);
+
+        ctx.font = 'normal 15px "Plus Jakarta Sans", sans-serif';
+        ctx.fillStyle = theme.cardDesc;
+        wrapText(ctx, point.desc, startX + 25, 360, cardWidth - 50, 22);
+
+        startX += 365;
+      });
+
+      ctx.fillStyle = theme.ctaBg;
+      ctx.beginPath();
+      ctx.roundRect(60, 500, 1080, 110, 12);
+      ctx.fill();
+      ctx.strokeStyle = theme.ctaBorder;
+      ctx.stroke();
+
+      ctx.font = '700 18px "Plus Jakarta Sans", sans-serif';
+      ctx.fillStyle = theme.ctaText;
+      ctx.fillText(data.ctaText, 90, 545);
+
+      ctx.font = '600 15px "Plus Jakarta Sans", sans-serif';
+      ctx.fillStyle = theme.ctaSub;
+      ctx.fillText(data.ctaSub, 90, 580);
+    }
+
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+      const words = text.split(' ');
+      let line = '';
+      for (let n = 0; n < words.length; n++) {
+        const testLine = line + words[n] + ' ';
+        const metrics = ctx.measureText(testLine);
+        if (metrics.width > maxWidth && n > 0) {
+          ctx.fillText(line, x, y);
+          line = words[n] + ' ';
+          y += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+      ctx.fillText(line, x, y);
     }
 
     function downloadPoster() {
       const canvas = document.getElementById('posterCanvas');
       const link = document.createElement('a');
-      link.download = `zenthra_b2b_poster_${Date.now()}.png`;
+      link.download = `zenthra_poster_${activeRatio.replace(':', '_')}_${Date.now()}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
+      showToast(`Exported ${activeRatio} HD PNG to Downloads!`);
     }
 
     function copyCopy(platform) {
       const preset = PRESETS[activePreset];
       if (!preset || !preset[platform]) return;
       navigator.clipboard.writeText(preset[platform]).then(() => {
-        alert(`✓ Copied ${platform.toUpperCase()} post copy to clipboard! Ready to publish.`);
+        showToast(`Copied ${platform.toUpperCase()} post copy to clipboard!`);
       });
+    }
+
+    function showToast(message) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-msg';
+      toast.innerHTML = `<span>✓</span> <span>${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 2600);
     }
 
     document.addEventListener('DOMContentLoaded', () => {

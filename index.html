@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zenthra Systems — Autonomous AI Operations & Systems Engineering</title>
   <meta name="description" content="Zenthra Systems builds enterprise n8n workflow systems, autonomous AI agents, resilient data pipelines, and custom web applications with 24/7 SLA.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Zenthra Systems">
+  <meta property="og:title" content="Zenthra Systems — Autonomous AI Operations & Systems Engineering">
+  <meta property="og:description" content="Enterprise n8n workflow systems, autonomous AI agents, resilient data pipelines, and custom web applications with 24/7 SLA.">
+  <meta property="og:url" content="https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Zenthra Systems — Autonomous AI Operations">
+  <meta name="twitter:description" content="Eliminate repetitive manual operations with enterprise n8n workflows and 24/7 AI agents.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -524,6 +532,67 @@
       letter-spacing: -0.03em;
       color: #38bdf8;
       font-family: var(--font-mono);
+    }
+
+    /* Currency Toggle Group */
+    .currency-toggle-group {
+      display: inline-flex;
+      background: #f1f5f9;
+      padding: 0.2rem;
+      border-radius: 10px;
+      gap: 0.25rem;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .currency-btn {
+      padding: 0.25rem 0.65rem;
+      border-radius: 7px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .currency-btn.active {
+      background: #ffffff;
+      color: var(--accent-primary);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* Toast Notification System */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+
+    .toast-msg {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      border-left: 4px solid #10b981;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      animation: toastSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: auto;
+    }
+
+    @keyframes toastSlideIn {
+      from { transform: translateX(50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
     }
 
     /* Footer */
@@ -1282,6 +1351,15 @@
 
     <div class="calculator-card" id="calculator-card-el">
       <div class="calc-controls">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
+          <span style="font-size: 0.78rem; font-weight: 750; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em;">Invoicing Currency:</span>
+          <div class="currency-toggle-group">
+            <button class="currency-btn active" id="currBtnUSD" onclick="setCurrency('USD', '$')">$ USD</button>
+            <button class="currency-btn" id="currBtnEUR" onclick="setCurrency('EUR', '€')">€ EUR</button>
+            <button class="currency-btn" id="currBtnGBP" onclick="setCurrency('GBP', '£')">£ GBP</button>
+          </div>
+        </div>
+
         <div class="slider-group">
           <label>
             <span>Team Members Spending Time on Manual Ops:</span>
@@ -1513,8 +1591,21 @@
 
   <script>
     // =========================================================================
-    // ROI & SAVINGS CALCULATOR LOGIC
+    // ROI & SAVINGS CALCULATOR LOGIC (MULTI-CURRENCY SUPPORT)
     // =========================================================================
+    let currentCurrencySymbol = '$';
+    let currentCurrencyCode = 'USD';
+
+    function setCurrency(code, symbol) {
+      currentCurrencyCode = code;
+      currentCurrencySymbol = symbol;
+      document.querySelectorAll('.currency-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('currBtn' + code);
+      if (activeBtn) activeBtn.classList.add('active');
+      updateCalculator();
+      showToast(`Switched currency to ${code} (${symbol})`);
+    }
+
     function updateCalculator() {
       const team = parseInt(document.getElementById('teamSize').value, 10);
       const hours = parseInt(document.getElementById('hoursSpent').value, 10);
@@ -1522,14 +1613,42 @@
 
       document.getElementById('teamSizeVal').textContent = `${team} ${team === 1 ? 'Person' : 'People'}`;
       document.getElementById('hoursVal').textContent = `${hours} Hours`;
-      document.getElementById('rateVal').textContent = `$${rate} / hr`;
+      document.getElementById('rateVal').textContent = `${currentCurrencySymbol}${rate} / hr`;
 
       const weeklyHoursSaved = team * hours * 0.90;
       const annualHoursSaved = Math.round(weeklyHoursSaved * 52);
       const annualDollarsSaved = Math.round(annualHoursSaved * rate);
 
       document.getElementById('annualHours').textContent = annualHoursSaved.toLocaleString() + ' hrs';
-      document.getElementById('annualSavings').textContent = '$' + annualDollarsSaved.toLocaleString();
+      document.getElementById('annualSavings').textContent = currentCurrencySymbol + annualDollarsSaved.toLocaleString();
+    }
+
+    function showToast(message) {
+      let container = document.getElementById('toastContainer');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toastContainer';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+      }
+      const toast = document.createElement('div');
+      toast.className = 'toast-msg';
+      toast.innerHTML = `<span>✓</span> <span>${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 2600);
+    }
+
+    function copyToClipboard(text, label = "Text") {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(`Copied ${label} to clipboard!`);
+      }).catch(() => {
+        showToast("Copied to clipboard!");
+      });
     }
 
     // =========================================================================
