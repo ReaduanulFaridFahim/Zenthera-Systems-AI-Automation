@@ -1188,6 +1188,11 @@
       <li><a href="#calculator">ROI Estimator</a></li>
       <li><a href="#chat-assistant">Live AI Agent</a></li>
       <li>
+        <a href="poster_studio.html" target="_blank" class="btn btn-secondary" style="padding: 0.38rem 0.85rem; font-size: 0.82rem; border-color: #bae6fd; color: #0284c7;">
+          <span>🎨 Poster Studio</span>
+        </a>
+      </li>
+      <li>
         <button class="btn btn-tour" onclick="startWebsiteTour()" style="padding: 0.38rem 0.85rem; font-size: 0.82rem;">
           <span>🚀 Interactive Training</span>
         </button>
@@ -1497,6 +1502,7 @@
         <button class="academy-tab" onclick="switchAcademyTab('rag')">3. AI Agent &amp; Supabase RAG</button>
         <button class="academy-tab" onclick="switchAcademyTab('outbound')">4. Outbound Lead Generation</button>
         <button class="academy-tab" onclick="switchAcademyTab('pricing')">5. Sprints, Retainers &amp; Invoicing</button>
+        <button class="academy-tab" onclick="switchAcademyTab('social')">6. Social Media &amp; Poster Engine</button>
       </div>
 
       <div class="academy-body" id="academyBody">
@@ -1972,6 +1978,25 @@
           <p>• <strong>Monthly Retainer — $1,500 to $2,500 / mo:</strong> Continuous workflow maintenance, DLQ monitoring, 99.9% uptime SLA.</p>
           <p>• <strong>Billing:</strong> Invoicing in USD ($), EUR (€), GBP (£) via Stripe or Wise with 50% upfront deposit.</p>
         </div>
+      `,
+      social: `
+        <h3>6. Autonomous Social Media & Inbound DM Engine</h3>
+        <p>A multi-network content machine generating B2B leads across LinkedIn, X (Twitter), and Instagram:</p>
+        <div class="academy-box">
+          <h4>Phase 1: Automated 1080x1350 Poster Generation</h4>
+          <p>Generate high-end dark tech minimalist graphics optimized for mobile social feeds:</p>
+          <div class="academy-code">node poster-generator.js</div>
+          <p>Or open the interactive browser studio: <a href="poster_studio.html" target="_blank" style="color: #0284c7; font-weight: 700; text-decoration: underline;">Launch Poster Studio (1-Click PNG Download) ↗</a></p>
+          
+          <h4>Phase 2: Production n8n Workflow</h4>
+          <p>Import <code>workflows/zenthra_social_automation.json</code> into n8n. Runs every Mon/Wed/Fri at 13:00 GMT, prompts GPT-4o with Zenthra Systems' elite voice, and dispatches across networks.</p>
+
+          <h4>Phase 3: Unified Cross-Network Publishing (Ayrshare)</h4>
+          <p>One single API POST publishes to your LinkedIn Company Page, X handle, Instagram Pro, and Facebook simultaneously without broken OAuth tokens.</p>
+
+          <h4>Phase 4: 24/7 Inbound DM Lead Triage</h4>
+          <p>When leads comment or message keywords like <code>WEBSITE</code>, <code>AUDIT</code>, <code>AI</code>, or <code>SCALE</code>, ManyChat / webhook instantly responds under 15s and directs them to <a href="https://cal.com/zenthra-systems-dyuqpi/30min" target="_blank" style="color: #0284c7; font-weight: 700;">https://cal.com/zenthra-systems-dyuqpi/30min</a>.</p>
+        </div>
       `
     };
 
@@ -1992,7 +2017,7 @@
 
     function switchAcademyTab(tabKey) {
       document.querySelectorAll('.academy-tab').forEach((tab, idx) => {
-        const keys = ['overview', 'sales', 'rag', 'outbound', 'pricing'];
+        const keys = ['overview', 'sales', 'rag', 'outbound', 'pricing', 'social'];
         tab.classList.toggle('active', keys[idx] === tabKey);
       });
       document.getElementById('academyBody').innerHTML = ACADEMY_CONTENT[tabKey] || '';

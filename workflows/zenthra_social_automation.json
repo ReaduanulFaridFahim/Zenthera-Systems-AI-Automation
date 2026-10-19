@@ -1,0 +1,146 @@
+{
+  "name": "Zenthra Systems - Autonomous Social Publisher",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 13 * * 1,3,5"
+            }
+          ]
+        }
+      },
+      "name": "Schedule (Mon/Wed/Fri 1PM GMT)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "id": "node-schedule-trigger"
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "messages": {
+          "message": [
+            {
+              "role": "system",
+              "message": "You are the Head of Growth for Zenthra Systems, an elite web development & AI automation agency targeting founders in the US, UK, Canada, and Europe. Return ONLY valid JSON with keys: linkedin_post, twitter_post, ig_caption, poster_headline, poster_subheadline, point1_title, point1_desc, point2_title, point2_desc, point3_title, point3_desc."
+            },
+            {
+              "role": "user",
+              "message": "Generate a high-converting post and poster content showing why static brochure websites fail in 2026, and how custom web apps with AI agents generate measurable ROI. Include contact email: connect.zenthra@gmail.com."
+            }
+          ]
+        },
+        "jsonOutput": true
+      },
+      "name": "Generate Marketing Copy & Poster Data",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [460, 300],
+      "id": "node-openai-marketing"
+    },
+    {
+      "parameters": {
+        "url": "https://api.creatomate.com/v1/renders",
+        "method": "POST",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "template_id",
+              "value": "YOUR_CREATOMATE_TEMPLATE_ID"
+            },
+            {
+              "name": "modifications",
+              "value": "={{ { 'Title': $json.poster_headline, 'CTA': 'connect.zenthra@gmail.com' } }}"
+            }
+          ]
+        }
+      },
+      "name": "Render Dynamic Video (Creatomate API)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [680, 200],
+      "id": "node-creatomate-render"
+    },
+    {
+      "parameters": {
+        "url": "https://api.ayrshare.com/api/post",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_AYRSHARE_API_KEY"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "post",
+              "value": "={{ $('Generate Marketing Copy & Poster Data').item.json.linkedin_post }}"
+            },
+            {
+              "name": "platforms",
+              "value": "={{ ['linkedin', 'twitter', 'instagram', 'facebook'] }}"
+            },
+            {
+              "name": "mediaUrls",
+              "value": "={{ [$json.url] }}"
+            }
+          ]
+        }
+      },
+      "name": "Auto-Publish Across All Platforms (Ayrshare API)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [920, 300],
+      "id": "node-ayrshare-publish"
+    }
+  ],
+  "connections": {
+    "Schedule (Mon/Wed/Fri 1PM GMT)": {
+      "main": [
+        [
+          {
+            "node": "Generate Marketing Copy & Poster Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Marketing Copy & Poster Data": {
+      "main": [
+        [
+          {
+            "node": "Render Dynamic Video (Creatomate API)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Render Dynamic Video (Creatomate API)": {
+      "main": [
+        [
+          {
+            "node": "Auto-Publish Across All Platforms (Ayrshare API)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
