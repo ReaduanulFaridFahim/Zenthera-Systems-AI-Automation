@@ -1,0 +1,308 @@
+{
+    "total_repositories":  14,
+    "audited_at":  "2026-10-20T20:56:34.6682828+06:00",
+    "results":  [
+                    {
+                        "has_readme":  true,
+                        "pages_status":  " Live",
+                        "readme_size":  10566,
+                        "has_license":  false,
+                        "open_issues":  0,
+                        "name":  "Zenthera-Systems-AI-Automation",
+                        "gaps":  [
+                                     "No topics/tags",
+                                     "No open-source license"
+                                 ],
+                        "description":  "Zenthra Systems â€” Autonomous AI Operations, n8n Workflows, Supabase Vector RAG Hub \u0026 Client Acquisition Engine",
+                        "language":  "HTML",
+                        "license":  "None",
+                        "has_pages":  true,
+                        "qa_grade":  "B (Solid / Polish Needed)",
+                        "topics":  [
+
+                                   ],
+                        "html_url":  "https://github.com/ReaduanulFaridFahim/Zenthera-Systems-AI-Automation"
+                    },
+                    {
+                        "has_readme":  true,
+                        "pages_status":  " Live",
+                        "readme_size":  7649,
+                        "has_license":  false,
+                        "open_issues":  0,
+                        "name":  "tactical-void-replacement-engine",
+                        "gaps":  [
+                                     "No topics/tags",
+                                     "No open-source license"
+                                 ],
+                        "description":  "The Tactical Void \u0026 Drop-In Replacement Engine â€” Empirical Sporting Continuity, Vector Similarity \u0026 Arbitrage Scouting Platform for Players and Head Coaches.",
+                        "language":  "JavaScript",
+                        "license":  "None",
+                        "has_pages":  true,
+                        "qa_grade":  "B (Solid / Polish Needed)",
+                        "topics":  [
+
+                                   ],
+                        "html_url":  "https://github.com/ReaduanulFaridFahim/tactical-void-replacement-engine"
+                    },
+                    {
+                        "has_readme":  true,
+                        "pages_status":  " Live",
+                        "readme_size":  4074,
+                        "has_license":  false,
+                        "open_issues":  0,
+                        "name":  "football-transfers-ffp",
+                        "gaps":  [
+                                     "Missing description",
+                                     "No topics/tags",
+                                     "No open-source license"
+                                 ],
+                        "description":  null,
+                        "language":  "Python",
+                        "license":  "None",
+                        "has_pages":  true,
+                        "qa_grade":  "C (Needs Attention)",
+                        "topics":  [
+
+                                   ],
+                        "html_url":  "https://github.com/ReaduanulFaridFahim/football-transfers-ffp"
+                    },
+                    {
+                        "has_readme":  true,
+                        "pages_status":  "None",
+                        "readme_size":  10187,
+                        "has_license":  false,
+                        "open_issues":  0,
+                        "name":  "ReaduanulFaridFahim",
+                        "gaps":  [
+                                     "No open-source license"
+                                 ],
+                        "description":  "Config files for my GitHub profile.",
+                        "language":  null,
+                        "license":  "None",
+                        "has_pages":  false,
+                        "qa_grade":  "B (Solid / Polish Needed)",
+                        "topics":  [
+                                       "config",
+                                       "github-config"
+                                   ],
+                        "html_url":  "https://github.com/ReaduanulFaridFahim/ReaduanulFaridFahim"
+                    },
+                    {
+                        "has_readme":  true,
+                        "pages_status":  " Live",
+                        "readme_size":  1554,
+                        "has_license":  false,
+                        "open_issues":  0,
+                        "name":  "readuanulfaridfahim.github.io",
+                        "gaps":  [
+                                     "No topics/tags",
+                                     "No open-source license"
+                                 ],
+                        "description":  "This is for my personal portfolio website",
+                        "language":  "HTML",
+                        "license":  "None",
+                        "has_pages":  true,
+                        "qa_grade":  "B (Solid / Polish Needed)",
+                        "topics":  [
+
+                                   ],
+                        "html_url":  "https://github.com/ReaduanulFaridFahim/readuanulfaridfahim.github.io"
+                    },
+                    {
+                        "has_readme":  true,
+                        "pages_status":  "None",
+                        "readme_size":  3728,
+                        "has_license":  true,
+                        "open_issues":  0,
+                        "name":  "Pre-Owned-Bike-Price-Prediction",
+                        "gaps":  [
+                                     "Missing description",
+                                     "No topics/tags"
+                                 ],
+                        "description":  null,
+                        "language":  "HTML",
+                        "license":  "GPL-3.0",
+                        "has_pages":  false,
+                        "qa_grade":  "B (Solid / Polish Needed)",
+                        "topics":  [
+
+                                   ],
+                        "html_url":  "https://github.com/ReaduanulFaridFahim/Pre-Owned-Bike-Price-Prediction"
+                    },
+                    {
+                        "has_readme":  true,
+                        "pages_status":  "None",
+                        "readme_size":  8526,
+                        "has_license":  false,
+                        "open_issues":  0,
+                        "name":  "ABC-Company-Sqa-Assignment",
+                        "gaps":  [
+                                     "No topics/tags",
+                                     "No open-source license"
+                                 ],
+                        "description":  "SQA Assignment for ABC Company Mobile App - Automation Testing with Appium",
+                        "language":  "Python",
+                        "license":  "None",
+                        "has_pages":  false,
+                        "qa_grade":  "B (Solid / Polish Needed)",
+                        "topics":  [
+
+                                   ],
+                        "html_url":  "https://github.com/ReaduanulFaridFahim/ABC-Company-Sqa-Assignment"
+                    },
+                    {
+                        "has_readme":  true,
+                        "pages_status":  "None",
+                        "readme_size":  2099,
+                        "has_license":  true,
+                        "open_issues":  0,
+                        "name":  "Augmented-Reality-Based-Clothing-Trial-App",
+                        "gaps":  [
+                                     "Missing description",
+                                     "No topics/tags"
+                                 ],
+                        "description":  null,
+                        "language":  null,
+                        "license":  "Apache-2.0",
+                        "has_pages":  false,
+                        "qa_grade":  "B (Solid / Polish Needed)",
+                        "topics":  [
+
+                                   ],
+                        "html_url":  "https://github.com/ReaduanulFaridFahim/Augmented-Reality-Based-Clothing-Trial-App"
+                    },
+                    {
+                        "has_readme":  true,
+                        "pages_status":  "None",
+                        "readme_size":  2192,
+                        "has_license":  true,
+                        "open_issues":  0,
+                        "name":  "-Bangla-Handwritten-Text-Conversion-Using-Optical-Character-Recognition-",
+                        "gaps":  [
+                                     "Missing description",
+                                     "No topics/tags"
+                                 ],
+                        "description":  null,
+                        "language":  null,
+                        "license":  "Apache-2.0",
+                        "has_pages":  false,
+                        "qa_grade":  "B (Solid / Polish Needed)",
+                        "topics":  [
+
+                                   ],
+                        "html_url":  "https://github.com/ReaduanulFaridFahim/-Bangla-Handwritten-Text-Conversion-Using-Optical-Character-Recognition-"
+                    },
+                    {
+                        "has_readme":  true,
+                        "pages_status":  "None",
+                        "readme_size":  2027,
+                        "has_license":  false,
+                        "open_issues":  0,
+                        "name":  "Sign-Language-Detection",
+                        "gaps":  [
+                                     "Missing description",
+                                     "No topics/tags",
+                                     "No open-source license"
+                                 ],
+                        "description":  null,
+                        "language":  "Python",
+                        "license":  "None",
+                        "has_pages":  false,
+                        "qa_grade":  "C (Needs Attention)",
+                        "topics":  [
+
+                                   ],
+                        "html_url":  "https://github.com/ReaduanulFaridFahim/Sign-Language-Detection"
+                    },
+                    {
+                        "has_readme":  true,
+                        "pages_status":  "None",
+                        "readme_size":  2794,
+                        "has_license":  false,
+                        "open_issues":  0,
+                        "name":  "Sleep-Disorder-Predictions-",
+                        "gaps":  [
+                                     "No topics/tags",
+                                     "No open-source license"
+                                 ],
+                        "description":  "Sleep Disorder Prediction System Using Machine Learning  This repository contains the implementation and documentation of a Sleep Disorder Prediction System developed as a group project for the CSE445 course at North South University under the supervision of Assistant Professor Riasat Khan.",
+                        "language":  null,
+                        "license":  "None",
+                        "has_pages":  false,
+                        "qa_grade":  "B (Solid / Polish Needed)",
+                        "topics":  [
+
+                                   ],
+                        "html_url":  "https://github.com/ReaduanulFaridFahim/Sleep-Disorder-Predictions-"
+                    },
+                    {
+                        "has_readme":  true,
+                        "pages_status":  "None",
+                        "readme_size":  30,
+                        "has_license":  false,
+                        "open_issues":  0,
+                        "name":  "Libray-Managment-System-RFF-WRT",
+                        "gaps":  [
+                                     "Missing description",
+                                     "README.md skeletal",
+                                     "No topics/tags",
+                                     "No open-source license"
+                                 ],
+                        "description":  null,
+                        "language":  "Java",
+                        "license":  "None",
+                        "has_pages":  false,
+                        "qa_grade":  "C (Needs Attention)",
+                        "topics":  [
+
+                                   ],
+                        "html_url":  "https://github.com/ReaduanulFaridFahim/Libray-Managment-System-RFF-WRT"
+                    },
+                    {
+                        "has_readme":  true,
+                        "pages_status":  "None",
+                        "readme_size":  26,
+                        "has_license":  false,
+                        "open_issues":  0,
+                        "name":  "Hotel-Management-System-",
+                        "gaps":  [
+                                     "Missing description",
+                                     "README.md skeletal",
+                                     "No topics/tags",
+                                     "No open-source license"
+                                 ],
+                        "description":  null,
+                        "language":  "PHP",
+                        "license":  "None",
+                        "has_pages":  false,
+                        "qa_grade":  "C (Needs Attention)",
+                        "topics":  [
+
+                                   ],
+                        "html_url":  "https://github.com/ReaduanulFaridFahim/Hotel-Management-System-"
+                    },
+                    {
+                        "has_readme":  true,
+                        "pages_status":  "None",
+                        "readme_size":  135,
+                        "has_license":  false,
+                        "open_issues":  0,
+                        "name":  "CV",
+                        "gaps":  [
+                                     "Missing description",
+                                     "README.md skeletal",
+                                     "No topics/tags",
+                                     "No open-source license"
+                                 ],
+                        "description":  null,
+                        "language":  "HTML",
+                        "license":  "None",
+                        "has_pages":  false,
+                        "qa_grade":  "C (Needs Attention)",
+                        "topics":  [
+
+                                   ],
+                        "html_url":  "https://github.com/ReaduanulFaridFahim/CV"
+                    }
+                ]
+}
