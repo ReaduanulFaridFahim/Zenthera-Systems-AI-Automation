@@ -94,13 +94,20 @@ Write-Host ""
 Write-Host "--- 4. CHECKING LIVE N8N CLUSTER WEBHOOK ---" -ForegroundColor Yellow
 $webhookUrl = "https://zenthrasystems.app.n8n.cloud/webhook/c3bf3837-a96a-4283-9a3f-ab55afe4df54/chat"
 try {
+    $uniqueSession = "qa-probe-" + (Get-Date -Format "yyyyMMddHHmmss")
     $body = @{
-        action = "ping"
-        chatInput = "QA Ping: Autonomous health probe"
-        sessionId = "qa-session-probe"
-    } | ConvertTo-Json
+        action = "chat"
+        chatInput = "Hi, we are looking for an enterprise n8n workflow consultancy to automate our sales operations and lead routing into HubSpot and Slack. Can Zenthra Systems help?"
+        sessionId = $uniqueSession
+        clientContext = @{
+            name = "Enterprise Lead QA"
+            company = "Global Enterprise Corp"
+            title = "VP of Technology"
+            region = "USA / EMEA"
+        }
+    } | ConvertTo-Json -Depth 5
 
-    $resp = Invoke-RestMethod -Uri $webhookUrl -Method POST -Body $body -ContentType "application/json" -TimeoutSec 15
+    $resp = Invoke-RestMethod -Uri $webhookUrl -Method POST -Body $body -ContentType "application/json" -TimeoutSec 35
     Write-Host "  [PASS] n8n Webhook responding: $($resp | ConvertTo-Json -Compress)" -ForegroundColor Green
 } catch {
     Write-Host "  [INFO] Webhook ping status: $($_.Exception.Message)" -ForegroundColor Yellow
