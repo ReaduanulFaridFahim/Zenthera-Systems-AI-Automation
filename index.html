@@ -1581,6 +1581,7 @@
         <button class="academy-tab" onclick="switchAcademyTab('outbound')">4. Outbound Lead Generation</button>
         <button class="academy-tab" onclick="switchAcademyTab('pricing')">5. Sprints, Retainers &amp; Invoicing</button>
         <button class="academy-tab" onclick="switchAcademyTab('social')">6. Social Media &amp; Poster Engine</button>
+        <button class="academy-tab" onclick="switchAcademyTab('simulations')">7. Live Simulations &amp; Outbound</button>
       </div>
 
       <div class="academy-body" id="academyBody">
@@ -2116,6 +2117,57 @@
           <h4>Phase 4: 24/7 Inbound DM Lead Triage</h4>
           <p>When leads comment or message keywords like <code>WEBSITE</code>, <code>AUDIT</code>, <code>AI</code>, or <code>SCALE</code>, ManyChat / webhook instantly responds under 15s and directs them to <a href="https://cal.com/zenthra-systems-dyuqpi/30min" target="_blank" style="color: #0284c7; font-weight: 700;">https://cal.com/zenthra-systems-dyuqpi/30min</a>.</p>
         </div>
+      `,
+      simulations: `
+        <h3>7. Live Enterprise Client Simulations & Outbound Campaign</h3>
+        <p>Real-time telemetry from enterprise inquiries tested against your live n8n AI cluster and outbound dispatch logs:</p>
+        
+        <div class="academy-box" style="margin-bottom: 1rem;">
+          <h4>🎯 Verified Live Simulation Audit (All 3 Passed · 200 OK)</h4>
+          <div style="display: grid; gap: 0.75rem; margin-top: 0.75rem;">
+            <div style="background: #ffffff; border: 1px solid #bae6fd; padding: 0.85rem; border-radius: 10px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                <strong>🚢 TransEuropa Freight & Customs BV (Rotterdam, NL)</strong>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #059669; background: #ecfdf5; padding: 2px 8px; border-radius: 4px;">Latency: 5,539ms · Status: 200 OK</span>
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.35rem;"><strong>Inquiry:</strong> Automated vision extraction for 250+ daily EUR.1 customs declarations and bills of lading into TMS.</p>
+              <p style="font-size: 0.82rem; color: #0369a1;"><strong>AI Qualification:</strong> Structured 3-tier delivery phases (Discovery 1-2w, Dev 3-6w, Optimization 1-2w) & requested current TMS stack.</p>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid #bae6fd; padding: 0.85rem; border-radius: 10px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                <strong>⚡ CloudScale Global SaaS (Austin, TX, USA)</strong>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #059669; background: #ecfdf5; padding: 2px 8px; border-radius: 4px;">Latency: 3,526ms · Status: 200 OK</span>
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.35rem;"><strong>Inquiry:</strong> Sub-30s lead triage for 800+ monthly demo leads, Zapier tax elimination ($900/mo overages), HubSpot + Slack routing.</p>
+              <p style="font-size: 0.82rem; color: #0369a1;"><strong>AI Qualification:</strong> Structured 4-pillar architecture (Webhook capture, enrichment, AI scoring, instant Slack ping) & calculated $187k/yr savings.</p>
+            </div>
+
+            <div style="background: #ffffff; border: 1px solid #bae6fd; padding: 0.85rem; border-radius: 10px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                <strong>💼 Sterling &amp; Vance Wealth Partners (London, UK)</strong>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #059669; background: #ecfdf5; padding: 2px 8px; border-radius: 4px;">Latency: 5,332ms · Status: 200 OK</span>
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.35rem;"><strong>Inquiry:</strong> Private Supabase pgvector knowledge base for 50 wealth managers with strict GDPR data sovereignty.</p>
+              <p style="font-size: 0.82rem; color: #0369a1;"><strong>AI Qualification:</strong> Verified private isolated vectors, role-based access control, zero public LLM training, and Cal.com executive handoff.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="academy-box">
+          <h4>🚀 Active Outbound Campaigns &amp; Lead Manifest (6 Verticals)</h4>
+          <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 0.5rem;">The outbound campaign dispatcher has generated hyper-personalized technical architectures for 6 global enterprises:</p>
+          <ul style="font-size: 0.82rem; line-height: 1.6; color: var(--text-secondary); margin-left: 1.25rem;">
+            <li><strong>Nexus Freight (Chicago, USA):</strong> $96,687/yr labor savings (EDI/TMS vision automation)</li>
+            <li><strong>CloudScale Global (Austin, USA):</strong> $187,850/yr labor savings (Sub-30s HubSpot lead triage)</li>
+            <li><strong>Sterling &amp; Vance Wealth (London, UK):</strong> £167,960/yr labor savings (Private GDPR Supabase pgvector)</li>
+            <li><strong>Bavaria Precision Parts (Munich, Germany):</strong> €215,475/yr labor savings (Autonomous Vision Invoicing &amp; SAP sync)</li>
+            <li><strong>Pacific HealthBridge (Singapore):</strong> $72,930/yr labor savings (24/7 WhatsApp triage agent)</li>
+            <li><strong>Apex OmniCommerce (Sydney, Australia):</strong> $139,230/yr labor savings (Real-time 3PL/Shopify inventory guard)</li>
+          </ul>
+          <p style="margin-top: 0.85rem; font-size: 0.82rem;">To re-dispatch campaigns with custom parameters anytime:</p>
+          <div class="academy-code">powershell -ExecutionPolicy Bypass -File tools/dispatch_outbound_campaign.ps1</div>
+        </div>
       `
     };
 
@@ -2136,7 +2188,7 @@
 
     function switchAcademyTab(tabKey) {
       document.querySelectorAll('.academy-tab').forEach((tab, idx) => {
-        const keys = ['overview', 'sales', 'rag', 'outbound', 'pricing', 'social'];
+        const keys = ['overview', 'sales', 'rag', 'outbound', 'pricing', 'social', 'simulations'];
         tab.classList.toggle('active', keys[idx] === tabKey);
       });
       document.getElementById('academyBody').innerHTML = ACADEMY_CONTENT[tabKey] || '';

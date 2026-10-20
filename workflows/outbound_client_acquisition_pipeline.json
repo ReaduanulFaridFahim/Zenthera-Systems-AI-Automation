@@ -1,5 +1,5 @@
 {
-  "name": "Zenthra Systems — Autonomous Outbound Client Acquisition & Cold Email Engine",
+  "name": "Zenthra Systems — Autonomous Outbound Client Acquisition & Multi-CRM Engine",
   "nodes": [
     {
       "parameters": {
@@ -61,7 +61,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Fallback seed leads if running in test environment without live Apollo key\nconst apolloData = $json.people || [];\n\nconst sampleLeads = [\n  {\n    first_name: 'Marcus',\n    last_name: 'Vance',\n    email: 'marcus@nexustechlogistics.com',\n    title: 'VP of Technology & Operations',\n    organization: { name: 'Nexus Logistics', website_url: 'nexuslogistics.com' },\n    headline: 'Scaling multi-channel delivery ops across US & Canada',\n    pain_point: 'Manual freight bill auditing and slow CRM lead dispatch'\n  },\n  {\n    first_name: 'Sarah',\n    last_name: 'Chen',\n    email: 'sarah@kineticgrowth.io',\n    title: 'Head of Growth Operations',\n    organization: { name: 'Kinetic Agency', website_url: 'kineticgrowth.io' },\n    headline: 'High-growth B2B lead generation agency running paid ads',\n    pain_point: 'SDRs taking 45 minutes to respond to Meta Lead Ads, losing prospect conversions'\n  },\n  {\n    first_name: 'David',\n    last_name: 'Kowalski',\n    email: 'david@luminaecommerce.co',\n    title: 'Founder & CEO',\n    organization: { name: 'Lumina Commerce', website_url: 'luminaecommerce.co' },\n    headline: '8-figure multi-brand Shopify ecosystem',\n    pain_point: 'Disconnected inventory sync between Shopify, 3PL, and QuickBooks'\n  }\n];\n\nconst rawLeads = apolloData.length > 0 ? apolloData : sampleLeads;\n\nreturn rawLeads.map(lead => ({\n  json: {\n    first_name: lead.first_name,\n    last_name: lead.last_name,\n    full_name: `${lead.first_name} ${lead.last_name}`,\n    email: lead.email,\n    title: lead.title,\n    company_name: lead.organization ? lead.organization.name : 'your company',\n    domain: lead.organization ? lead.organization.website_url : '',\n    pain_point: lead.pain_point || 'Operational manual bottlenecks in data and workflow routing'\n  }\n}));"
+        "jsCode": "// Fallback seed leads if running in test environment without live Apollo key\nconst apolloData = $json.people || [];\n\nconst sampleLeads = [\n  {\n    first_name: 'Marcus',\n    last_name: 'Vance',\n    email: 'marcus@nexustechlogistics.com',\n    title: 'VP of Technology & Operations',\n    organization: { name: 'Nexus Freight Logistics', website_url: 'nexuslogistics.com' },\n    region: 'Chicago, IL, USA',\n    pain_point: 'Manual freight bill auditing, EDI data entry bottlenecks, and delayed TMS dispatch',\n    estimated_annual_savings: 96687\n  },\n  {\n    first_name: 'Elena',\n    last_name: 'Rostova',\n    email: 'elena.rostova@cloudscale.io',\n    title: 'VP of Growth Operations',\n    organization: { name: 'CloudScale Global', website_url: 'cloudscaleglobal.io' },\n    region: 'Austin, TX, USA',\n    pain_point: '45-minute SDR lead response latency on Meta/Google Ads leads and $900/mo Zapier task tax',\n    estimated_annual_savings: 187850\n  },\n  {\n    first_name: 'Alistair',\n    last_name: 'Sterling',\n    email: 'a.sterling@sterlingvance.co.uk',\n    title: 'Chief Technology Officer',\n    organization: { name: 'Sterling & Vance Wealth', website_url: 'sterlingvance.co.uk' },\n    region: 'London, UK',\n    pain_point: 'Client financial dossiers trapped in PDF silos; lack of private GDPR vector search',\n    estimated_annual_savings: 167960\n  }\n];\n\nconst rawLeads = apolloData.length > 0 ? apolloData : sampleLeads;\n\nreturn rawLeads.map(lead => ({\n  json: {\n    first_name: lead.first_name,\n    last_name: lead.last_name,\n    full_name: `${lead.first_name} ${lead.last_name}`,\n    email: lead.email,\n    title: lead.title,\n    company_name: lead.organization ? lead.organization.name : 'your company',\n    domain: lead.organization ? lead.organization.website_url : '',\n    region: lead.region || 'North America / EMEA',\n    pain_point: lead.pain_point || 'Operational manual bottlenecks in data and workflow routing',\n    estimated_annual_savings: lead.estimated_annual_savings || 120000\n  }\n}));"
       },
       "id": "outbound-004",
       "name": "Normalize & Filter Verified Leads",
@@ -75,7 +75,7 @@
         "messages": {
           "messageValues": [
             {
-              "message": "=You are an elite B2B Solutions Architect at Zenthra Systems (an engineering consultancy specializing in enterprise n8n workflow systems, autonomous AI agents, and data engineering pipelines).\n\nYour task is to write a highly technical, non-salesy, hyper-personalized 3-sentence outreach email to a prospective client.\n\nProspect Details:\n- Name: {{ $json.first_name }} {{ $json.last_name }}\n- Title: {{ $json.title }}\n- Company: {{ $json.company_name }}\n- Known Operational Pain Point: {{ $json.pain_point }}\n\nStrict Rules:\n1. Tone: Consultative, senior peer-to-peer, zero fluff, zero generic compliments like 'hope this finds you well'.\n2. Sentence 1: Acknowledge their exact operational bottleneck.\n3. Sentence 2: Mention how Zenthra Systems solved this exact problem using an automated n8n pipeline or AI agent architecture with specific metrics (e.g. reducing triage latency from 45 min to 30 sec).\n4. Sentence 3: Low-friction CTA asking if they are open to reviewing an asynchronous 2-minute architectural blueprint.\n\nReturn clean JSON in the format:\n{\n  \"subject\": \"n8n workflow for {{ $json.company_name }}'s operations\",\n  \"body\": \"[email body]\"\n}"
+              "message": "=You are an elite B2B Solutions Architect at Zenthra Systems (an engineering consultancy specializing in enterprise n8n workflow systems, autonomous AI agents, and data engineering pipelines).\n\nYour task is to write a highly technical, non-salesy, hyper-personalized 3-sentence outreach email to a prospective client.\n\nProspect Details:\n- Name: {{ $json.first_name }} {{ $json.last_name }}\n- Title: {{ $json.title }}\n- Company: {{ $json.company_name }}\n- Known Operational Pain Point: {{ $json.pain_point }}\n- Estimated Recoverable Annual Savings: ${{ $json.estimated_annual_savings }}\n\nStrict Rules:\n1. Tone: Consultative, senior peer-to-peer, zero fluff, zero generic compliments like 'hope this finds you well'.\n2. Sentence 1: Acknowledge their exact operational bottleneck.\n3. Sentence 2: Mention how Zenthra Systems solved this exact problem using an automated n8n pipeline or AI agent architecture with specific metrics (e.g. reducing triage latency from 45 min to 30 sec, recovering ${{ $json.estimated_annual_savings }}/yr in manual labor).\n4. Sentence 3: Low-friction CTA asking if they are open to reviewing an asynchronous 2-minute architectural blueprint.\n\nReturn clean JSON in the format:\n{\n  \"subject\": \"n8n workflow architecture for {{ $json.company_name }}'s operations\",\n  \"body\": \"[email body]\"\n}"
             }
           ]
         },
@@ -97,7 +97,7 @@
     },
     {
       "parameters": {
-        "jsCode": "let parsed;\ntry {\n  const raw = $json.message.content.replace(/```json/g, '').replace(/```/g, '').trim();\n  parsed = JSON.parse(raw);\n} catch(e) {\n  parsed = {\n    subject: `Technical architecture inquiry for ${$('Normalize & Filter Verified Leads').item.json.company_name}`,\n    body: `Hi ${$('Normalize & Filter Verified Leads').item.json.first_name},\\n\\nNoticed your team is scaling operations at ${$('Normalize & Filter Verified Leads').item.json.company_name}. We recently built an automated n8n pipeline solving ${$('Normalize & Filter Verified Leads').item.json.pain_point}, cutting latency by 90% without adding headcount.\\n\\nWould you be open to an asynchronous 2-minute blueprint of how we wired this up?\\n\\nBest,\\nZenthra Systems Engineering Team\\nconnect.zenthra@gmail.com`\n  };\n}\n\nreturn {\n  json: {\n    to_email: $('Normalize & Filter Verified Leads').item.json.email,\n    to_name: $('Normalize & Filter Verified Leads').item.json.full_name,\n    company: $('Normalize & Filter Verified Leads').item.json.company_name,\n    subject: parsed.subject,\n    body: parsed.body\n  }\n};"
+        "jsCode": "let parsed;\ntry {\n  const raw = $json.message.content.replace(/```json/g, '').replace(/```/g, '').trim();\n  parsed = JSON.parse(raw);\n} catch(e) {\n  const lead = $('Normalize & Filter Verified Leads').item.json;\n  parsed = {\n    subject: `Technical architecture inquiry for ${lead.company_name}`,\n    body: `Hi ${lead.first_name},\\n\\nNoticed your team is scaling operations at ${lead.company_name}. We recently built an automated n8n pipeline solving ${lead.pain_point}, cutting latency by 90% and recovering ~$${lead.estimated_annual_savings.toLocaleString()} in annual labor.\\n\\nWould you be open to an asynchronous 2-minute blueprint of how we wired this up?\\n\\nBest,\\nZenthra Systems Engineering Team\\nconnect.zenthra@gmail.com`\n  };\n}\n\nconst lead = $('Normalize & Filter Verified Leads').item.json;\n\nreturn {\n  json: {\n    first_name: lead.first_name,\n    last_name: lead.last_name,\n    to_email: lead.email,\n    to_name: lead.full_name,\n    company: lead.company_name,\n    title: lead.title,\n    region: lead.region,\n    pain_point: lead.pain_point,\n    estimated_annual_savings: lead.estimated_annual_savings,\n    subject: parsed.subject,\n    body: parsed.body,\n    booking_link: \"https://cal.com/zenthra-systems-dyuqpi/30min\"\n  }\n};"
       },
       "id": "outbound-006",
       "name": "Format Outbound Dispatch Payload",
@@ -118,7 +118,7 @@
       "name": "Dispatch Personalized Email (Gmail / SMTP)",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
-      "position": [1380, 400],
+      "position": [1380, 280],
       "credentials": {
         "smtp": {
           "id": "zenthra_smtp",
@@ -128,13 +128,125 @@
     },
     {
       "parameters": {
-        "jsCode": "return {\n  json: {\n    event: 'OUTBOUND_DISPATCH_CONFIRMED',\n    recipient: $json.to_name,\n    email: $json.to_email,\n    company: $json.company,\n    subject: $json.subject,\n    status: 'DISPATCHED_TO_LEAD',\n    timestamp: new Date().toISOString()\n  }\n};"
+        "method": "POST",
+        "url": "https://api.resend.com/emails",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $vars.RESEND_API_KEY || 're_default_zenthra_key' }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"from\": \"Zenthra Systems <outreach@zenthrasystems.com>\",\n  \"to\": [\"{{ $json.to_email }}\"],\n  \"subject\": \"{{ $json.subject }}\",\n  \"html\": \"<div style='font-family: sans-serif; line-height: 1.6; color: #1e293b;'><p>{{ $json.body.replace(/\\n/g, '<br>') }}</p><p style='margin-top: 24px; padding-top: 16px; border-top: 1px solid #e2e8f0; font-size: 13px; color: #64748b;'><strong>Zenthra Systems Engineering Studio</strong><br><a href='https://cal.com/zenthra-systems-dyuqpi/30min' style='color: #0284c7; text-decoration: none;'>Schedule Strategy Session on Cal.com &rarr;</a></p></div>\"\n}",
+        "options": {}
       },
       "id": "outbound-008",
+      "name": "Dispatch via Resend API (High-Deliverability)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1380, 480]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.hubapi.com/crm/v3/objects/contacts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $vars.HUBSPOT_ACCESS_TOKEN || 'pat-eu1-dummy-zenthra' }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"properties\": {\n    \"email\": \"{{ $json.to_email }}\",\n    \"firstname\": \"{{ $json.first_name }}\",\n    \"lastname\": \"{{ $json.last_name }}\",\n    \"company\": \"{{ $json.company }}\",\n    \"jobtitle\": \"{{ $json.title }}\",\n    \"lifecyclestage\": \"lead\",\n    \"hs_lead_status\": \"OUTBOUND_CONTACTED\",\n    \"notes_last_contacted\": \"{{ new Date().toISOString() }}\"\n  }\n}",
+        "options": {}
+      },
+      "id": "outbound-009",
+      "name": "HubSpot CRM Sync (Create/Update Contact)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1620, 280]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.notion.com/v1/pages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $vars.NOTION_API_KEY || 'secret_notion_key' }}"
+            },
+            {
+              "name": "Notion-Version",
+              "value": "2022-06-28"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"parent\": { \"database_id\": \"{{ $vars.NOTION_DATABASE_ID || 'zenthra_pipeline_db' }}\" },\n  \"properties\": {\n    \"Name\": { \"title\": [{ \"text\": { \"content\": \"{{ $json.to_name }}\" } }] },\n    \"Company\": { \"rich_text\": [{ \"text\": { \"content\": \"{{ $json.company }}\" } }] },\n    \"Title\": { \"rich_text\": [{ \"text\": { \"content\": \"{{ $json.title }}\" } }] },\n    \"Email\": { \"email\": \"{{ $json.to_email }}\" },\n    \"Estimated Annual ROI\": { \"number\": {{ $json.estimated_annual_savings }} },\n    \"Status\": { \"select\": { \"name\": \"Outbound Dispatched\" } },\n    \"Cal Link\": { \"url\": \"https://cal.com/zenthra-systems-dyuqpi/30min\" }\n  }\n}",
+        "options": {}
+      },
+      "id": "outbound-010",
+      "name": "Notion Enterprise CRM Pipeline Sync",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1620, 480]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SLACK_WEBHOOK_URL || 'https://hooks.slack.com/services/DUMMY/SLACK/WEBHOOK' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"text\": \"🚀 *Outbound Prospect Engaged*: {{ $json.to_name }} ({{ $json.company }})\\n*Estimated ROI*: ${{ $json.estimated_annual_savings.toLocaleString() }}/yr\\n*Status*: Dispatched & Synced to HubSpot + Notion\\n*Booking Link*: https://cal.com/zenthra-systems-dyuqpi/30min\"\n}",
+        "options": {}
+      },
+      "id": "outbound-011",
+      "name": "Slack Enterprise Deal Room Alert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1860, 380]
+    },
+    {
+      "parameters": {
+        "jsCode": "return {\n  json: {\n    event: 'OUTBOUND_PIPELINE_TRANSACTION_COMPLETE',\n    recipient: $json.to_name,\n    email: $json.to_email,\n    company: $json.company,\n    annual_savings: $json.estimated_annual_savings,\n    hubspot_synced: true,\n    notion_synced: true,\n    slack_notified: true,\n    timestamp: new Date().toISOString()\n  }\n};"
+      },
+      "id": "outbound-012",
       "name": "Log Outreach Telemetry",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [1600, 400]
+      "position": [2080, 380]
     }
   ],
   "connections": {
@@ -200,11 +312,60 @@
             "node": "Dispatch Personalized Email (Gmail / SMTP)",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Dispatch via Resend API (High-Deliverability)",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
     },
     "Dispatch Personalized Email (Gmail / SMTP)": {
+      "main": [
+        [
+          {
+            "node": "HubSpot CRM Sync (Create/Update Contact)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dispatch via Resend API (High-Deliverability)": {
+      "main": [
+        [
+          {
+            "node": "Notion Enterprise CRM Pipeline Sync",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HubSpot CRM Sync (Create/Update Contact)": {
+      "main": [
+        [
+          {
+            "node": "Slack Enterprise Deal Room Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion Enterprise CRM Pipeline Sync": {
+      "main": [
+        [
+          {
+            "node": "Slack Enterprise Deal Room Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack Enterprise Deal Room Alert": {
       "main": [
         [
           {

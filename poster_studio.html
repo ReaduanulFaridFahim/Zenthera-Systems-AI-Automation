@@ -384,13 +384,26 @@
       </div>
 
       <div class="form-group">
-        <label>Load High-Converting B2B Preset</label>
+        <label>High-Converting B2B Template Presets</label>
+        <div style="display: flex; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 0.5rem;">
+          <button type="button" class="pill-btn preset-chip active" data-preset="brochure" style="font-size: 0.72rem; padding: 0.25rem 0.6rem;" onclick="selectTemplateChip('brochure')">Brochure vs AI</button>
+          <button type="button" class="pill-btn preset-chip" data-preset="zapier" style="font-size: 0.72rem; padding: 0.25rem 0.6rem;" onclick="selectTemplateChip('zapier')">Zapier Tax</button>
+          <button type="button" class="pill-btn preset-chip" data-preset="lead-triage" style="font-size: 0.72rem; padding: 0.25rem 0.6rem;" onclick="selectTemplateChip('lead-triage')">Sub-30s Triage</button>
+          <button type="button" class="pill-btn preset-chip" data-preset="invoice-ai" style="font-size: 0.72rem; padding: 0.25rem 0.6rem;" onclick="selectTemplateChip('invoice-ai')">Invoice AI</button>
+          <button type="button" class="pill-btn preset-chip" data-preset="cyclistic-bi" style="font-size: 0.72rem; padding: 0.25rem 0.6rem;" onclick="selectTemplateChip('cyclistic-bi')">BI Dashboard</button>
+          <button type="button" class="pill-btn preset-chip" data-preset="bottleneck-breakdown" style="font-size: 0.72rem; padding: 0.25rem 0.6rem;" onclick="selectTemplateChip('bottleneck-breakdown')">Margin Leak</button>
+          <button type="button" class="pill-btn preset-chip" data-preset="ai-vs-human" style="font-size: 0.72rem; padding: 0.25rem 0.6rem;" onclick="selectTemplateChip('ai-vs-human')">AI vs FTE</button>
+          <button type="button" class="pill-btn preset-chip" data-preset="scale-matrix" style="font-size: 0.72rem; padding: 0.25rem 0.6rem;" onclick="selectTemplateChip('scale-matrix')">Scale Matrix</button>
+        </div>
         <select class="preset-select" id="presetSelect" onchange="loadPreset(this.value)">
           <option value="brochure">1. Brochure Sites vs Next.js + AI Agents</option>
           <option value="zapier">2. The True Cost of Zapier vs n8n Clusters</option>
           <option value="lead-triage">3. Eliminating Manual Lead Routing (Sub-30s)</option>
           <option value="invoice-ai">4. Autonomous Invoicing & Vision GL Reconciliation</option>
           <option value="cyclistic-bi">5. Cyclistic BI & Scalable BigQuery Pipelines</option>
+          <option value="bottleneck-breakdown">6. The Bottleneck Breakdown (Margin Leak)</option>
+          <option value="ai-vs-human">7. AI Agent vs Human FTE Benchmark</option>
+          <option value="scale-matrix">8. The Autonomous Scale Matrix</option>
         </select>
       </div>
 
@@ -602,8 +615,61 @@
         linkedin: "Scattered data in CSVs and disparate databases costs enterprises millions in blind spots.\n\nOur Cyclistic data pipeline case study proves how automated BigQuery ETL and Looker Studio dashboards unlock immediate operational clarity.\n\n#DataEngineering #BigQuery #LookerStudio #Analytics",
         twitter: "Turn scattered database records into real-time executive dashboards. Built on BigQuery and Looker.",
         instagram: "Actionable business intelligence engineered for high-growth operators. Check out our Cyclistic data pipeline case study."
+      },
+      "bottleneck-breakdown": {
+        category: "OPERATIONAL AUDIT",
+        headline: "Where Your Margins Are Really Leaking",
+        subheadline: "The hidden $150k/year operational tax of manual data transfers.",
+        p1Title: "Fragmented Tool Silos",
+        p1Desc: "Data trapped between CRM, ERP, and spreadsheets causes 20+ hours of weekly manual sync.",
+        p2Title: "Human Latency Tax",
+        p2Desc: "Every 10-minute delay in operational handoffs costs 15% in customer churn and missed SLAs.",
+        p3Title: "Autonomous Event Mesh",
+        p3Desc: "Private n8n clusters bridge tools with real-time webhooks and guaranteed retries.",
+        ctaText: "Reclaim 85% of your team's wasted administrative hours.",
+        ctaSub: "Schedule an operational audit: https://cal.com/zenthra-systems-dyuqpi/30min",
+        linkedin: "Where do operational margins really leak in $2M-$20M companies?\n\nIt's rarely in marketing ad spend. It's in the invisible 'Manual Glue Tax'—high-salary operators copying CSVs, re-typing invoice items, and manually re-assigning leads across tools.\n\nAt Zenthra Systems, we replace brittle manual handoffs with private, self-hosted n8n event meshes.\n\nKey takeaways:\n• Zero recurring per-task overages\n• Real-time webhook reconciliation\n• 85% reduction in manual hours\n\nBook a 30-min architecture review: https://cal.com/zenthra-systems-dyuqpi/30min\n\n#Operations #Automation #n8n #B2B #SystemsEngineering",
+        twitter: "Your margins aren't leaking in ad spend. They're leaking in the 20 hours/week your team spends copying data between CRM, ERP, and spreadsheets.\n\nWe build autonomous event meshes that fix this turnkey: https://cal.com/zenthra-systems-dyuqpi/30min",
+        instagram: "Stop paying high-salary team members to act as human data routers.\n\nPrivate autonomous n8n workflows automate 85% of administrative tasks.\n\nLink in bio for custom audit."
+      },
+      "ai-vs-human": {
+        category: "EXECUTIVE BENCHMARK",
+        headline: "AI Agent vs. Human FTE: The Real Numbers",
+        subheadline: "Comparing 24/7 autonomous agents against traditional operational overhead.",
+        p1Title: "Response Latency (<30s vs 4.2h)",
+        p1Desc: "Instant qualification and lead routing vs end-of-day inbox triage and delayed follow-ups.",
+        p2Title: "Coverage (24/7/365 vs 40h/wk)",
+        p2Desc: "Zero after-hours backlog or missed international time-zone enterprise opportunities.",
+        p3Title: "Cost ($0 Overage vs $75k+ FTE)",
+        p3Desc: "Self-hosted workflows eliminate expensive per-seat software licenses and staffing bloat.",
+        ctaText: "Benchmark your operations: schedule a technical audit on Cal.com.",
+        ctaSub: "Book: https://cal.com/zenthra-systems-dyuqpi/30min | connect.zenthra@gmail.com",
+        linkedin: "The math behind autonomous operations is no longer speculative.\n\nComparing an autonomous n8n AI agent with traditional human triage:\n⏱️ Speed: <30 seconds vs 4.2 hours average response latency\n🌍 Availability: 24/7/365 continuous operation across all global time zones\n💰 Financials: One-time engineering deployment vs $75,000+/year per FTE\n\nWe build turnkey production AI systems in 2 weeks.\n\nSchedule a strategy session: https://cal.com/zenthra-systems-dyuqpi/30min\n\n#ArtificialIntelligence #Operations #WorkflowAutomation #EnterpriseAI",
+        twitter: "AI Agent vs Human FTE:\n⚡ <30s response vs 4.2 hours\n🌐 24/7 coverage vs 40h/week\n📉 $0 task tax vs $75k/year overhead\n\nAudit your workflow: https://cal.com/zenthra-systems-dyuqpi/30min",
+        instagram: "The future of operations is autonomous.\n\nSwipe to see the hard numbers comparing AI agents to traditional manual workflows ➡️"
+      },
+      "scale-matrix": {
+        category: "SYSTEMS ARCHITECTURE",
+        headline: "The Autonomous Scale Matrix",
+        subheadline: "How enterprise engineering teams scale from 1,000 to 1,000,000 monthly events.",
+        p1Title: "Webhook-First Ingestion",
+        p1Desc: "Ingest events instantly with HMAC verification and dead-letter queue fallbacks.",
+        p2Title: "Private Supabase pgvector",
+        p2Desc: "Sub-50ms semantic search on company knowledge without third-party data leakage.",
+        p3Title: "Decoupled Orchestration",
+        p3Desc: "Containerized n8n clusters that scale horizontally without per-step pricing.",
+        ctaText: "Upgrade to an enterprise event mesh with turnkey 2-week delivery.",
+        ctaSub: "Book architecture review: https://cal.com/zenthra-systems-dyuqpi/30min",
+        linkedin: "Scaling from 1,000 to 1,000,000 workflow events breaks fragile no-code setups.\n\nHere is the architecture we deploy for enterprise clients:\n1. Webhook-first ingestion with HMAC security\n2. Private Supabase pgvector database for sovereign knowledge retrieval\n3. High-throughput n8n cluster for business logic\n\nComplete data sovereignty. Zero vendor lock-in.\n\nSchedule a technical session: https://cal.com/zenthra-systems-dyuqpi/30min\n\n#SoftwareArchitecture #n8n #Supabase #Engineering #DevOps",
+        twitter: "How to scale to 1M events without Zapier bill shocks:\n1. Webhook ingestion + HMAC\n2. Private Supabase pgvector\n3. Self-hosted n8n cluster\n\nTurnkey in 2 weeks: https://cal.com/zenthra-systems-dyuqpi/30min",
+        instagram: "The enterprise architecture behind zero-maintenance automations. Full breakdown inside."
       }
     };
+
+    function selectTemplateChip(key) {
+      document.getElementById('presetSelect').value = key;
+      loadPreset(key);
+    }
 
     let activePreset = 'brochure';
     let activeTheme = 'dark';
@@ -641,6 +707,11 @@
       const data = PRESETS[key];
       if (!data) return;
 
+      document.querySelectorAll('.preset-chip').forEach(btn => {
+        if (btn.getAttribute('data-preset') === key) btn.classList.add('active');
+        else btn.classList.remove('active');
+      });
+
       document.getElementById('inputCategory').value = data.category;
       document.getElementById('inputHeadline').value = data.headline;
       document.getElementById('inputSubheadline').value = data.subheadline;
@@ -654,7 +725,7 @@
       document.getElementById('inputCtaSub').value = data.ctaSub;
 
       renderPoster();
-      showToast(`Loaded Preset: ${data.category}`);
+      showToast(`Loaded Template: ${data.category}`);
     }
 
     function handleInput() {
@@ -970,9 +1041,19 @@
     }
 
     function copyCopy(platform) {
-      const preset = PRESETS[activePreset];
-      if (!preset || !preset[platform]) return;
-      navigator.clipboard.writeText(preset[platform]).then(() => {
+      const preset = PRESETS[activePreset] || {};
+      const currentHeadline = document.getElementById('inputHeadline').value;
+      let text = preset[platform] || '';
+
+      if (preset.headline && currentHeadline !== preset.headline && text) {
+        text = text.replace(preset.headline, currentHeadline);
+      }
+
+      if (!text) {
+        text = `${currentHeadline}\n\n${document.getElementById('inputSubheadline').value}\n\n01. ${document.getElementById('p1Title').value}: ${document.getElementById('p1Desc').value}\n02. ${document.getElementById('p2Title').value}: ${document.getElementById('p2Desc').value}\n03. ${document.getElementById('p3Title').value}: ${document.getElementById('p3Desc').value}\n\nSchedule strategy session: https://cal.com/zenthra-systems-dyuqpi/30min\n\n#EnterpriseAI #Automation #n8n #Engineering`;
+      }
+
+      navigator.clipboard.writeText(text).then(() => {
         showToast(`Copied ${platform.toUpperCase()} post copy to clipboard!`);
       });
     }
