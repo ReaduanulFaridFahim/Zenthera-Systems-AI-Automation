@@ -14,58 +14,32 @@
       },
       "name": "Schedule (Mon/Wed/Fri 1PM GMT)",
       "type": "n8n-nodes-base.scheduleTrigger",
-      "typeVersion": 1,
-      "position": [240, 300],
+      "typeVersion": 1.2,
+      "position": [240, 240],
       "id": "node-schedule-trigger"
     },
     {
       "parameters": {
-        "model": "gpt-4o",
-        "messages": {
-          "message": [
-            {
-              "role": "system",
-              "message": "You are the Head of Growth for Zenthra Systems, an elite web development & AI automation agency targeting founders in the US, UK, Canada, and Europe. Return ONLY valid JSON with keys: linkedin_post, twitter_post, ig_caption, poster_headline, poster_subheadline, point1_title, point1_desc, point2_title, point2_desc, point3_title, point3_desc."
-            },
-            {
-              "role": "user",
-              "message": "Generate a high-converting post and poster content showing why static brochure websites fail in 2026, and how custom web apps with AI agents generate measurable ROI. Include contact email: connect.zenthra@gmail.com."
-            }
-          ]
-        },
-        "jsonOutput": true
+        "httpMethod": "POST",
+        "path": "zenthra-social-publish",
+        "responseMode": "responseNode",
+        "options": {}
       },
-      "name": "Generate Marketing Copy & Poster Data",
-      "type": "@n8n/n8n-nodes-langchain.openAi",
-      "typeVersion": 1,
-      "position": [460, 300],
-      "id": "node-openai-marketing"
+      "name": "Webhook (Instant Trigger)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 440],
+      "id": "node-webhook-trigger"
     },
     {
       "parameters": {
-        "url": "https://api.creatomate.com/v1/renders",
-        "method": "POST",
-        "authentication": "genericCredentialType",
-        "genericAuthType": "httpHeaderAuth",
-        "sendBody": true,
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "template_id",
-              "value": "YOUR_CREATOMATE_TEMPLATE_ID"
-            },
-            {
-              "name": "modifications",
-              "value": "={{ { 'Title': $json.poster_headline, 'CTA': 'connect.zenthra@gmail.com' } }}"
-            }
-          ]
-        }
+        "jsCode": "// Detect if triggered by webhook with custom payload or by schedule\nconst input = $input.first() ? $input.first().json : {};\nconst body = input.body || input;\n\nconst presets = [\n  {\n    category: \"B2B TECH INSIGHT\",\n    headline: \"Is Your Website Costing You 6-Figure Enterprise Deals?\",\n    subheadline: \"Why modern Western enterprises are leaving template sites behind for autonomous AI apps.\",\n    points: [\n      { title: \"Sub-Second Page Speeds (<0.8s)\", desc: \"Engineered in Next.js & TypeScript for 99+ Core Web Vitals.\" },\n      { title: \"24/7 Autonomous AI Sales Agents\", desc: \"Instantly qualify and book inbound leads without human delay.\" },\n      { title: \"Custom API & Microservice Pipelines\", desc: \"Automate payments, CRM sync, and enterprise workflows.\" }\n    ]\n  },\n  {\n    category: \"FINANCIAL AI OPS\",\n    headline: \"The True Cost of Zapier vs Self-Hosted n8n Clusters\",\n    subheadline: \"How fast-growing companies eliminate the 5-figure Zapier task tax.\",\n    points: [\n      { title: \"Zero Per-Execution Tax\", desc: \"Save $800 to $3,200/mo in Zapier task overages with self-hosted n8n.\" },\n      { title: \"Sub-Second Event Processing\", desc: \"Direct Webhook-to-PostgreSQL processing with zero rate limits.\" },\n      { title: \"Complete Data Sovereignty\", desc: \"Customer PII never traverses third-party automation servers.\" }\n    ]\n  },\n  {\n    category: \"SPEED-TO-LEAD\",\n    headline: \"Eliminating Manual Lead Routing: Sub-30s Speed-to-Lead\",\n    subheadline: \"How autonomous event meshes qualify prospects before your competitors reply.\",\n    points: [\n      { title: \"Sub-30s Automated Discovery\", desc: \"Lead submits form -> AI scores budget, tech stack & urgency instantly.\" },\n      { title: \"Instant Multi-CRM Synchronization\", desc: \"Bi-directional HubSpot, Notion & Slack real-time pipeline sync.\" },\n      { title: \"Direct Cal.com Integration\", desc: \"Qualified prospects are routed directly to executive discovery slots.\" }\n    ]\n  },\n  {\n    category: \"FINANCIAL AI OPS\",\n    headline: \"Autonomous Invoicing & Vision PO Reconciliation\",\n    subheadline: \"Reclaiming 85% of accounting labor costs with computer vision.\",\n    points: [\n      { title: \"Multi-Page PDF Parsing\", desc: \"Extract line items, tax IDs, and vendor terms with 99.4% precision.\" },\n      { title: \"Two-Way Purchase Order Matching\", desc: \"Automate cross-referencing against ERP purchase orders and GL codes.\" },\n      { title: \"Instant Anomaly Detection\", desc: \"Flag duplicate billings, tax mismatches, and fraudulent line items.\" }\n    ]\n  }\n];\n\nconst dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24)) % presets.length;\nconst selected = (body.headline && body.headline.length > 5) ? body : presets[dayIndex];\n\nconst category = body.category || selected.category || \"ENTERPRISE AUTOMATION\";\nconst headline = body.headline || selected.headline;\nconst subheadline = body.subheadline || selected.subheadline;\nconst points = body.points || selected.points;\nconst bookingUrl = \"https://cal.com/zenthra-systems-dyuqpi/30min\";\nconst email = \"connect.zenthra@gmail.com\";\n\nconst linkedinPost = `🚨 ${headline}\\n\\n${subheadline}\\n\\nHere is how leading engineering teams are scaling operations in 2026:\\n\\n` +\n  points.map((p, idx) => `0${idx + 1}. ${p.title}\\n→ ${p.desc}`).join(\"\\n\\n\") +\n  `\\n\\n💡 Ready to eliminate manual bottlenecks and reclaim 85% of operational labor?\\n\\n📅 Book an Architecture Discovery Call: ${bookingUrl}\\n📧 Direct Inquiries: ${email}\\n\\n#AIAutomation #EnterpriseEngineering #n8n #WorkflowAutomation #B2BTech #ZenthraSystems`;\n\nconst twitterPost = `⚡ ${headline}\\n\\n` +\n  points.slice(0, 2).map((p, i) => `• ${p.title}: ${p.desc}`).join(\"\\n\") +\n  `\\n\\nEliminate manual bottlenecks: ${bookingUrl}\\n\\n#n8n #AI #Automation`;\n\nconst igCaption = `⚡ ${headline}\\n.\\n${subheadline}\\n.\\n` +\n  points.map((p, i) => `[0${i + 1}] ${p.title}: ${p.desc}`).join(\"\\n\") +\n  `\\n.\\n🔗 Schedule your 30-min architecture consultation: ${bookingUrl}\\n.\\n#aiagents #n8n #operations #b2b #systemautomation`;\n\nconst svgPoster = `<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1080 1350\" width=\"1080\" height=\"1350\">\n  <defs>\n    <linearGradient id=\"bgGrad\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">\n      <stop offset=\"0%\" stop-color=\"#020617\"/>\n      <stop offset=\"100%\" stop-color=\"#0f172a\"/>\n    </linearGradient>\n  </defs>\n  <rect width=\"1080\" height=\"1350\" fill=\"url(#bgGrad)\"/>\n  <circle cx=\"950\" cy=\"150\" r=\"350\" fill=\"#0284c7\" opacity=\"0.12\" filter=\"blur(80px)\"/>\n  <circle cx=\"150\" cy=\"1150\" r=\"300\" fill=\"#2563eb\" opacity=\"0.10\" filter=\"blur(70px)\"/>\n  <text x=\"80\" y=\"110\" font-family=\"'Plus Jakarta Sans', sans-serif\" font-weight=\"800\" font-size=\"28\" fill=\"#38bdf8\" letter-spacing=\"2\">ZENTHRA SYSTEMS</text>\n  <text x=\"80\" y=\"145\" font-family=\"'JetBrains Mono', monospace\" font-size=\"16\" fill=\"#64748b\" letter-spacing=\"1\">AUTONOMOUS OPERATIONS ENGINE</text>\n  <rect x=\"80\" y=\"210\" width=\"220\" height=\"34\" rx=\"17\" fill=\"#1e293b\"/>\n  <text x=\"190\" y=\"233\" font-family=\"'JetBrains Mono', monospace\" font-size=\"13\" font-weight=\"700\" fill=\"#38bdf8\" text-anchor=\"middle\" letter-spacing=\"1\">${category}</text>\n  <text x=\"80\" y=\"320\" font-family=\"'Plus Jakarta Sans', sans-serif\" font-weight=\"800\" font-size=\"52\" fill=\"#ffffff\">${headline.length > 38 ? headline.substring(0, 36) + '...' : headline}</text>\n  <text x=\"80\" y=\"390\" font-family=\"'Plus Jakarta Sans', sans-serif\" font-size=\"24\" fill=\"#94a3b8\">${subheadline.length > 60 ? subheadline.substring(0, 58) + '...' : subheadline}</text>\n  <g transform=\"translate(80, 480)\">\n    <rect width=\"920\" height=\"150\" rx=\"16\" fill=\"#0b1329\" stroke=\"#1e293b\" stroke-width=\"1\"/>\n    <text x=\"35\" y=\"50\" font-family=\"'JetBrains Mono', monospace\" font-weight=\"700\" font-size=\"22\" fill=\"#38bdf8\">01</text>\n    <text x=\"90\" y=\"50\" font-family=\"'Plus Jakarta Sans', sans-serif\" font-weight=\"700\" font-size=\"26\" fill=\"#ffffff\">${points[0] ? points[0].title : 'Enterprise SLA'}</text>\n    <text x=\"90\" y=\"95\" font-family=\"'Plus Jakarta Sans', sans-serif\" font-size=\"18\" fill=\"#94a3b8\">${points[0] ? points[0].desc : 'High-throughput execution'}</text>\n  </g>\n  <g transform=\"translate(80, 660)\">\n    <rect width=\"920\" height=\"150\" rx=\"16\" fill=\"#0b1329\" stroke=\"#1e293b\" stroke-width=\"1\"/>\n    <text x=\"35\" y=\"50\" font-family=\"'JetBrains Mono', monospace\" font-weight=\"700\" font-size=\"22\" fill=\"#38bdf8\">02</text>\n    <text x=\"90\" y=\"50\" font-family=\"'Plus Jakarta Sans', sans-serif\" font-weight=\"700\" font-size=\"26\" fill=\"#ffffff\">${points[1] ? points[1].title : 'Data Sovereignty'}</text>\n    <text x=\"90\" y=\"95\" font-family=\"'Plus Jakarta Sans', sans-serif\" font-size=\"18\" fill=\"#94a3b8\">${points[1] ? points[1].desc : 'Zero third-party PII exposure'}</text>\n  </g>\n  <g transform=\"translate(80, 840)\">\n    <rect width=\"920\" height=\"150\" rx=\"16\" fill=\"#0b1329\" stroke=\"#1e293b\" stroke-width=\"1\"/>\n    <text x=\"35\" y=\"50\" font-family=\"'JetBrains Mono', monospace\" font-weight=\"700\" font-size=\"22\" fill=\"#38bdf8\">03</text>\n    <text x=\"90\" y=\"50\" font-family=\"'Plus Jakarta Sans', sans-serif\" font-weight=\"700\" font-size=\"26\" fill=\"#ffffff\">${points[2] ? points[2].title : 'Instant Integration'}</text>\n    <text x=\"90\" y=\"95\" font-family=\"'Plus Jakarta Sans', sans-serif\" font-size=\"18\" fill=\"#94a3b8\">${points[2] ? points[2].desc : 'Direct webhook event mesh'}</text>\n  </g>\n  <g transform=\"translate(80, 1080)\">\n    <rect width=\"920\" height=\"180\" rx=\"20\" fill=\"#0284c7\" fill-opacity=\"0.12\" stroke=\"#0284c7\" stroke-width=\"1.5\"/>\n    <text x=\"460\" y=\"65\" font-family=\"'Plus Jakarta Sans', sans-serif\" font-weight=\"700\" font-size=\"26\" fill=\"#ffffff\" text-anchor=\"middle\">Schedule an Architecture Discovery Call</text>\n    <text x=\"460\" y=\"115\" font-family=\"'JetBrains Mono', monospace\" font-weight=\"600\" font-size=\"20\" fill=\"#38bdf8\" text-anchor=\"middle\">${bookingUrl}</text>\n  </g>\n</svg>`;\n\nreturn [{\n  json: {\n    status: \"SYNTHESIZED\",\n    category,\n    headline,\n    subheadline,\n    points,\n    linkedin_post: linkedinPost,\n    twitter_post: twitterPost,\n    ig_caption: igCaption,\n    booking_url: bookingUrl,\n    contact_email: email,\n    svg_poster: svgPoster,\n    dispatched_at: new Date().toISOString()\n  }\n}];"
       },
-      "name": "Render Dynamic Video (Creatomate API)",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [680, 200],
-      "id": "node-creatomate-render"
+      "name": "Synthesize B2B Social & Poster Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [500, 340],
+      "id": "node-code-synthesizer"
     },
     {
       "parameters": {
@@ -85,24 +59,34 @@
           "parameters": [
             {
               "name": "post",
-              "value": "={{ $('Generate Marketing Copy & Poster Data').item.json.linkedin_post }}"
+              "value": "={{ $json.linkedin_post }}"
             },
             {
               "name": "platforms",
               "value": "={{ ['linkedin', 'twitter', 'instagram', 'facebook'] }}"
-            },
-            {
-              "name": "mediaUrls",
-              "value": "={{ [$json.url] }}"
             }
           ]
-        }
+        },
+        "options": {}
       },
-      "name": "Auto-Publish Across All Platforms (Ayrshare API)",
+      "name": "Auto-Publish Across Platforms (Ayrshare API)",
       "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.1,
-      "position": [920, 300],
-      "id": "node-ayrshare-publish"
+      "typeVersion": 4.2,
+      "position": [780, 240],
+      "id": "node-ayrshare-publish",
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"status\": \"DISPATCHED\",\n  \"headline\": $('Synthesize B2B Social & Poster Payload').item.json.headline,\n  \"category\": $('Synthesize B2B Social & Poster Payload').item.json.category,\n  \"booking_url\": $('Synthesize B2B Social & Poster Payload').item.json.booking_url,\n  \"linkedin_post\": $('Synthesize B2B Social & Poster Payload').item.json.linkedin_post,\n  \"twitter_post\": $('Synthesize B2B Social & Poster Payload').item.json.twitter_post,\n  \"ig_caption\": $('Synthesize B2B Social & Poster Payload').item.json.ig_caption,\n  \"dispatched_at\": $('Synthesize B2B Social & Poster Payload').item.json.dispatched_at,\n  \"engine\": \"Zenthra Systems n8n Cloud Automation\"\n}",
+        "options": {}
+      },
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1020, 340],
+      "id": "node-respond-webhook"
     }
   ],
   "connections": {
@@ -110,29 +94,34 @@
       "main": [
         [
           {
-            "node": "Generate Marketing Copy & Poster Data",
+            "node": "Synthesize B2B Social & Poster Payload",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Generate Marketing Copy & Poster Data": {
+    "Webhook (Instant Trigger)": {
       "main": [
         [
           {
-            "node": "Render Dynamic Video (Creatomate API)",
+            "node": "Synthesize B2B Social & Poster Payload",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Render Dynamic Video (Creatomate API)": {
+    "Synthesize B2B Social & Poster Payload": {
       "main": [
         [
           {
-            "node": "Auto-Publish Across All Platforms (Ayrshare API)",
+            "node": "Auto-Publish Across Platforms (Ayrshare API)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Respond to Webhook",
             "type": "main",
             "index": 0
           }

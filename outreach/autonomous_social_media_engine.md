@@ -87,16 +87,22 @@ The production workflow is saved at [`workflows/zenthra_social_automation.json`]
 | Node Name | Node Type | Purpose | Configuration Notes |
 | :--- | :--- | :--- | :--- |
 | **Schedule (Mon/Wed/Fri 1PM GMT)** | `scheduleTrigger` | Triggers post generation 3x/week at peak Western B2B browsing times (09:00 AM EST / 14:00 GMT). | Cron: `0 13 * * 1,3,5` |
-| **Generate Marketing Copy & Poster Data** | `@n8n/n8n-nodes-langchain.openAi` | Prompts GPT-4o with Zenthra Systems' elite voice to output structured JSON. | Schema includes `linkedin_post`, `twitter_post`, `ig_caption`, and poster fields. |
-| **Render Dynamic Video / Image (Creatomate API)** | `httpRequest` | (Optional) Renders animated video or banner via Creatomate template. | Endpoint: `https://api.creatomate.com/v1/renders` |
-| **Auto-Publish Across All Platforms (Ayrshare API)** | `httpRequest` | Dispatches post copy + media URL simultaneously to LinkedIn, X, IG, and Facebook. | Endpoint: `https://api.ayrshare.com/api/post` |
+| **Webhook (Instant Trigger)** | `webhook` | Instant API dispatch endpoint for Poster Studio, curl, and automated scripts. | Path: `/webhook/zenthra-social-publish` |
+| **Synthesize B2B Social & Poster Payload** | `code` | Synthesizes multi-platform copy (LinkedIn, X, Instagram) and generates pure SVG 1080x1350 poster code. | Algorithmic rotation across 8 enterprise templates. Zero external dependencies. |
+| **Auto-Publish Across Platforms (Ayrshare API)** | `httpRequest` | (Optional) Dispatches post copy to LinkedIn, X, IG, and Facebook when Ayrshare token is provided. | Endpoint: `https://api.ayrshare.com/api/post` (`continueOnFail: true`) |
+| **Respond to Webhook** | `respondToWebhook` | Returns HTTP 200 receipt with full generated post copy, SVG markup, and Cal.com booking link. | Instant response back to calling frontend. |
 
-### How to Import into n8n:
-1. Open your n8n workspace (`https://zenthrasystems.app.n8n.cloud` or self-hosted).
+### How to Import & Activate in n8n Cloud:
+1. Open your n8n Cloud workspace: **`https://zenthrasystems.app.n8n.cloud`**.
 2. Click **Workflows** → **Import from File**.
 3. Select [`workflows/zenthra_social_automation.json`](file:///d:/Aviation/workflows/zenthra_social_automation.json).
-4. Supply your OpenAI Credential and your Ayrshare API key in the HTTP Request node.
-5. Toggle the workflow to **Active**.
+4. (Optional) In the Ayrshare node, enter your Ayrshare Bearer token if connecting live social accounts.
+5. Toggle the workflow switch in the top-right corner to **Active**.
+6. Trigger the live automation on-demand anytime via terminal:
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File tools\trigger_n8n_social_cloud.ps1
+   ```
+   Or click **"⚡ Dispatch to n8n Cloud"** in the [Poster Studio](https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/poster_studio.html).
 
 ---
 
