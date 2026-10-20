@@ -1,0 +1,34 @@
+version: '3.8'
+
+# ==============================================================================
+# Zenthra Systems — Autonomous Enterprise AI & n8n Workflow Cluster
+# Powered by official n8n: https://github.com/n8n-io/n8n
+# ==============================================================================
+
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: zenthra_n8n_core
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - NODE_ENV=production
+      - WEBHOOK_URL=http://localhost:5678/
+      - GENERIC_TIMEZONE=UTC
+      - N8N_DIAGNOSTICS_ENABLED=false
+      - N8N_PERSONALIZATION_ENABLED=false
+      - EXECUTIONS_DATA_PRUNE=true
+      - EXECUTIONS_DATA_MAX_AGE=168
+      # LangChain & AI Community nodes enabled
+      - N8N_AI_COMMUNITY_NODES_ENABLED=true
+    volumes:
+      - n8n_storage:/home/node/.n8n
+      - ./workflows:/workflows:ro
+      - ./data:/data:ro
+
+volumes:
+  n8n_storage:
+    driver: local

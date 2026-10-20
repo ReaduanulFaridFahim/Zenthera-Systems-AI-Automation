@@ -85,7 +85,8 @@ $report = [PSCustomObject]@{
     results = $auditResults
 }
 
-$report | ConvertTo-Json -Depth 5 | Set-Content -Path "d:\Aviation\outreach\all_repos_qa_audit.json" -Encoding UTF8
+$json = $report | ConvertTo-Json -Depth 5
+[System.IO.File]::WriteAllText("d:\Aviation\outreach\all_repos_qa_audit.json", $json, [System.Text.UTF8Encoding]::new($false))
 Write-Host "======================================================================" -ForegroundColor Cyan
 Write-Host "QA AUDIT COMPLETE - SAVED TO outreach/all_repos_qa_audit.json" -ForegroundColor Green
 Write-Host "======================================================================" -ForegroundColor Cyan

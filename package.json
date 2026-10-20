@@ -1,4 +1,18 @@
 {
+  "name": "zenthera-systems-ai-automation",
+  "version": "1.0.0",
+  "description": "Autonomous Enterprise AI Operations, n8n Systems & Client Acquisition Engine powered by n8n (https://github.com/n8n-io/n8n)",
+  "homepage": "https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ReaduanulFaridFahim/Zenthera-Systems-AI-Automation.git"
+  },
+  "scripts": {
+    "n8n": "n8n start",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "audit": "powershell -ExecutionPolicy Bypass -File tools/run_qa_audit.ps1"
+  },
   "dependencies": {
     "sqlite3": "^6.0.1"
   },

@@ -5,7 +5,7 @@
 ![GitHub Pages Deployment](https://img.shields.io/badge/Deployment-GitHub%20Pages%20Live-0284c7?style=for-the-badge&logo=github)
 ![Cluster SLA](https://img.shields.io/badge/Cluster%20SLA-99.98%25%20Uptime-059669?style=for-the-badge&logo=statuspage)
 ![Node Version](https://img.shields.io/badge/Node.js-v24.20.0-339933?style=for-the-badge&logo=node.js)
-![n8n Cloud](https://img.shields.io/badge/n8n-Orchestration%20Cluster-EA4B71?style=for-the-badge&logo=n8n)
+[![Powered by n8n](https://img.shields.io/badge/Orchestrated%20With-n8n%20Workflow%20Engine-EA4B71?style=for-the-badge&logo=n8n)](https://github.com/n8n-io/n8n)
 ![Supabase pgvector](https://img.shields.io/badge/Supabase-pgvector%20RAG-3ECF8E?style=for-the-badge&logo=supabase)
 ![Cal.com](https://img.shields.io/badge/Cal.com-Verified%20Booking-292929?style=for-the-badge&logo=calendar)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
@@ -14,7 +14,7 @@
 
 **Enterprise n8n Workflow Systems · Autonomous AI Front-Office Concierge · Sub-30s Lead Triage · Sovereign pgvector RAG**
 
-[🌐 Live Enterprise Portal](https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/) • [🎨 B2B Social Poster Studio](https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/poster_studio.html) • [🎓 Interactive Practice Hub](https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/practice_video.html) • [📅 Cal.com 30-Min Booking](https://cal.com/zenthra-systems-dyuqpi/30min)
+[🌐 Live Enterprise Portal](https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/) • [🎨 B2B Social Poster Studio](https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/poster_studio.html) • [🎓 Interactive Practice Hub](https://readuanulfaridfahim.github.io/Zenthera-Systems-AI-Automation/practice_video.html) • [📅 Cal.com 30-Min Booking](https://cal.com/zenthra-systems-dyuqpi/30min) • [🐙 Powered by n8n](https://github.com/n8n-io/n8n)
 
 </div>
 
@@ -54,6 +54,51 @@ This repository contains the complete production-grade source code, importable n
   │ • Slack / Discord Instant Deal Room Pings    │  │ • 24/7 Inbound DM ManyChat Webhook   │
   └──────────────────────────────────────────────┘  └──────────────────────────────────────┘
 ```
+
+---
+
+## ⚡ Orchestration Core — Powered by [n8n](https://github.com/n8n-io/n8n)
+
+Zenthra Systems is engineered directly on top of [n8n (n8n-io/n8n)](https://github.com/n8n-io/n8n) — the industry-leading fair-code workflow automation and AI agent orchestration platform.
+
+### Why Zenthra Runs on [n8n](https://github.com/n8n-io/n8n)
+- **Zero Per-Execution "Zapier Tax"**: Host on private enterprise infrastructure with unlimited workflow runs and zero per-step billing fees.
+- **Data Sovereignty & Enterprise Compliance**: Customer data, vector embeddings, and API keys remain strictly inside your private network or cloud cluster.
+- **First-Class AI & LangChain Ecosystem**: Native support for LLMs (GPT-4o, Claude 3.5), autonomous agent memory, dynamic tool calling, and vector stores.
+- **Source Control for Workflows**: Every pipeline is version-controlled as standard JSON definitions in [`/workflows/`](file:///d:/Aviation/workflows/).
+
+### Quickstart: Launching the n8n Engine
+
+#### 1. Via Docker Compose (Recommended)
+This repository includes a production-ready [`docker-compose.yml`](file:///d:/Aviation/docker-compose.yml) configured with persistent storage and read-only workflow mounts:
+
+```bash
+# Launch official n8n container in the background
+docker compose up -d
+
+# Check cluster logs
+docker compose logs -f n8n
+```
+Access the local n8n Workflow Studio at: **`http://localhost:5678`**
+
+#### 2. Via Local Node.js / npm
+```bash
+# Install n8n globally
+npm install -g n8n
+
+# Start n8n using npm script
+npm run n8n
+
+# Or run the Windows batch launcher:
+.\start_n8n.bat
+```
+
+#### 3. Importing Production Workflows
+Once your n8n workspace is open, go to **Workflows > Import from File** and select any workflow from [`workflows/`](file:///d:/Aviation/workflows/):
+- **[`outbound_client_acquisition_pipeline.json`](file:///d:/Aviation/workflows/outbound_client_acquisition_pipeline.json)** — Multi-CRM sync (HubSpot, Notion, Resend, Slack).
+- **[`zenthra_operations_agent.json`](file:///d:/Aviation/workflows/zenthra_operations_agent.json)** — Autonomous LangChain agent with Supabase pgvector RAG memory.
+- **[`knowledge_ingestion_pipeline.json`](file:///d:/Aviation/workflows/knowledge_ingestion_pipeline.json)** — Document chunking and embedding ingestion.
+- **[`zenthra_social_automation.json`](file:///d:/Aviation/workflows/zenthra_social_automation.json)** — Scheduled social media multi-channel poster.
 
 ---
 
